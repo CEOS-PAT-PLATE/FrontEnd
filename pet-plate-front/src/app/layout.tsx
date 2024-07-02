@@ -1,13 +1,17 @@
-import './globals.css';
-
+import StyledComponentsRegistry from './lib/registry'
+ 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html>
+      <body>
+        <StyledComponentsRegistry>
+          {children}
+        </StyledComponentsRegistry>
+      </body>
     </html>
-  );
+  )
 }
