@@ -4,7 +4,7 @@ import 'reset-css';
 const GlobalStyles = createGlobalStyle`
   
   body {
-    background-color: ${(props) => props.theme.colors.green};
+    background-color: ${(props) => props.theme.colors['green-900']}; //theme 사용 문법 예시 
   }
 
 `;
