@@ -4,7 +4,7 @@ import 'reset-css';
 const GlobalStyles = createGlobalStyle`
   
   body {
-    background-color: aliceblue;
+    background-color: ${(props) => props.theme.colors.green};
   }
 
 `;
