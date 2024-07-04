@@ -1,7 +1,7 @@
 export default function Page() {
   return (
     <div>
-      <h1>자연식</h1>
+      <h1>사료</h1>
     </div>
   )
 }

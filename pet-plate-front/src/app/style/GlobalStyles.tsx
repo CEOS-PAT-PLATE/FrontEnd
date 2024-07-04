@@ -2,6 +2,11 @@ import { createGlobalStyle } from 'styled-components'
 import 'reset-css'
 
 const GlobalStyles = createGlobalStyle`
+
+/* Variable 폰트 스타일링 */
+  @import url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css');
+
+  
   html, body {
     margin: 0;
     padding: 0;
@@ -16,6 +21,12 @@ const GlobalStyles = createGlobalStyle`
     height: 753px;
     margin: auto;
     position: relative;
+
+    
+    font-family: 'SUIT Variable', sans-serif; /* Variable 폰트를 기본으로 설정 */
+
+    /* font-family: 'SUIT', sans-serif; */
+  }
   }
 `
 
