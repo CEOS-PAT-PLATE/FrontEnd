@@ -21,13 +21,14 @@ const NavItem = styled.div<{ $isActive: boolean }>`
   a {
     text-decoration: none;
   }
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  padding: 0px 15px;
-  height: 30px;
-
+ display: flex;
+width: 61px;
+height: 30px;
+padding: 0px 16px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
   ${({ $isActive }) =>
     $isActive &&
     css`
