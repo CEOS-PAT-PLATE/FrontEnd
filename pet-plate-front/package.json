@@ -16,8 +16,8 @@
     "react": "^18",
     "react-dom": "^18",
     "recoil": "^0.7.7",
-    "reset-css": "^5.0.2",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "styled-reset": "^4.5.2"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

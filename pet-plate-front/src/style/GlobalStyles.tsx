@@ -1,34 +1,46 @@
 import { createGlobalStyle } from 'styled-components'
-import 'reset-css'
+import reset from "styled-reset";
 
 const GlobalStyles = createGlobalStyle`
 
-/* Variable 폰트 스타일링 */
-  @import url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css');
+@font-face {
+  font-family: 'SUIT';
+  src: url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
 
-  
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background-color:${(props) => props.theme.colors['green']}; // 전체 배경색 설정
-  }
+@font-face {
+  font-family: 'SUIT Variable';
+  src: url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
 
+  ${reset}
+
+  html,
   body {
-    background-color: ${(props) => props.theme.colors['grey1']}; // body 배경색 설정
+    /* width:100%;
+    height: 100vh; */
     width: 360px;
-    height: 756px;
-    margin: auto;
-    padding-top:44px;
-    position: relative;
-
-    
-    font-family: 'SUIT Variable', sans-serif; /* Variable 폰트를 기본으로 설정 */
-
-    /* font-family: 'SUIT', sans-serif; */
+    height: 800px;
+    margin: 0 auto;
   }
-  }
+
+* {
+  box-sizing: border-box;
+}
+
+
+
+button{
+  cursor: pointer;
+  padding: 0;
+}
+  
 `
 
 export default GlobalStyles
