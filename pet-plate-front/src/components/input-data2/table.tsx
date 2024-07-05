@@ -10,8 +10,7 @@ export default function Table() {
   const consumedRaws = useRecoilValue(consumedRawsState);
 
   const filteredRawFoods = searchQuery ? rawFoods.filter((food) => food.name.includes(searchQuery)).slice(0, 5) : [];
-
-  const recentConsumedRaws = !searchQuery ? consumedRaws.slice(0, 3) : [];
+  const recentConsumedRaws = !searchQuery ? consumedRaws.slice(0,2) : [];
 
   return (
     <TableContainer>
@@ -22,16 +21,16 @@ export default function Table() {
               <p>{food.description}</p>
             </Card>
           ))
-          : (
-            <RecentContainer>
-              {recentConsumedRaws.map((consumed) => (
-                <RecentCard key={consumed.rawId}>
-                  <p>{consumed.rawId}</p>
-                  <p>{consumed.serving}g</p>
-                </RecentCard>
-              ))}
-            </RecentContainer>
-          )}
+        : (
+          <RecentContainer>
+            {recentConsumedRaws.map((consumed) => (
+              <RecentCard key={consumed.rawId}>
+                <p>{consumed.rawId}</p>
+                <p>{consumed.serving}g</p>
+              </RecentCard>
+            ))}
+          </RecentContainer>
+        )}
     </TableContainer>
   );
 }
@@ -56,20 +55,9 @@ const Card = styled.div`
 
 const RecentContainer = styled.div`
   display: flex;
-  overflow-x: auto;
   gap: 16px;
   padding: 10px 0;
   white-space: nowrap;
-  &::-webkit-scrollbar {
-    height: 8px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--grey2, #eceef0);
-    border-radius: 4px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
 `;
 
 const RecentCard = styled.div`
