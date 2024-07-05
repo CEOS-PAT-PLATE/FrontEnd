@@ -16,15 +16,15 @@ export default function Navbar() {
   return (
     <div>
       <NavContainer>
-        {optionList.map((item) => (
-          <NavElements option={item} isActive={`/${item.link}` === pathName} />
+        {optionList.map((item, index) => (
+          <NavElements key={index} option={item} isActive={`/${item.link}` === pathName} />
         ))}
       </NavContainer>
     </div>
   )
 }
 
-const NavContainer = styled.li`
+const NavContainer = styled.ul`
   position: relative; /* 절대적인 위치를 고정 */
   top: 14px; /* 화면 상단에 고정 */
   left: 17px; /* 좌측 정렬 */

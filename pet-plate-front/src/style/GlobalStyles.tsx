@@ -3,9 +3,22 @@ import 'reset-css'
 
 const GlobalStyles = createGlobalStyle`
 
-/* Variable 폰트 스타일링 */
-  @import url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css');
+  
+@font-face {
+  font-family: 'SUIT';
+  src: url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
 
+@font-face {
+  font-family: 'SUIT Variable';
+  src: url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
   
   html, body {
     margin: 0;
@@ -16,6 +29,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
+  font-family: 'SUIT', sans-serif;
     background-color: ${(props) => props.theme.colors['grey1']}; // body 배경색 설정
     width: 360px;
     height: 756px;
