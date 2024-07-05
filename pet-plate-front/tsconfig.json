@@ -23,11 +23,18 @@
       "@app/*": ["./app/*"],
       "@components/*": ["./components/*"],
       "@lib/*": ["./lib/*"],
-      "@style/*": ["./style/*"]
+      "@style/*": ["./style/*"],
+      "@public/*": ["../public/*"]
     },
     "types": ["styled-components"]
   },
 
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "svgr.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }
