@@ -9,15 +9,15 @@ interface NavElementsProps {
 
 export default function NavElements({ option, isActive }: NavElementsProps) {
   return (
-    <NavItem isActive={isActive}>
-      <StyledLink href={`/${option.link}`} isActive={isActive}>
+    <NavItem $isActive={isActive}>
+      <StyledLink href={`/${option.link}`} $isActive={isActive}>
         {option.name}
       </StyledLink>
     </NavItem>
   )
 }
 
-const NavItem = styled.div<{ isActive: boolean }>`
+const NavItem = styled.div<{ $isActive: boolean }>`
   a {
     text-decoration: none;
   }
@@ -28,19 +28,20 @@ const NavItem = styled.div<{ isActive: boolean }>`
   padding: 0px 15px;
   height: 30px;
 
-  ${({ isActive }) =>
-    isActive &&
+  ${({ $isActive }) =>
+    $isActive &&
     css`
       border-radius: 100px;
       background: var(--white, #fff);
       box-shadow: 2px 2px 8px 0px rgba(124, 131, 137, 0.3);
     `}
 `
-const StyledLink = styled(Link)<{ isActive: boolean }>`
+
+const StyledLink = styled(Link)<{ $isActive: boolean }>`
   white-space: nowrap;
 
-  ${({ isActive }) =>
-    !isActive &&
+  ${({ $isActive }) =>
+    !$isActive &&
     css`
       color: var(--grey7, #959ca4);
       text-align: center;
@@ -52,8 +53,8 @@ const StyledLink = styled(Link)<{ isActive: boolean }>`
       line-height: 160%; /* 19.2px */
     `}
 
-  ${({ isActive }) =>
-    isActive &&
+  ${({ $isActive }) =>
+    $isActive &&
     css`
       color: var(--grey11, #36393c);
       text-align: center;
