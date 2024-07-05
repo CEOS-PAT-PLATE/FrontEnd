@@ -30,6 +30,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0 auto;
   }
 
+
 * {
   box-sizing: border-box;
 }
