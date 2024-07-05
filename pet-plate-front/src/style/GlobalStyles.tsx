@@ -40,6 +40,11 @@ button{
   cursor: pointer;
   padding: 0;
 }
+
+h2{
+  font-size: 1rem;
+  font-weight: 400;
+}
   
 `
 
