@@ -18,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     background-color: ${(props) => props.theme.colors['grey1']}; // body 배경색 설정
     width: 360px;
-    height: 753px;
+    height: 756px;
     margin: auto;
     padding-top:44px;
     position: relative;
