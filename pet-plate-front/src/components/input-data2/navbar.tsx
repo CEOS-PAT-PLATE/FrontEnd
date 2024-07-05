@@ -26,7 +26,7 @@ export default function Navbar() {
 
 const NavContainer = styled.ul`
   position: relative; /* 절대적인 위치를 고정 */
-  top: 44px; /* 화면 상단에 고정 */
+  top: 72px; /* 화면 상단에 고정 */
   left: 17px; /* 좌측 정렬 */
 
   display: flex;

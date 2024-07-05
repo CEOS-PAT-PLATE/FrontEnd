@@ -47,6 +47,7 @@ export default function StoreButton() {
       src={isValid ? StoreButtonActive : StoreButtonInactive}
       alt="store-button"
       onClick={handleClick}
+      priority // 이미지 로드 우선순위 지정
     />
   );
 }

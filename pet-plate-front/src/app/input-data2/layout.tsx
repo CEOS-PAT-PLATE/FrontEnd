@@ -8,6 +8,7 @@ import ExitButton from '@public/svg/exit-button.svg?url';
 //import StoreButtonActive from '@public/svg/store-button-inactive.svg?url';
 
 
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Wrapper>
@@ -18,6 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <ExitButtonImage src={ExitButton} alt="exit-button" />
         <Content>{children}</Content>
       </GridContainer>
+      <StoreButton/>
     </Wrapper>
   );
 }
@@ -40,13 +42,15 @@ const NavbarContainer = styled.div`
 const ExitButtonImage = styled(Image)`
   grid-area: exit-button; /* 이미지를 exit-button 영역에 배치 */
   position: relative; /* 절대적인 위치를 고정 */
-  top: 44px; /* 화면 상단에 고정 */
+  top: 72px; /* 화면 상단에 고정 */
   left: -3px; /* 좌측 정렬 */
 `;
 
 const Content = styled.div`
   grid-area: content; /* Content를 content 영역에 배치 */
-  padding: 20px; /* 내용 여백 설정 */
+  position: absolute; /* 절대적인 위치를 고정 */
+  top: 138px; /* 화면 상단에 고정 */
+  left:24px;
 `;
 
 const Wrapper = styled.div`
