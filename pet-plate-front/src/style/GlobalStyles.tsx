@@ -20,6 +20,7 @@ const GlobalStyles = createGlobalStyle`
     width: 360px;
     height: 753px;
     margin: auto;
+    padding-top:44px;
     position: relative;
 
     
