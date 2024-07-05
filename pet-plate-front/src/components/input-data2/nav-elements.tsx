@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Option } from '../../lib/types'
+import { Option } from '@lib/types'
 import styled, { css } from 'styled-components'
 
 interface NavElementsProps {
