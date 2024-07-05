@@ -1,6 +1,6 @@
 'use client';
 import NavElements from '@components/input-data2/nav-elements';
-import { Option } from '@app/lib/types';
+import { Option } from '@lib/types';
 import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
 

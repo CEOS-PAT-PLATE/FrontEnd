@@ -1,8 +1,12 @@
 'use client';
 import Image from 'next/image';
 import Navbar from '@components/input-data2/navbar';
+import StoreButton from '@components/input-data2/store-button';
 import styled from 'styled-components';
 import ExitButton from '@public/svg/exit-button.svg?url';
+//import StoreButtonInactive from '@public/svg/store-button-inactive.svg?url';
+//import StoreButtonActive from '@public/svg/store-button-inactive.svg?url';
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -25,7 +29,8 @@ const GridContainer = styled.div`
   align-items: center;
   grid-template-areas:
     'navbar navbar exit-button'
-    'content content content'; /* grid-area 이름 설정 */
+    'content content content' /* grid-area 이름 설정 */
+    'store-button  store-button  store-button';
 `;
 
 const NavbarContainer = styled.div`
@@ -49,3 +54,4 @@ const Wrapper = styled.div`
   width: 360px;
   height: 800px;
 `;
+

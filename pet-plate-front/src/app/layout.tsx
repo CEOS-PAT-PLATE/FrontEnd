@@ -1,5 +1,9 @@
+'use client';
+
 import StyledComponentsRegistry from '@lib/registry';
 import ClientComponentContainer from '@components/ClientComponentContainer';
+import { RecoilRoot } from 'recoil';
+import RecoilRootWrapper from '@lib/recoilwrapper';
 
 import type { Viewport } from 'next';
 
@@ -14,7 +18,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html>
       <body>
-        <ClientComponentContainer>{children}</ClientComponentContainer>
+        <RecoilRootWrapper>
+          <ClientComponentContainer>{children}</ClientComponentContainer>
+        </RecoilRootWrapper>
       </body>
     </html>
   );
