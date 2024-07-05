@@ -1,6 +1,6 @@
 'use client';
 import NavElements from '@components/input-data2/nav-elements';
-import { Option } from '@lib/types';
+import { Option } from '@app/lib/types';
 import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
 
@@ -26,7 +26,7 @@ export default function Navbar() {
 
 const NavContainer = styled.ul`
   position: relative; /* 절대적인 위치를 고정 */
-  top: 14px; /* 화면 상단에 고정 */
+  top: 44px; /* 화면 상단에 고정 */
   left: 17px; /* 좌측 정렬 */
 
   display: flex;
