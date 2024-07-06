@@ -1,12 +1,10 @@
 'use client';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { searchQueryState, rawFoodsState, consumedRawsState, isValidState } from '@lib/atoms';
+import { searchQueryState, rawFoodsState, consumedRawsState, isValidState, isServing } from '@lib/atoms';
 import styled from 'styled-components';
 import UnifiedCard from '@components/input-data2/unified-card';
-import { useState,useEffect } from 'react';
-import { isServing } from '@lib/atoms';
-
+import { useState, useEffect } from 'react';
 
 export default function Table() {
   const searchQuery = useRecoilValue(searchQueryState);
@@ -18,8 +16,6 @@ export default function Table() {
   const [serving, setServing] = useState('');
   const setIsServing = useSetRecoilState(isServing);
 
-
-
   const filteredRawFoods = searchQuery ? rawFoods.filter((food) => food.name.includes(searchQuery)).slice(0, 5) : [];
   const recentConsumedRaws = !searchQuery ? consumedRaws.slice(0, 5) : [];
   const fontWeight1 = '400';
@@ -29,23 +25,27 @@ export default function Table() {
   const isRecent = recentConsumedRaws.some(consumed => consumed.rawId === clickedId);
   const selectedFood = filteredRawFoods.find(food => food.name === clickedId);
 
-
   useEffect(() => {
     setIsValid(isStoreValid());
   }, [clickedId, serving, isRecent, setIsValid]);
 
-
-
   function handleClick(id: string) {
-    setClickedId(id);
-    setSomeClicked(true);
-    setIsServing(true);
+    if (clickedId === id) {
+      setClickedId(null);
+      setSomeClicked(false);
+      setServing('');
+      setIsServing(false);
+    } else {
+      setClickedId(id);
+      setSomeClicked(true);
+      setIsServing(true);
+    }
   }
 
   function isStoreValid(): boolean {
     if (!clickedId) return false;
-  if (isRecent) return true;
-   if(selectedFood&&serving!=='')return true;
+    if (isRecent) return true;
+    if (selectedFood && serving !== '') return true;
     return false;
   }
 
@@ -86,19 +86,18 @@ export default function Table() {
             ))}
           </RecentContainer>
         )}
-           {!isRecent && someClicked && (
-        <ServingWrapper>
-        <ServingText>섭취량</ServingText>
-        <ServingInput
-          type="text"
-          onChange={(e) => setServing(e.target.value)}
-          placeholder=" "
-        />
-</ServingWrapper>
-        
-      )}
+        {!isRecent && someClicked && (
+          <ServingWrapper>
+            <ServingText>섭취량</ServingText>
+            <ServingInput
+              type="text"
+              value={serving}
+              onChange={(e) => setServing(e.target.value)}
+              placeholder=" "
+            />
+          </ServingWrapper>
+        )}
       </TableContainer>
-
     </div>
   );
 }
@@ -138,40 +137,35 @@ const StoreButton = styled.button`
 `;
 
 const ServingInput = styled.input`
- display: flex;
-width: 152px;
-height: 40px;
-padding: 8px 12px;
-flex-direction: column;
-align-items: flex-start;
-flex-shrink: 0;
-border-radius: 8px;
-border: 1px solid var(--grey2, #ECEEF0);
-background: var(--white, #FFF);
-margin-left:118px;
+  display: flex;
+  width: 152px;
+  height: 40px;
+  padding: 8px 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid var(--grey2, #ECEEF0);
+  background: var(--white, #FFF);
+  margin-left: 118px;
 
- &:focus {
+  &:focus {
     border: 1px solid var(--primary, #40C97F); /* 포커스 시 초록색 테두리 */
     outline: none; /* 기본 포커스 스타일 제거 */
   }
 `;
 
-const ServingText=styled.div`
-color: var(--grey11, #36393C);
-
-/* title2_bold_16pt */
-font-family: SUIT;
-font-size: 16px;
-font-style: normal;
-font-weight: 700;
-line-height: 160%; /* 25.6px */
-margin-top:4px;
-
-
-
+const ServingText = styled.div`
+  color: var(--grey11, #36393C);
+  /* title2_bold_16pt */
+  font-family: SUIT;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 160%; /* 25.6px */
+  margin-top: 4px;
 `;
 
-const ServingWrapper=styled.div`    
-display: flex;
-
+const ServingWrapper = styled.div`    
+  display: flex;
 `;
