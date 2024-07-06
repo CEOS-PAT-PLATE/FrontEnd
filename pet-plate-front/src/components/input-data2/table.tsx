@@ -55,18 +55,21 @@ const Card = styled.div`
 
 const RecentContainer = styled.div`
   display: flex;
-  gap: 16px;
-  padding: 10px 0;
-  white-space: nowrap;
+  padding: 10px 14px;
+  width: 335px;
+  overflow-x: scroll;
+    gap: 10px;
+
+
+
 `;
 
 const RecentCard = styled.div`
   display: inline-block;
-  width: 136px;
+    min-width: 136px;/* overflow scroll때문에 넓이 136px 보다 작아지는 문제 해결 */
   padding: 10px 14px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
   border-radius: 8px;
   border: 1px solid var(--grey2, #eceef0);
   background: var(--white, #fff);
@@ -77,4 +80,13 @@ const RecentCard = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 160%; /* 25.6px */
+  gap: 8px;
+  &:first-child {
+    margin-left: -14px; /* 첫 번째 카드의 왼쪽 여백 제거 - 슬라이딩 했을때 
+    안했을 때 위치 동일하도록*/
+  }
+
+  &:not(:first-child) {
+    margin-left: 10px; /* 첫 번째 카드를 제외한 모든 카드의 왼쪽 여백 설정 */
+  }
 `;
