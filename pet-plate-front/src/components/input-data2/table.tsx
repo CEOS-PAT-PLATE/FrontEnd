@@ -5,11 +5,14 @@ import { searchQueryState, rawFoodsState, consumedRawsState } from '@lib/atoms';
 import styled from 'styled-components';
 import Card from '@components/input-data2/card';
 import RecentCard from '@components/input-data2/recent-card';
+import { useState } from 'react';
 
 export default function Table() {
   const searchQuery = useRecoilValue(searchQueryState);
   const rawFoods = useRecoilValue(rawFoodsState);
   const consumedRaws = useRecoilValue(consumedRawsState);
+  const [clickedId, setClickedId] = useState<string | null>(null);
+  const [someClicked, setSomeClicked] = useState(false);
 
   const filteredRawFoods = searchQuery ? rawFoods.filter((food) => food.name.includes(searchQuery)).slice(0, 5) : [];
   const recentConsumedRaws = !searchQuery ? consumedRaws.slice(0, 5) : [];
@@ -18,9 +21,9 @@ export default function Table() {
   const lineHeight1 = '160%';
   const lineHeight2 = '130%';
 
-  function handleClick(food: string) {
-    alert(`${food}을(를) 선택했습니다.`);
-    return;
+  function handleClick(id: string) {
+    setClickedId(id);
+    setSomeClicked(true);
   }
 
   return (
@@ -35,7 +38,9 @@ export default function Table() {
             titleLineHeight={lineHeight1}
             descriptionFontWeight={fontWeight1}
             descriptionLineHeight={lineHeight2}
+            isClicked={clickedId === food.name}
             onClick={() => handleClick(food.name)}
+            someClicked={someClicked}
           />
         ))
       ) : (
@@ -49,7 +54,9 @@ export default function Table() {
               titleLineHeight={lineHeight1}
               descriptionFontWeight={fontWeight1}
               descriptionLineHeight={lineHeight1}
+              isClicked={clickedId === consumed.rawId}
               onClick={() => handleClick(consumed.rawId)}
+              someClicked={someClicked}
             />
           ))}
         </RecentContainer>

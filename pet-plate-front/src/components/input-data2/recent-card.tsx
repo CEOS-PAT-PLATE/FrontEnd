@@ -1,15 +1,8 @@
 import styled, { css } from 'styled-components';
 import { Description, Title } from '@style/input-data2/TextStyle';
+import { CardProps } from '@lib/types'
 
-interface RecentCardProps {
-  title: string;
-  description: string;
-  titleFontWeight: string;
-  titleLineHeight: string;
-  descriptionFontWeight: string;
-  descriptionLineHeight: string;
-  onClick?: () => void;
-}
+
 
 export default function RecentCard({
   title,
@@ -18,10 +11,12 @@ export default function RecentCard({
   titleLineHeight,
   descriptionFontWeight,
   descriptionLineHeight,
+  isClicked,
+  someClicked,
   onClick
-}: RecentCardProps) {
+}: CardProps) {
   return (
-    <RecentCardContainer onClick={onClick}>
+    <RecentCardContainer onClick={onClick} $isClicked={isClicked} $someClicked={someClicked}>
       <Title $fontWeight={titleFontWeight} $lineHeight={titleLineHeight}>
         {title}
       </Title>
@@ -32,15 +27,13 @@ export default function RecentCard({
   );
 }
 
-const RecentCardContainer = styled.div`
+const RecentCardContainer = styled.div<{ $isClicked: boolean, $someClicked:boolean }>`
   display: inline-block;
   min-width: 136px; /* overflow scroll때문에 넓이 136px 보다 작아지는 문제 해결 */
   padding: 10px 14px;
   flex-direction: column;
   align-items: flex-start;
-  border-radius: 8px;
-  border: 1px solid var(--grey2, #eceef0);
-  background: var(--white, #fff);
+
   color: var(--grey11, #36393c);
   font-family: SUIT;
   font-size: 16px;
@@ -54,6 +47,34 @@ const RecentCardContainer = styled.div`
   &:not(:first-child) {
     margin-left: 10px; /* 첫 번째 카드를 제외한 모든 카드의 왼쪽 여백 설정 */
   }
+          border-radius: 8px;
+
+    ${({ $someClicked, $isClicked }) =>
+    $someClicked && !$isClicked &&
+    css`
+      display: none;
+    `}
+
+  ${({ $isClicked }) =>
+    $isClicked &&
+    css`
+      border: 1px solid var(--primary, #40C97F);
+      background: var(--50, #ECFAF2);
+
+
+
+
+
+    `}
+
+
+  ${({ $isClicked }) =>
+    !$isClicked &&
+    css`
+      border: 1px solid var(--grey2, #eceef0);
+      background: var(--white, #fff);
+    `}
+
 `;
 
 interface TextProps {

@@ -6,6 +6,19 @@ export type Option = {
 };
 
 
+export interface CardProps {
+  title: string;
+  description: string;
+  titleFontWeight: string;
+  titleLineHeight: string;
+  descriptionFontWeight: string;
+  descriptionLineHeight: string;
+  isClicked: boolean;
+  someClicked: boolean;
+  onClick?: () => void;
+}
+
+
 // 자연식 데이터
 export interface RawFood {
 id: number

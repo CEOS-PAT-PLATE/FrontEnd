@@ -1,16 +1,8 @@
 import styled, { css } from 'styled-components';
 import { Description, Title } from '@style/input-data2/TextStyle';
+import { CardProps } from '@lib/types'
 
-interface CardProps {
-  title: string;
-  description: string;
-  titleFontWeight: string;
-  titleLineHeight: string;
-  descriptionFontWeight: string;
-  descriptionLineHeight: string;
-  onClick?: () => void;
 
-}
 
 export default function Card({
   title,
@@ -19,11 +11,12 @@ export default function Card({
   titleLineHeight,
   descriptionFontWeight,
   descriptionLineHeight,
+  isClicked,
+  someClicked,
   onClick
-
 }: CardProps) {
   return (
-    <CardContainer  onClick={onClick}>
+    <CardContainer  onClick={onClick} $isClicked={isClicked} $someClicked={someClicked}>
       <Title $fontWeight={titleFontWeight} $lineHeight={titleLineHeight}>
         {title}
       </Title>
@@ -34,7 +27,7 @@ export default function Card({
   );
 }
 
-const CardContainer = styled.div`
+const CardContainer = styled.div<{ $isClicked: boolean, $someClicked:boolean }>`
   display: flex;
   width: 312px;
   padding: 10px 14px;
@@ -44,4 +37,31 @@ const CardContainer = styled.div`
   border-radius: 8px;
   border: 1px solid var(--grey2, #eceef0);
   background: var(--white, #fff);
+
+    ${({ $someClicked, $isClicked }) =>
+    $someClicked && !$isClicked &&
+    css`
+      display: none;
+    `}
+
+  ${({ $isClicked }) =>
+    $isClicked &&
+    css`
+      border: 1px solid var(--primary, #40C97F);
+      background: var(--50, #ECFAF2);
+
+
+
+
+
+    `}
+
+
+  ${({ $isClicked }) =>
+    !$isClicked &&
+    css`
+      border: 1px solid var(--grey2, #eceef0);
+      background: var(--white, #fff);
+    `}
+
 `;
