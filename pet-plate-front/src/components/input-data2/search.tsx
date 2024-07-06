@@ -3,8 +3,6 @@
 import { useRecoilState } from 'recoil';
 import { searchQueryState } from '@lib/atoms';
 import styled from 'styled-components';
-import SearchbarDefault from '@public/svg/searchbar-default.svg?url';
-import SearchbarSearching from '@public/svg/searchbar-searching.svg?url';
 import SearchbarResetButton from '@public/svg/searchbar-resetbutton.svg?url';
 import SearchbarIcon from '@public/svg/searchbar-searchicon.svg?url';
 import Image from 'next/image';
@@ -28,7 +26,7 @@ export default function Search() {
           type="text"
           value={searchQuery}
           onChange={handleChange}
-          searchQuery={searchQuery} // searchQuery를 props로 전달
+          $searchQuery={searchQuery} // $ 접두사를 사용하여 props 전달
         />
         {searchQuery && <ResetButton src={SearchbarResetButton} alt="Reset Icon" onClick={handleReset} priority />}
       </SearchInputWrapper>
@@ -50,7 +48,7 @@ const SearchInputWrapper = styled.div`
   width: 100%;
 `;
 
-const SearchInput = styled.input<{ searchQuery: string }>`
+const SearchInput = styled.input<{ $searchQuery: string }>`
   display: flex;
   width: 312px;
   padding-left: 48px;
@@ -59,7 +57,7 @@ const SearchInput = styled.input<{ searchQuery: string }>`
   padding-bottom: 12px;
   align-items: center;
   border-radius: 8px;
-  border: ${(props) => (props.searchQuery ? '1px solid var(--grey10, #4F5357)' : '1px solid var(--grey2, #ECEEF0)')};
+  border: ${(props) => (props.$searchQuery ? '1px solid var(--grey10, #4F5357)' : '1px solid var(--grey2, #ECEEF0)')};
   background: var(--white, #fff);
   box-sizing: border-box;
   outline: none; /* 포커스 스타일 제거 */

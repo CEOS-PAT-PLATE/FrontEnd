@@ -2,7 +2,7 @@
 
 import { useRecoilValue } from 'recoil';
 import { searchQueryState, rawFoodsState, consumedRawsState } from '@lib/atoms';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export default function Table() {
   const searchQuery = useRecoilValue(searchQueryState);
@@ -11,22 +11,26 @@ export default function Table() {
 
   const filteredRawFoods = searchQuery ? rawFoods.filter((food) => food.name.includes(searchQuery)).slice(0, 5) : [];
   const recentConsumedRaws = !searchQuery ? consumedRaws.slice(0,5) : [];
+  const fontWeight1 = '400';
+  const fontWeight2 = '700';
+  const lineHeight1 = '160%';
+  const lineHeight2 = '130%';
 
   return (
-    <TableContainer searchQuery={searchQuery}>
+    <TableContainer $searchQuery={searchQuery}>
       {searchQuery
         ? filteredRawFoods.map((food) => (
             <Card key={food.id}>
-              <Title fontweight='700' lineHeight="160%">{food.name}</Title>
-              <Description fontweight='400' lineHeight="130%">{food.description}</Description>
+              <Title $fontWeight={fontWeight2} $lineHeight={lineHeight1}>{food.name}</Title>
+              <Description $fontWeight={fontWeight1} $lineHeight={lineHeight2}>{food.description}</Description>
             </Card>
           ))
         : (
           <RecentContainer>
             {recentConsumedRaws.map((consumed) => (
               <RecentCard key={consumed.rawId}>
-                <Title fontweight='400'  lineHeight="160%">{consumed.rawId}</Title>
-                <Description  fontweight='400'  lineHeight="160%">{consumed.serving}g</Description>
+                <Title $fontWeight={fontWeight1} $lineHeight={lineHeight1}>{consumed.rawId}</Title>
+                <Description $fontWeight={fontWeight1} $lineHeight={lineHeight1}>{consumed.serving}g</Description>
               </RecentCard>
             ))}
           </RecentContainer>
@@ -35,14 +39,15 @@ export default function Table() {
   );
 }
 
-const TableContainer = styled.div<{ searchQuery: string }>`
+
+const TableContainer = styled.div<{ $searchQuery: string }>`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   gap: 16px;
   overflow-y: scroll;
   height: 320px;
-  margin-top: ${(props) => (props.searchQuery ? '45px' : '0px')}; /* 검색어가 있을 때만 margin-top 추가 */
+  margin-top: ${(props) => (props.$searchQuery ? '45px' : '0px')}; /* 검색어가 있을 때만 margin-top 추가 */
 `;
 
 const Card = styled.div`
@@ -89,22 +94,31 @@ const RecentCard = styled.div`
   }
 `;
 
-const Title = styled.h3<{ lineHeight: string,fontweight:string }>`
+interface TextProps {
+  $lineHeight: string;
+  $fontWeight: string;
+}
+
+const Title = styled.h3<TextProps>`
   color: var(--grey11, #36393c);
   font-family: SUIT;
   font-size: 16px;
   font-style: normal;
-  font-weight:  ${(props) => props.fontweight};
-  line-height: ${(props) => props.lineHeight}; /* props로 전달받은 line-height 사용 */
+  ${(props) => css`
+    font-weight: ${props.$fontWeight};
+    line-height: ${props.$lineHeight};
+  `}
   margin: 0;
 `;
 
-const Description = styled.p<{ lineHeight: string,fontweight:string }>`
+const Description = styled.p<TextProps>`
   color: var(--grey8, #7c8389);
   font-family: SUIT;
   font-size: 16px;
   font-style: normal;
-  font-weight: 400;
-  line-height: ${(props) => props.lineHeight}; /* props로 전달받은 line-height 사용 */
+  ${(props) => css`
+    font-weight: ${props.$fontWeight};
+    line-height: ${props.$lineHeight};
+  `}
   margin: 0;
 `;
