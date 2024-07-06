@@ -37,15 +37,19 @@ export default function Table() {
 
 const TableContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  flex-wrap: nowrap;
   gap: 16px;
+    overflow-y: scroll;
+    height:320px;
+
 `;
 
 const Card = styled.div`
   display: flex;
   width: 312px;
   padding: 10px 14px;
-  flex-direction: column;
+  flex-direction: column; /*카드 내부 텍스트를 세로로 배치 */
   align-items: flex-start;
   gap: 8px;
   border-radius: 8px;
