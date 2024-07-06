@@ -43,4 +43,5 @@ const Description = styled.p`
   line-height: 160%; /* 22.4px */
 `;
 
+
 export default InfoLayout;
