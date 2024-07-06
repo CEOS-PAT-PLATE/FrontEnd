@@ -2,7 +2,7 @@ import Search from '@components/input-data2/search';
 import Table from '@components/input-data2/table';
 import InfoLayout from '@components/input-data2/info-layout';
 
-export default function Page() {
+export default async function Page() {
   return (
     <>
       <InfoLayout
