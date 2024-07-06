@@ -54,8 +54,8 @@ export default function StoreButton() {
 
 const StoreButtonImage = styled(Image)`
   grid-area: store-button; /* 이미지를 exit-button 영역에 배치 */
-  position: absolute; /* 절대적인 위치를 고정 */
+  position: relative; /* 절대적인 위치를 고정 */
   width: 312px;
-  bottom: 36px;
   left: 24px;
+top:707px;
 `;

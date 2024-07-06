@@ -10,7 +10,7 @@ export default function Table() {
   const consumedRaws = useRecoilValue(consumedRawsState);
 
   const filteredRawFoods = searchQuery ? rawFoods.filter((food) => food.name.includes(searchQuery)).slice(0, 5) : [];
-  const recentConsumedRaws = !searchQuery ? consumedRaws.slice(0,2) : [];
+  const recentConsumedRaws = !searchQuery ? consumedRaws.slice(0,5) : [];
 
   return (
     <TableContainer>

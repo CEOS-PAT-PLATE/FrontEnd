@@ -11,6 +11,7 @@ import Wrapper from '@style/input-data2/Wrapper';
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   return (
+    <>
     <Wrapper>
       <GridContainer>
         <NavbarContainer>
@@ -19,8 +20,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
         <ExitButtonImage src={ExitButton} alt="exit-button" />
         <Content>{children}</Content>
       </GridContainer>
-      <StoreButton/>
     </Wrapper>
+    <StoreButton/>
+          
+</>
   );
 }
 
