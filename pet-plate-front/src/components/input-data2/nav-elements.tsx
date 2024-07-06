@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { Option } from '@lib/types'
 import styled, { css } from 'styled-components'
+import { searchQueryState, isValidState,isServing } from '@lib/atoms';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 interface NavElementsProps {
   option: Option
@@ -8,9 +10,20 @@ interface NavElementsProps {
 }
 
 export default function NavElements({ option, isActive }: NavElementsProps) {
+
+  const resetSearchQuery = useResetRecoilState(searchQueryState);
+  const resetIsValid = useResetRecoilState(isValidState);
+  const resetIsServing= useResetRecoilState(isServing);
+
+  function resetGlobalState() { // 전역 상태 초기화 함수
+    resetSearchQuery();
+    resetIsValid();
+    resetIsServing();
+  }
+
   return (
     <NavItem $isActive={isActive}>
-      <StyledLink href={`/${option.link}`} $isActive={isActive}>
+      <StyledLink href={`/${option.link}`} $isActive={isActive} onClick={resetGlobalState}>
         {option.name}
       </StyledLink>
     </NavItem>

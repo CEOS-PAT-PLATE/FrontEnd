@@ -6,6 +6,12 @@ export const isValidState = atom({
   default: false,
 });
 
+
+export const isServing = atom({
+    key: 'isServing',
+    default: false,
+  });
+
 export const searchQueryState = atom<string>({
   key: 'searchQueryState',
   default: '',

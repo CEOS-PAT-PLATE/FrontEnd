@@ -4,6 +4,8 @@ import { Option } from '@lib/types';
 import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
 
+
+
 export const optionList: Option[] = [
   { name: '자연식', link: 'input-data2/natural-food' },
   { name: '사료', link: 'input-data2/dry-food' },
@@ -12,6 +14,8 @@ export const optionList: Option[] = [
 ];
 
 export default function Navbar() {
+
+
   const pathName = usePathname();
   return (
     <div>
