@@ -1,21 +1,17 @@
 
-import Navbar from '@components/input-data2/navbar';
-import StoreButton from '@components/input-data2/store-button';
 import AddButton from '@components/input-data2/addplate-button';
-import GridContainer from '@style/input-data2/GridContainer';
-import NavbarContainer from '@style/input-data2/NavbarContainer';
-import ExitButtonImage from '@style/input-data2//ExitButtonImage';
-import Content from '@style/input-data2//Content';
-import BackgroundWrapper from '@style/input-data2/201Backgrund'; 
+import id_201 from '@public/svg/id_201.svg?url';
+import Image from 'next/image';
 
 
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <BackgroundWrapper>
-    {children}
+       
+    <>
+    <Image src={id_201} alt='id-201' />
     <AddButton/>
-</BackgroundWrapper>
+    </>
   );
 }
 
