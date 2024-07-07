@@ -2,10 +2,16 @@
 import React, { useRef, useState } from 'react';
 import styled from "styled-components"
 import NextButton from "@components/input-data1/nextButton"
+import ageContent from '@components/input-data1/pageContents/ageContent';
+import nameContent from '@components/input-data1/pageContents/nameContent';
+import weightContent from '@components/input-data1/pageContents/weightContent';
+import activenessContent from '@components/input-data1/pageContents/activenessContent';
+import neuteringSurgeryContent from '@components/input-data1/pageContents/neuteringSurgeryContent';
 
 export default function Page() {
   const divRefs = useRef<HTMLDivElement[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const contentLists = [nameContent,ageContent, weightContent, activenessContent, neuteringSurgeryContent];
 
   const handleScroll = () => {
     if (currentIndex < divRefs.current.length - 1) {
@@ -22,19 +28,20 @@ export default function Page() {
   return (
     <PageContainer>
       <ScrollableContainer>
-        {[...Array(5)].map((_, index) => (
-          <ScrollableDiv
-            key={index}
-            ref={(el) => {
-              if (el && !divRefs.current.includes(el)) {
-                divRefs.current[index] = el;
-              }
-            }}
-          >
-            This is div number {index + 1}
-          </ScrollableDiv>
-        ))}
+        {contentLists.map((ContentComponent, index) => (
+            <ScrollableDiv
+              key={index}
+              ref={(el) => {
+                if (el && !divRefs.current.includes(el)) {
+                  divRefs.current[index] = el;
+                }
+              }}
+            >
+              <ContentComponent />
+            </ScrollableDiv>
+          ))}
       </ScrollableContainer>
+      
       <FixedButtonContainer>
         <NextButton onClick={handleScroll} />
       </FixedButtonContainer>
@@ -54,10 +61,8 @@ const PageContainer = styled.div`
 const ScrollableContainer = styled.div`
   width: 100%;
   height: 100%;
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  overflow-y: hidden; /* 휠 스크롤 비활성화 */
+  overscroll-behavior-y: none; /* 터치 기반 스크롤 비활성화 */
 `;
 
 const ScrollableDiv = styled.div`
