@@ -1,8 +1,12 @@
 import styled from "styled-components"
 
-export default function nextButton() {
+interface NextButtonProps {
+    onClick: () => void;
+  }
+
+export default function nextButton({ onClick }: NextButtonProps) {
   return (
-    <ButtonContainer>
+    <ButtonContainer onClick={onClick}>
         <span>다음으로</span>
     </ButtonContainer>
   )

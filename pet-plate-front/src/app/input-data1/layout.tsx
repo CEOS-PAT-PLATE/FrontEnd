@@ -2,7 +2,6 @@
 
 import styled from "styled-components"
 import InputDataFirstHeader from "@components/input-data1/inputDataFirstHeader"
-import NextButton from "@components/input-data1/nextButton"
 import Progressbar from "@components/input-data1/progressbar"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -12,7 +11,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <InputDataFirstHeader/>
             <Progressbar/>
             <Contents>{children}</Contents>
-            <NextButton/>
         </Container>
     )
   }
