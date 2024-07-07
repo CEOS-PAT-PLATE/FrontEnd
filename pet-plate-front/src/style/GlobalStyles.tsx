@@ -46,6 +46,12 @@ h2{
   font-size: 1rem;
   font-weight: 400;
 }
+
+h1{
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 160%;
+}
   
 `
 

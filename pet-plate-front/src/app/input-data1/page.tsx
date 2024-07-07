@@ -11,7 +11,7 @@ import neuteringSurgeryContent from '@components/input-data1/pageContents/neuter
 export default function Page() {
   const divRefs = useRef<HTMLDivElement[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const contentLists = [nameContent,ageContent, weightContent, activenessContent, neuteringSurgeryContent];
+  const contentLists = [nameContent, ageContent, weightContent, activenessContent, neuteringSurgeryContent];
 
   const handleScroll = () => {
     if (currentIndex < divRefs.current.length - 1) {
@@ -41,7 +41,7 @@ export default function Page() {
             </ScrollableDiv>
           ))}
       </ScrollableContainer>
-      
+
       <FixedButtonContainer>
         <NextButton onClick={handleScroll} />
       </FixedButtonContainer>
