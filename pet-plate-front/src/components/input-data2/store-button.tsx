@@ -26,31 +26,31 @@ export default function StoreButton() {
       case '/input-data2/dry-food':
         alert('하루 식사에 사료가 저장되었습니다.');
         setIsValid(false);
-        router.push('/input-data2/201', { scroll: false })
+        router.push('/201', { scroll: false })
 
         break;
       case '/input-data2/favorites':
         alert('즐겨찾기에 저장되었습니다.');
         setIsValid(false);
-        router.push('/input-data2/201', { scroll: false })
+        router.push('/201', { scroll: false })
 
         break;
       case '/input-data2/natural-food':
         alert('하루 식사에 자연식이 저장되었습니다.');
         setIsValid(false);
-        router.push('/input-data2/201', { scroll: false })
+        router.push('/201', { scroll: false })
 
         break;
       case '/input-data2/packaged-snacks':
         alert('하루 식사에 포장 간식이 저장되었습니다.');
         setIsValid(false);
-        router.push('/input-data2/201', { scroll: false })
+        router.push('/201', { scroll: false })
 
         break;
       default:
         alert('잘못된 페이지');
         setIsValid(false);
-        router.push('/input-data2/201', { scroll: false })
+        router.push('/201', { scroll: false })
 
     }
 
@@ -72,4 +72,6 @@ const StoreButtonImage = styled(Image)`
   width: 312px;
   left: 24px;
   top: 707px;
+      cursor: pointer;
+
 `;

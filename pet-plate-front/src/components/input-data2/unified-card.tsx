@@ -45,6 +45,8 @@ const CardContainer = styled.div<{ $isClicked: boolean, $someClicked: boolean, $
   font-style: normal;
   font-weight: 400;
   line-height: 160%; /* 25.6px */
+      cursor: pointer;
+
 
   ${({ $isRecent,$isClicked }) => 
     $isRecent &&!$isClicked &&
