@@ -58,6 +58,6 @@ const InputFieldWrapper = styled.div`
     span{
         font-size: 1rem;
         font-weight: bold;
-        color: #4F5357; //grey10
+        color: ${(props) => props.theme.colors['grey10']};
     }
 `

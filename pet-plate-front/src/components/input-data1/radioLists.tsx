@@ -19,9 +19,9 @@ export default function radioLists({name, value, text} : radioListProps) {
 const RadioWrapper = styled.div`
     width: 19.5rem;
     height: 3rem;
-    border: solid 0.063rem #BDC5CC; // grey5
+    border: solid 0.063rem ${(props) => props.theme.colors['grey5']};
     border-radius: 0.5rem;
-    background-color: #ECEEF0;
+    background-color: ${(props) => props.theme.colors['grey2']};
 
     display: flex;
     flex-direction: row;
@@ -30,8 +30,8 @@ const RadioWrapper = styled.div`
     gap: 0.5rem;
     margin-bottom: 0.5rem;
     &:hover{
-        border: solid 0.063rem #66D498; // green400
-        background-color: #E6F4EC; // green100
+        border: solid 0.063rem ${(props) => props.theme.colors['green-400']};
+        background-color: ${(props) => props.theme.colors['green-100']};
     }
 
 
@@ -40,11 +40,11 @@ const RadioWrapper = styled.div`
         width: 20px;
         height: 20px;
         margin: 0;
-        border: 0.313rem solid #BDC5CC; //grey5
+        border: 0.313rem solid ${(props) => props.theme.colors['grey5']};
         border-radius: 50%;
 
         &:checked{
-            border: 0.313rem solid #66D498; //green400
+            border: 0.313rem solid ${(props) => props.theme.colors['green-400']};
         }
     }
 
@@ -53,7 +53,7 @@ const RadioWrapper = styled.div`
         height: 1.625rem;
         display: flex;
         align-items: center;
-        color: #7C8389; //grey8
+        color: ${(props) => props.theme.colors['grey8']};
 
         font-size: 1rem;
         font-weight: 400;

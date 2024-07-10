@@ -28,17 +28,17 @@ const InputFileld = styled.input`
     font-size: 1rem;
     font-weight: 400;
     width: ${(props) => props.width};
-    border: solid 0.063rem #BDC5CC; // grey5
+    border: solid 0.063rem ${(props) => props.theme.colors['grey5']};
     border-radius: 0.5rem;
-    color: #36393C; //grey11
+    color:  ${(props) => props.theme.colors['grey11']};
 
     &::placeholder {
-        color: #AFB8C1; //grey6
+        color: ${(props) => props.theme.colors['grey6']};
     }
 
     &:focus{
         outline: none;
-        border-color: #40C97F; //green500
+        border-color: ${(props) => props.theme.colors['green']};
     }
 
 `

@@ -17,7 +17,7 @@ const ButtonContainer = styled.div`
     height: 3.563rem;
     border: none;
     border-radius: 0.5rem;
-    background-color: #ECEEF0; //grey2
+    background-color: ${(props) => props.theme.colors['grey2']};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,12 +25,12 @@ const ButtonContainer = styled.div`
     span{
         font-size: 1.125rem;
         font-weight: 600;
-        color: #BDC5CC; //grey5
+        color: ${(props) => props.theme.colors['grey5']};
     }
 
     //임의 설정 => 실제로는 inputfield 채워졌을 때
     &:hover{
-        background-color: #4F5357; //grey10
+        background-color: ${(props) => props.theme.colors['grey10']};
         
         span{
             color: white;
