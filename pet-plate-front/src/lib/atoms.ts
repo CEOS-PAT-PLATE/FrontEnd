@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { RawFood, ConsumedRaw } from '@lib/types';
+import { RawFood, ConsumedRaw, PetInfo } from '@lib/types';
 
 export const isValidState = atom({
   key: 'isValidState',
@@ -492,4 +492,18 @@ export const consumedRawsState = atom<ConsumedRaw[]>({
   export const scrollIndexState = atom<number>({
     key: 'scrollIndexState',
     default: 0,
+  });
+
+  export const petInfoState = atom<PetInfo[]>({
+    key: 'petInfoState',
+    default: [
+      {
+        petId: 0,
+        name: '김백순', 
+        age: 3,
+        weight: 9,
+        activity: 'ACTIVE',
+        neutering: "NEUTERED"
+      }
+    ],
   });

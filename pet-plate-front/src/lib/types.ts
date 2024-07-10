@@ -67,3 +67,14 @@ rawId: number
 serving: number
 date: string // YYYY-MM-DD 형식
 }
+
+
+//반려견 기본 정보
+export interface PetInfo {
+  petId: number,
+  name: string, 
+  age: number,
+  weight: number,
+  activity: string,
+  neutering: string
+}
