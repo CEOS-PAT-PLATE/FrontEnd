@@ -68,7 +68,6 @@ const ScrollableContainer = styled.div`
 const ScrollableDiv = styled.div`
   width: 100%;
   height: 42rem;
-  background-color: lightblue;
 `;
 
 const FixedButtonContainer = styled.div`

@@ -21,6 +21,7 @@ const RadioWrapper = styled.div`
     height: 3rem;
     border: solid 0.063rem #BDC5CC; // grey5
     border-radius: 0.5rem;
+    background-color: #ECEEF0;
 
     display: flex;
     flex-direction: row;
