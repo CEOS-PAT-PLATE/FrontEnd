@@ -1,5 +1,8 @@
 'use client'
 import styled from 'styled-components';
+import FavoriteIcon from '@components/input-data2/favorite-icon';
+import { usePathname } from 'next/navigation';
+
 
 interface InfoLayoutProps {
   title: string;
@@ -7,11 +10,22 @@ interface InfoLayoutProps {
 }
 
 const InfoLayout = ({ title, description }: InfoLayoutProps) => {
+
+  const pathName = usePathname();
+
   return (
+    <>
     <Container>
       <Title>{title}</Title>
       <Description>{description}</Description>
+      {pathName !== '/input-data2/favorites' && (
+        <FavoriteIconWrapper>
+          <FavoriteIcon />
+        </FavoriteIconWrapper>
+      )}
     </Container>
+ 
+    </>
   );
 };
 
@@ -42,6 +56,15 @@ const Description = styled.p`
   font-weight: 400;
   line-height: 160%; /* 22.4px */
 `;
+
+const FavoriteIconWrapper = styled.div`
+position:absolute;
+left:275px;
+top:8px;
+
+
+`;
+
 
 
 export default InfoLayout;

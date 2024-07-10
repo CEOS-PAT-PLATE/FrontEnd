@@ -26,7 +26,9 @@ export default function FavoriteContainer({ type, name }: Foodlist) {
     <Container>
       <IconImage src={foodIcon?.img || ''} alt={type}/>
      <FavoriteText>{name}</FavoriteText>
-     <FavoriteIcon/>
+     <FavoriteIconWrapper>
+    <FavoriteIcon/>
+    </FavoriteIconWrapper>
     </Container>
   );
 }
@@ -51,6 +53,7 @@ padding: 5px 0px 5px 16px;
   border: 1px solid var(--grey2, #ECEEF0);
   background: var(--white, #FFF);
   margin-bottom:8px;
+  position:relatvie;
 `;
 
 
@@ -70,3 +73,12 @@ line-height: 180%; /* 32.4px */
 letter-spacing: -0.75px;
 left:58px;
     `;
+
+
+const FavoriteIconWrapper = styled.div`
+position:absolute;
+left:275px;
+top:14px;
+ left:264px;
+
+`;
