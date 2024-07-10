@@ -21,8 +21,7 @@ const GlobalStyles = createGlobalStyle`
 
   ${reset}
 
-  html,
-  body {
+  html,body {
     /* width:100%;
     height: 100vh; */
     width: 360px;

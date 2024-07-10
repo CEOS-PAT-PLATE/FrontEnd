@@ -486,3 +486,10 @@ export const consumedRawsState = atom<ConsumedRaw[]>({
       { petId: 3, rawId: '당근', serving: 110, date: '2023-07-03' },
     ],
   });
+
+
+  //input-data1
+  export const scrollIndexState = atom<number>({
+    key: 'scrollIndexState',
+    default: 0,
+  });

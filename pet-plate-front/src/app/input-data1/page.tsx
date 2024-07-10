@@ -1,6 +1,11 @@
 'use client'
-import React, { useRef, useState } from 'react';
+
+import React, { useRef } from 'react';
+import { scrollIndexState } from '@lib/atoms';
+import { useRecoilState } from 'recoil';
 import styled from "styled-components"
+import InputDataFirstHeader from "@components/input-data1/inputDataFirstHeader"
+import Progressbar from "@components/input-data1/progressbar"
 import NextButton from "@components/input-data1/nextButton"
 import ageContent from '@components/input-data1/pageContents/ageContent';
 import nameContent from '@components/input-data1/pageContents/nameContent';
@@ -10,10 +15,21 @@ import neuteringSurgeryContent from '@components/input-data1/pageContents/neuter
 
 export default function Page() {
   const divRefs = useRef<HTMLDivElement[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const contentLists = [nameContent, ageContent, weightContent, activenessContent, neuteringSurgeryContent];
+  const [currentIndex, setCurrentIndex] = useRecoilState(scrollIndexState);
 
-  const handleScroll = () => {
+  const handleScrollUp = () => {
+    if (currentIndex > 0) {
+      const prevIndex = currentIndex - 1;
+      const prevDiv = divRefs.current[prevIndex];
+
+      if (prevDiv) {
+        prevDiv.scrollIntoView({ behavior: 'smooth' });
+        setCurrentIndex(prevIndex);
+      }
+    }
+  };
+
+  const handleScrollDown = () => {
     if (currentIndex < divRefs.current.length - 1) {
       const nextIndex = currentIndex + 1;
       const nextDiv = divRefs.current[nextIndex];
@@ -25,27 +41,33 @@ export default function Page() {
     }
   };
 
+  const contentLists = [nameContent, ageContent, weightContent, activenessContent, neuteringSurgeryContent];
+
   return (
+    <>
+    <InputDataFirstHeader onClickBackButton = {handleScrollUp}/>
+    <Progressbar/>
     <PageContainer>
       <ScrollableContainer>
         {contentLists.map((ContentComponent, index) => (
-            <ScrollableDiv
-              key={index}
-              ref={(el) => {
-                if (el && !divRefs.current.includes(el)) {
-                  divRefs.current[index] = el;
-                }
-              }}
-            >
-              <ContentComponent />
-            </ScrollableDiv>
-          ))}
+          <ScrollableDiv
+            key={index}
+            ref={(el) => {
+              if (el && !divRefs.current.includes(el)) {
+                divRefs.current[index] = el;
+              }
+            }}
+          >
+            <ContentComponent />
+          </ScrollableDiv>
+        ))}
       </ScrollableContainer>
 
       <FixedButtonContainer>
-        <NextButton onClick={handleScroll} />
+        <NextButton onClick={handleScrollDown} />
       </FixedButtonContainer>
     </PageContainer>
+    </>
   );
 }
 

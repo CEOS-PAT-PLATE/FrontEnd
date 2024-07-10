@@ -1,15 +1,12 @@
 'use client'
 
 import styled from "styled-components"
-import InputDataFirstHeader from "@components/input-data1/inputDataFirstHeader"
-import Progressbar from "@components/input-data1/progressbar"
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <Container>
             <Padding></Padding> 
-            <InputDataFirstHeader/>
-            <Progressbar/>
             <Contents>{children}</Contents>
         </Container>
     )
