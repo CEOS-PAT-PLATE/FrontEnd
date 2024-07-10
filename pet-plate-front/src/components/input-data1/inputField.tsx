@@ -28,8 +28,8 @@ const InputFileld = styled.input`
     font-size: 1rem;
     font-weight: 400;
     width: ${(props) => props.width};
-    border: solid 0.1px #BDC5CC; // 피그마에 명시 안되어있음, grey5
-    border-radius: 0.6rem;
+    border: solid 0.063rem #BDC5CC; // grey5
+    border-radius: 0.5rem;
     color: #36393C; //grey11
 
     &::placeholder {
