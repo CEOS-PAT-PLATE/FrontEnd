@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import reset from "styled-reset";
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
 
 const GlobalStyles = createGlobalStyle`
 
@@ -28,6 +28,7 @@ const GlobalStyles = createGlobalStyle`
     width: 360px;
     height: 800px;
     margin: 0 auto;
+    font-family: 'SUIT', sans-serif;
   }
 
 
@@ -53,6 +54,12 @@ h1{
   line-height: 160%;
 }
   
-`
+::-webkit-scrollbar {
+  width: 0px;
+    height: 0px;
 
-export default GlobalStyles
+}
+  
+`;
+
+export default GlobalStyles;
