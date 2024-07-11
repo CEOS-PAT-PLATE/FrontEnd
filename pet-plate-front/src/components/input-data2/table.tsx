@@ -5,8 +5,24 @@ import { searchQueryState, rawFoodsState, consumedRawsState, isValidState, isSer
 import styled from 'styled-components';
 import UnifiedCard from '@components/input-data2/unified-card';
 import { useState, useEffect } from 'react';
+import { useQuery } from "@tanstack/react-query";
+import {fetchNaturalFoodLists} from "@api/requests";
+
+
 
 export default function Table() {
+
+
+ // This useQuery could just as well happen in some deeper
+  // child to <Posts>, data will be available immediately either way
+  const { data } = useQuery({
+    queryKey: ['naturalFoodLists', '고기'],
+    queryFn: fetchNaturalFoodLists,
+  })
+
+console.log(data);
+
+
   const searchQuery = useRecoilValue(searchQueryState);
   const rawFoods = useRecoilValue(rawFoodsState);
   const setIsValid = useSetRecoilState(isValidState);
