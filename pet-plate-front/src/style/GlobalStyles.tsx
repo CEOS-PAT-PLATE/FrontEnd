@@ -21,8 +21,7 @@ const GlobalStyles = createGlobalStyle`
 
   ${reset}
 
-  html,
-  body {
+  html,body {
     /* width:100%;
     height: 100vh; */
     width: 360px;
@@ -30,6 +29,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0 auto;
     font-family: 'SUIT', sans-serif;
   }
+
 
 * {
   box-sizing: border-box;
@@ -42,6 +42,17 @@ button{
   padding: 0;
 }
 
+h2{
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+h1{
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 160%;
+}
+  
 ::-webkit-scrollbar {
   width: 0px;
     height: 0px;

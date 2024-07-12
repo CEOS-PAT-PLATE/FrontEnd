@@ -23,5 +23,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </RecoilRootWrapper>
       </body>
     </html>
-  );
+  )
 }
