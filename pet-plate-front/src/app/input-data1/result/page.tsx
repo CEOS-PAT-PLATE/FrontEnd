@@ -26,10 +26,11 @@ const handleAlert = () => {
     <Progressbar/>
     <PageContainer>
         <ResultList title = '반려견의 이름' value={petInfo[0].name}/>
-        <ResultList title = '나이' value={petInfo[0].age}/>
-        <ResultList title = '몸무게' value={petInfo[0].weight}/>
+        <ResultList title = '나이' value={`${petInfo[0].age}세`}/>
+        <ResultList title = '몸무게' value={`${petInfo[0].weight}kg`}/>
         <ResultList title = '활동량' value={petInfo[0].activity}/>
         <ResultList title = '중성화 여부' value={petInfo[0].neutering}/>
+        
         <FixedButtonContainer>
             <NextButton onClick={handleAlert} />
         </FixedButtonContainer>
