@@ -5,23 +5,21 @@ import { searchQueryState, rawFoodsState, consumedRawsState, isValidState, isSer
 import styled from 'styled-components';
 import UnifiedCard from '@components/input-data2/unified-card';
 import { useState, useEffect } from 'react';
-import { useQuery } from "@tanstack/react-query";
-import {fetchNaturalFoodLists} from "@api/requests";
-
-
+import { useQuery, useIsFetching } from '@tanstack/react-query';
+import { fetchNaturalFoodLists } from '@api/requests';
 
 export default function Table() {
-
-
- // This useQuery could just as well happen in some deeper
+  // This useQuery could just as well happen in some deeper
   // child to <Posts>, data will be available immediately either way
+  /*
   const { data } = useQuery({
-    queryKey: ['naturalFoodLists', '고기'],
+    queryKey: ['naturalFoodLists', ''],
     queryFn: fetchNaturalFoodLists,
-  })
+  });
+  
 
-console.log(data);
-
+  console.log(data);
+  */
 
   const searchQuery = useRecoilValue(searchQueryState);
   const rawFoods = useRecoilValue(rawFoodsState);
@@ -38,8 +36,8 @@ console.log(data);
   const fontWeight2 = '700';
   const lineHeight1 = '160%';
   const lineHeight2 = '130%';
-  const isRecent = recentConsumedRaws.some(consumed => consumed.rawId === clickedId);
-  const selectedFood = filteredRawFoods.find(food => food.name === clickedId);
+  const isRecent = recentConsumedRaws.some((consumed) => consumed.rawId === clickedId);
+  const selectedFood = filteredRawFoods.find((food) => food.name === clickedId);
 
   useEffect(() => {
     setIsValid(isStoreValid());
@@ -105,12 +103,7 @@ console.log(data);
         {!isRecent && someClicked && (
           <ServingWrapper>
             <ServingText>섭취량</ServingText>
-            <ServingInput
-              type="text"
-              value={serving}
-              onChange={(e) => setServing(e.target.value)}
-              placeholder=" "
-            />
+            <ServingInput type="text" value={serving} onChange={(e) => setServing(e.target.value)} placeholder=" " />
           </ServingWrapper>
         )}
       </TableContainer>
@@ -141,7 +134,7 @@ const StoreButton = styled.button`
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: var(--primary, #40C97F);
+  background-color: var(--primary, #40c97f);
   color: white;
   font-size: 16px;
   cursor: pointer;
@@ -161,18 +154,18 @@ const ServingInput = styled.input`
   align-items: flex-start;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 1px solid var(--grey2, #ECEEF0);
-  background: var(--white, #FFF);
+  border: 1px solid var(--grey2, #eceef0);
+  background: var(--white, #fff);
   margin-left: 118px;
 
   &:focus {
-    border: 1px solid var(--primary, #40C97F); /* 포커스 시 초록색 테두리 */
+    border: 1px solid var(--primary, #40c97f); /* 포커스 시 초록색 테두리 */
     outline: none; /* 기본 포커스 스타일 제거 */
   }
 `;
 
 const ServingText = styled.div`
-  color: var(--grey11, #36393C);
+  color: var(--grey11, #36393c);
   /* title2_bold_16pt */
   font-family: SUIT;
   font-size: 16px;
@@ -182,6 +175,6 @@ const ServingText = styled.div`
   margin-top: 4px;
 `;
 
-const ServingWrapper = styled.div`    
+const ServingWrapper = styled.div`
   display: flex;
 `;
