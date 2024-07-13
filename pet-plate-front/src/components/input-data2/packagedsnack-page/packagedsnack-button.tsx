@@ -38,14 +38,14 @@ export default function PackagedSnackButton() {
       {
         onSuccess: () => {
           alert('하루 식사에 포장 간식이 저장되었습니다.');
-        
+
           setFormData({
             field1: '',
             field2: '',
             field3: '',
             field4: '',
           });
-       
+
           setRequiredInputState([
             { index: 1, isRequired: false },
             { index: 2, isRequired: false },
