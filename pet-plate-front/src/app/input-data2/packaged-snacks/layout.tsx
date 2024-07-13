@@ -4,11 +4,14 @@ import LabeledInput from '@components/input-data2/labeled-input';
 import InfoLayout from '@components/input-data2/info-layout';
 import NutrientInfoLayout from '@components/input-data2/nutrient-info-layout';
 import NutrientInputFieldsContainer from '@components/input-data2/nutrient-input-container';
+import PackagedSnackButton from '@components/input-data2/packagedsnack-page/packagedsnack-button'
+
 
 interface Nutrient {
   name: string;
   unit: string;
   isRequired: boolean;
+  index:number;
 }
 
 interface NutrientSection {
@@ -18,25 +21,24 @@ interface NutrientSection {
 const nutrientSections: NutrientSection[] = [
   {
     nutrients: [
-      { name: '간식 총량', unit: 'g', isRequired: true },
-      { name: '칼로리', unit: 'kcal', isRequired: true },
-      { name: '지방 (오메가3, 오메가6)', unit: '%', isRequired: true },
-      { name: '단백질', unit: '%', isRequired: true },
-      { name: '탄수화물', unit: '%', isRequired: false },
+      { name: '간식 총량', unit: 'g', isRequired: true, index: 1 },
+      { name: '칼로리', unit: 'kcal', isRequired: true, index: 2 },
+      { name: '지방 (오메가3, 오메가6)', unit: '%', isRequired: true, index: 3 },
+      { name: '단백질', unit: '%', isRequired: true, index: 4 },
+      { name: '탄수화물', unit: '%', isRequired: false, index: 5 },
     ]
   },
   {
     nutrients: [
-      { name: '칼슘', unit: '%', isRequired: false },
-      { name: '인', unit: '%', isRequired: false },
+      { name: '칼슘', unit: '%', isRequired: false, index: 6 },
+      { name: '인', unit: '%', isRequired: false, index: 7 },
     ]
   },
   {
     nutrients: [
-      { name: '비타민 A', unit: '%', isRequired: false },
-      { name: '비타민 D', unit: '%', isRequired: false},
-      { name: '비타민 E', unit: '%', isRequired: false },
-
+      { name: '비타민 A', unit: '%', isRequired: false, index: 8 },
+      { name: '비타민 D', unit: '%', isRequired: false, index: 9 },
+      { name: '비타민 E', unit: '%', isRequired: false, index: 10 },
     ]
   }
 ];
@@ -55,6 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <LabeledInput label="포장 간식 이름" placeholder="포장 간식 이름을 적어주세요" />
       <NutrientInfoLayout title={title} description={description} />
       <NutrientInputFieldsContainer nutrientSections={nutrientSections} />
+      <PackagedSnackButton />
     </>
   );
 }

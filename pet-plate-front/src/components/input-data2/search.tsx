@@ -1,12 +1,12 @@
 'use client';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { searchQueryState } from '@lib/atoms';
+import { searchQueryState } from '@recoil/atoms';
 import styled from 'styled-components';
 import SearchbarResetButton from '@public/svg/searchbar-resetbutton.svg?url';
 import SearchbarIcon from '@public/svg/searchbar-searchicon.svg?url';
 import Image from 'next/image';
-import { isValidState,isServing } from '@lib/atoms';
+import { isValidState,isServing } from '@recoil/atoms';
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);

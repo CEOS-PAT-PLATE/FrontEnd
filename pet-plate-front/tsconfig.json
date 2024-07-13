@@ -25,6 +25,8 @@
       "@lib/*": ["./lib/*"],
       "@style/*": ["./style/*"],
       "@api/*": ["./api/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@recoil/*": ["./recoil/*"],
       "@public/*": ["../public/*"]
     },
     "types": ["styled-components"]

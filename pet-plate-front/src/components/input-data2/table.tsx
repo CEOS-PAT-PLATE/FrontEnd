@@ -1,26 +1,13 @@
 'use client';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { searchQueryState, rawFoodsState, consumedRawsState, isValidState, isServing } from '@lib/atoms';
+import { searchQueryState, rawFoodsState, consumedRawsState, isValidState, isServing } from '@recoil/atoms';
 import styled from 'styled-components';
 import UnifiedCard from '@components/input-data2/unified-card';
 import { useState, useEffect } from 'react';
-import { useQuery, useIsFetching } from '@tanstack/react-query';
-import { fetchNaturalFoodLists } from '@api/requests';
 
 export default function Table() {
-  // This useQuery could just as well happen in some deeper
-  // child to <Posts>, data will be available immediately either way
-  /*
-  const { data } = useQuery({
-    queryKey: ['naturalFoodLists', ''],
-    queryFn: fetchNaturalFoodLists,
-  });
-  
-
-  console.log(data);
-  */
-
+ 
   const searchQuery = useRecoilValue(searchQueryState);
   const rawFoods = useRecoilValue(rawFoodsState);
   const setIsValid = useSetRecoilState(isValidState);

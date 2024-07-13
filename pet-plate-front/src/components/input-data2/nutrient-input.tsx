@@ -1,17 +1,15 @@
 import styled from 'styled-components';
 
-
 interface NutrientInputFieldProps {
-    label: string;
-    unit: string;
-    isRequired: boolean;
-    placeholder: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  }
-  
+  label: string;
+  unit: string;
+  isRequired: boolean;
+  placeholder: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+}
 
-
-const NutrientInputField = ({ label, unit, isRequired, placeholder, onChange }:NutrientInputFieldProps) => {
+const NutrientInputField = ({ label, unit, isRequired, placeholder, onChange, value }: NutrientInputFieldProps) => {
   return (
     <NutrientInput>
       <Label>
@@ -19,7 +17,7 @@ const NutrientInputField = ({ label, unit, isRequired, placeholder, onChange }:N
         {isRequired && <Asterisk>*</Asterisk>}
       </Label>
       <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-        <InputField placeholder={placeholder} onChange={onChange} />
+        <InputField placeholder={placeholder} onChange={onChange} value={value} />
         <UnitLabel>{unit}</UnitLabel>
       </div>
     </NutrientInput>
@@ -27,7 +25,6 @@ const NutrientInputField = ({ label, unit, isRequired, placeholder, onChange }:N
 };
 
 export default NutrientInputField;
-
 
 export const NutrientInput = styled.div`
   display: flex;
@@ -40,7 +37,6 @@ export const NutrientInput = styled.div`
   border-radius: 8px;
   border: 1px solid var(--grey2, #ECEEF0);
   background: var(--white, #FFF);
-  
 `;
 
 export const Label = styled.div`
@@ -62,7 +58,7 @@ export const Asterisk = styled.span`
 `;
 
 export const UnitLabel = styled.div`
-color: var(--grey10, #4F5357);
+  color: var(--grey10, #4F5357);
   text-align: right;
   font-family: SUIT;
   font-size: 16px;
@@ -71,22 +67,18 @@ color: var(--grey10, #4F5357);
   line-height: 160%; /* 25.6px */
   width: 42px;
   flex-shrink: 0;
-  margin-left:10px;
+  margin-left: 10px;
 `;
 
 export const InputField = styled.input`
   width: 66px;
   flex-shrink: 0;
-color: var(--grey10, #4F5357);
+  color: var(--grey10, #4F5357);
   font-family: SUIT;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 160%; /* 25.6px */
-    margin-right:0px;
-
-
-border:none;
-
-  
+  margin-right: 0px;
+  border: none;
 `;

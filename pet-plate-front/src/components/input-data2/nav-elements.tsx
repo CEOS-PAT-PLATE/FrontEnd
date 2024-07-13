@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Option } from '@lib/types'
 import styled, { css } from 'styled-components'
-import { searchQueryState, isValidState,isServing } from '@lib/atoms';
+import { searchQueryState, isValidState,isServing } from '@recoil/atoms';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
 interface NavElementsProps {
