@@ -1,12 +1,13 @@
 'use client';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { searchQueryState, rawFoodsState, consumedRawsState, isValidState, isServing } from '@lib/atoms';
+import { searchQueryState, rawFoodsState, consumedRawsState, isValidState, isServing } from '@recoil/atoms';
 import styled from 'styled-components';
 import UnifiedCard from '@components/input-data2/unified-card';
 import { useState, useEffect } from 'react';
 
 export default function Table() {
+ 
   const searchQuery = useRecoilValue(searchQueryState);
   const rawFoods = useRecoilValue(rawFoodsState);
   const setIsValid = useSetRecoilState(isValidState);
@@ -22,8 +23,8 @@ export default function Table() {
   const fontWeight2 = '700';
   const lineHeight1 = '160%';
   const lineHeight2 = '130%';
-  const isRecent = recentConsumedRaws.some(consumed => consumed.rawId === clickedId);
-  const selectedFood = filteredRawFoods.find(food => food.name === clickedId);
+  const isRecent = recentConsumedRaws.some((consumed) => consumed.rawId === clickedId);
+  const selectedFood = filteredRawFoods.find((food) => food.name === clickedId);
 
   useEffect(() => {
     setIsValid(isStoreValid());
@@ -89,12 +90,7 @@ export default function Table() {
         {!isRecent && someClicked && (
           <ServingWrapper>
             <ServingText>섭취량</ServingText>
-            <ServingInput
-              type="text"
-              value={serving}
-              onChange={(e) => setServing(e.target.value)}
-              placeholder=" "
-            />
+            <ServingInput type="text" value={serving} onChange={(e) => setServing(e.target.value)} placeholder=" " />
           </ServingWrapper>
         )}
       </TableContainer>
@@ -125,7 +121,7 @@ const StoreButton = styled.button`
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: var(--primary, #40C97F);
+  background-color: var(--primary, #40c97f);
   color: white;
   font-size: 16px;
   cursor: pointer;
@@ -145,18 +141,18 @@ const ServingInput = styled.input`
   align-items: flex-start;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 1px solid var(--grey2, #ECEEF0);
-  background: var(--white, #FFF);
+  border: 1px solid var(--grey2, #eceef0);
+  background: var(--white, #fff);
   margin-left: 118px;
 
   &:focus {
-    border: 1px solid var(--primary, #40C97F); /* 포커스 시 초록색 테두리 */
+    border: 1px solid var(--primary, #40c97f); /* 포커스 시 초록색 테두리 */
     outline: none; /* 기본 포커스 스타일 제거 */
   }
 `;
 
 const ServingText = styled.div`
-  color: var(--grey11, #36393C);
+  color: var(--grey11, #36393c);
   /* title2_bold_16pt */
   font-family: SUIT;
   font-size: 16px;
@@ -166,6 +162,6 @@ const ServingText = styled.div`
   margin-top: 4px;
 `;
 
-const ServingWrapper = styled.div`    
+const ServingWrapper = styled.div`
   display: flex;
 `;

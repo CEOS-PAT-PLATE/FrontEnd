@@ -1,20 +1,23 @@
-'use client'
+'use client';
 
 import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
 import Image from 'next/image';
 import StoreButtonInactive from '@public/svg/store-button-inactive.svg?url';
 import StoreButtonActive from '@public/svg/store-button-active.svg?url';
-import { isValidState } from '@lib/atoms';
+import { isValidState } from '@recoil/atoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+
 
 export default function StoreButton() {
   const pathname = usePathname();
   const isValid = useRecoilValue(isValidState);
   const setIsValid = useSetRecoilState(isValidState);
 
-  const router = useRouter()
+  const router = useRouter();
 
   function handleClick() {
     if (!isValid) {
@@ -26,34 +29,32 @@ export default function StoreButton() {
       case '/input-data2/dry-food':
         alert('하루 식사에 사료가 저장되었습니다.');
         setIsValid(false);
-        router.push('/201', { scroll: false })
+        router.push('/201', { scroll: false });
 
         break;
       case '/input-data2/favorites':
         alert('즐겨찾기에 저장되었습니다.');
         setIsValid(false);
-        router.push('/201', { scroll: false })
+        router.push('/201', { scroll: false });
 
         break;
       case '/input-data2/natural-food':
         alert('하루 식사에 자연식이 저장되었습니다.');
         setIsValid(false);
-        router.push('/201', { scroll: false })
+        router.push('/201', { scroll: false });
 
         break;
       case '/input-data2/packaged-snacks':
         alert('하루 식사에 포장 간식이 저장되었습니다.');
         setIsValid(false);
-        router.push('/201', { scroll: false })
+        router.push('/201', { scroll: false });
 
         break;
       default:
         alert('잘못된 페이지');
         setIsValid(false);
-        router.push('/201', { scroll: false })
-
+        router.push('/201', { scroll: false });
     }
-
   }
 
   return (
@@ -72,6 +73,5 @@ const StoreButtonImage = styled(Image)`
   width: 312px;
   left: 24px;
   top: 707px;
-      cursor: pointer;
-
+  cursor: pointer;
 `;

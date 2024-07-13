@@ -9,6 +9,7 @@ interface Nutrient {
   name: string;
   unit: string;
   isRequired: boolean;
+  index:number;
 }
 
 interface NutrientSection {

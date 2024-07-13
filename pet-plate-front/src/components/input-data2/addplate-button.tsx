@@ -5,7 +5,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation'
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { searchQueryState, isValidState,isServing } from '@lib/atoms';
+import { searchQueryState, isValidState,isServing } from '@recoil/atoms';
 
 
 

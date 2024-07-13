@@ -1,6 +1,9 @@
 import InfoLayout from '@components/input-data2/info-layout';
 import FavoriteContainer from '@components/input-data2/favorite-container';
 import FavoriteContainerWrapper from '@style/input-data2/favorite-container-wrapper';
+import FavoritesButton from '@components/input-data2/favorite-page/favoritefood-button'
+
+
 
 const favoritesFoodList = [
   { type: '자연식', name: '바나나' },
@@ -26,6 +29,7 @@ export default function Page() {
           <FavoriteContainer key={index} type={item.type} name={item.name} />
         ))}
       </FavoriteContainerWrapper>
+      <FavoritesButton />
     </>
   );
 }
