@@ -1,6 +1,7 @@
 'use client'
 
 import styled from "styled-components"
+import NavbarFooter from "@components/main/navbarFooter"
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -8,6 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Container>
             <Padding></Padding> 
             <Contents>{children}</Contents>
+            <NavbarFooter/>
         </Container>
     )
   }
@@ -18,6 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
   `
   const Padding = styled.div`
     width: 100%;
@@ -26,5 +29,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   `
  const Contents = styled.div`
     width: 100%;
-    height: 100%;
+    flex-grow: 1;
  `
