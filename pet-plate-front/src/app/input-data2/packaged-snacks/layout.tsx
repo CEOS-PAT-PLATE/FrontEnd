@@ -4,7 +4,7 @@ import LabeledInput from '@components/input-data2/dryfood-snack-page/labeled-inp
 import InfoLayout from '@components/input-data2/common/info-layout';
 import NutrientInfoLayout from '@components/input-data2/dryfood-snack-page/nutrient-info-layout';
 import NutrientInputFieldsContainer from '@components/input-data2/dryfood-snack-page/nutrient-input-container';
-import DryFoodButton from '@components/input-data2/dryfood-snack-page/dryfood-button';
+import NutrientButton from '@components/input-data2/dryfood-snack-page/nutrient-button';
 
 interface Nutrient {
   name: string;
@@ -56,7 +56,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <LabeledInput label="포장 간식 이름" placeholder="포장 간식 이름을 적어주세요" />
       <NutrientInfoLayout title={title} description={description} />
       <NutrientInputFieldsContainer nutrientSections={nutrientSections} />
-      <DryFoodButton />
+      <NutrientButton />
     </>
   );
 }

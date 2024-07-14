@@ -3,7 +3,7 @@ import axiosInstance from '@api/index';
 export const packagedSnackAPI = {
 
 // 오늘 식사내역에 해당 포장 간식의 정보를 추가
-  addPackagedSnack: async (petId: number, snackData: {
+  addPackagedSnack: async (petId: number, data: {
     serving: number;
     name: string;
     kcal: number;
@@ -16,7 +16,7 @@ export const packagedSnackAPI = {
     vitaminDPercent: number;
     vitaminEPercent: number;
   }) => {
-    return await axiosInstance.post(`/pet/${petId}/packagedSnacks`, snackData);
+    return await axiosInstance.post(`/pet/${petId}/packagedSnacks`, data);
   },
 
   // 반려견의 특정 식사에서의 포장간식 섭취 내역만 조회

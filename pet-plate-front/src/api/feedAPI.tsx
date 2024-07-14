@@ -4,7 +4,7 @@ export const feedAPI = {
   // 오늘 식사내역에 해당 사료의 정보를 추가
   addFeed: async (
     petId: number,
-    feedData: {
+    data: {
       serving: number;
       name: string;
       kcal: number;
@@ -18,7 +18,7 @@ export const feedAPI = {
       vitaminEPercent: number;
     },
   ) => {
-    return await axiosInstance.post(`/pet/${petId}/feeds`, feedData);
+    return await axiosInstance.post(`/pet/${petId}/feeds`, data);
   },
 
   // 반려견의 특정 식사에서의 사료 섭취 내역만 조회

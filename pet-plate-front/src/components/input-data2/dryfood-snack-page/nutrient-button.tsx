@@ -5,17 +5,19 @@ import { useAddDirectlyToDailyMeals } from '@hooks/useAddDirectlyToDailyMeals';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { isFormValidState, RequiredInputState, NutrientNameState } from '@recoil/nutrientAtoms';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
-export default function DryFoodButton() {
-  const { addFeed } = useAddDirectlyToDailyMeals();
+export default function NutrientButton() {
+  const { addFeed, addPackagedSnack } = useAddDirectlyToDailyMeals();
   const router = useRouter();
   const isValid = useRecoilValue(isFormValidState);
 
   const [requiredInputState, setRequiredInputState] = useRecoilState(RequiredInputState);
-  const [nutrientName, setNutrientName] = useRecoilState(NutrientNameState); 
+  const [nutrientName, setNutrientName] = useRecoilState(NutrientNameState);
+  const pathName = usePathname();
+  const apiCall = pathName === '/input-data2/dry-food' ? addFeed : addPackagedSnack;
 
-
-  const feedData = {
+  const nutrientData = {
     serving: parseInt(requiredInputState.find((item) => item.index === 1)?.value || '0', 10),
     name: nutrientName,
     kcal: parseInt(requiredInputState.find((item) => item.index === 2)?.value || '0', 10),
@@ -35,11 +37,11 @@ export default function DryFoodButton() {
       return;
     }
 
-    addFeed.mutate(
-      { petId: 3, feedData: feedData },
+    apiCall.mutate(
+      { petId: 3, data: nutrientData },
       {
         onSuccess: () => {
-          alert('하루 식사에 사료가 저장되었습니다.');
+          alert('하루 식사에 저장되었습니다.');
 
           setRequiredInputState([
             { index: 1, value: '' },

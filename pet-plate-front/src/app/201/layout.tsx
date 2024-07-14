@@ -5,7 +5,7 @@ import Image from 'next/image';
 export default async function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Image src={id_201} alt="id-201" />
+      <Image src={id_201} alt="id-201" priority />
       <AddButton />
     </>
   );

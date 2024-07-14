@@ -11,12 +11,12 @@ interface RawMealData {
 
 interface FeedData {
   petId: number;
-  feedData: any;
+  data: any;
 }
 
 interface PackagedSnackData {
   petId: number;
-  snackData: any;
+  data: any;
 }
 
 export const useAddDirectlyToDailyMeals = (): {
@@ -34,14 +34,14 @@ export const useAddDirectlyToDailyMeals = (): {
   });
 
   const addFeed = useMutation<AxiosResponse<any>, Error, FeedData>({
-    mutationFn: ({ petId, feedData }) => feedAPI.addFeed(petId, feedData),
+    mutationFn: ({ petId, data }) => feedAPI.addFeed(petId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dailyMeals', 'feeds'] });
     },
   });
 
   const addPackagedSnack = useMutation<AxiosResponse<any>, Error, PackagedSnackData>({
-    mutationFn: ({ petId, snackData }) => packagedSnackAPI.addPackagedSnack(petId, snackData),
+    mutationFn: ({ petId, data }) => packagedSnackAPI.addPackagedSnack(petId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dailyMeals', 'packagedSnacks'] });
     },
