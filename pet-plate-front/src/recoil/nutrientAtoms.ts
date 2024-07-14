@@ -1,5 +1,6 @@
 import { atom, selector } from 'recoil';
 
+// 포장 간식
 export const RequiredInputState = atom<any[]>({
   key: 'isRequiredInputValid',
   default: [
@@ -39,3 +40,12 @@ function checkRequiredInputState(requiredInputState: any[], nutrientNameState: s
   });
 }
 
+
+// 자연식 
+export const RawFoodFormState = atom({
+  key: 'rawFoodName',
+  default: {
+    rawId: '',
+    serving:'' ,
+  },
+});

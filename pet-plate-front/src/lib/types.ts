@@ -4,6 +4,11 @@
 
 // 최근 2일간 섭취한 자연식 데이터
 
+export interface RawMealData {
+  petId: number;
+  rawData: { rawId: number; serving: number };
+}
+
 export interface RecentRawFood {
   dailyRawId: number;
   name: string;
