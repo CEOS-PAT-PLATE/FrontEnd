@@ -45,7 +45,7 @@ export interface CardProps {
 
 // 자연식 데이터
 export interface RawFood {
-  id: number;
+  rawId: number;
   name: string;
   description: string;
   standardAmount: number;

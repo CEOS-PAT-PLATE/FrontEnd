@@ -3,8 +3,15 @@ import Table from '@components/input-data2/naturalfood-page/table';
 import InfoLayout from '@components/input-data2/common/info-layout';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import NaturalFoodButton from '@components/input-data2/naturalfood-page/naturalfood-button';
+import { rawAPI } from '@api/rawAPI';
+import { RawFood } from '@lib/types';
 
-export default async function Page() {
+const fetchNaturalFoodLists = async (keyword: string) => {
+  const response = await rawAPI.getRawsByKeyword(keyword);
+  return response.data;
+};
+
+export default async function Page({ searchParams }: { searchParams?: { keyword?: string } }) {
   /*const queryClient = new QueryClient();
 
   // 미리 데이터를 가져와 쿼리 클라이언트에 캐시
@@ -18,6 +25,14 @@ export default async function Page() {
         <HydrationBoundary state={dehydratedState}>
          </HydrationBoundary>
   */
+
+  const keyword = searchParams?.keyword || '';
+
+  // data 속성을 추출하고, 그 값을 naturalFoodLists라는 변수에 할당
+  const { data: naturalFoodLists } = await fetchNaturalFoodLists(keyword);
+
+  console.log(naturalFoodLists);
+
   return (
     <>
       <InfoLayout
@@ -25,8 +40,8 @@ export default async function Page() {
         description="가열하지 않은, 날 것 그대로 급여하는 음식을 의미해요. 바나나, 오이, 딸기 등을 포함해요."
       />
 
-      <Search />
-      <Table />
+      <Search placeholder="검색" />
+      <Table keyword={keyword} rawFoods={naturalFoodLists }/>
       <NaturalFoodButton />
     </>
   );

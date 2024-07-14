@@ -8,13 +8,29 @@ import SearchbarIcon from '@public/svg/searchbar-searchicon.svg?url';
 import Image from 'next/image';
 import { isValidState, isServing } from '@recoil/atoms';
 
-export default function Search() {
+// 리펙토링을 위한 import 
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+export default function Search({placeholder}: {placeholder: string}) {
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const isValid = useRecoilValue(isValidState);
   const isServingState = useRecoilValue(isServing);
 
+  // 리펙토링을 위한 hooks 
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const {replace} = useRouter();
+
+
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
+    const params = new URLSearchParams(searchParams);
+    if(event.target.value) {
+      params.set('keyword', event.target.value);
+    }else{params.delete('keyword');}
+
+    replace(`${pathname}?${params.toString()}`);              ;
   };
 
   const handleReset = () => {
