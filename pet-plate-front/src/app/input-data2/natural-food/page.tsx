@@ -1,30 +1,32 @@
 import Search from '@components/input-data2/naturalfood-page/search';
 import Table from '@components/input-data2/naturalfood-page/table';
 import InfoLayout from '@components/input-data2/common/info-layout';
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import NaturalFoodButton from '@components/input-data2/naturalfood-page/naturalfood-button';
 import { rawAPI } from '@api/rawAPI';
-import { RawFood } from '@lib/types';
+
 
 const fetchNaturalFoodLists = async (keyword: string) => {
   const response = await rawAPI.getRawsByKeyword(keyword);
   return response.data;
 };
 
+const fetchRecentNaturalFoodLists = async (petId: number) => {
+  const response = await rawAPI.getRecentRaws(petId);
+  return response.data;
+};
+
+
+
+
 export default async function Page({ searchParams }: { searchParams?: { keyword?: string } }) {
-  /*const queryClient = new QueryClient();
 
-  // 미리 데이터를 가져와 쿼리 클라이언트에 캐시
-  await queryClient.prefetchQuery({
-    queryKey: ['naturalFoodLists', '호박'],
-    queryFn: fetchNaturalFoodLists,
-  });
+  const petId = 3;
 
-  const dehydratedState = await dehydrate(queryClient);
-  console.log(dehydratedState?.queries[0]?.state.data);
-        <HydrationBoundary state={dehydratedState}>
-         </HydrationBoundary>
-  */
+  
+  // 최근 2일동안 섭취한 자연식
+  // 쿼리 클라이언트
+
+  
 
   const keyword = searchParams?.keyword || '';
 
@@ -32,6 +34,8 @@ export default async function Page({ searchParams }: { searchParams?: { keyword?
   const { data: naturalFoodLists } = await fetchNaturalFoodLists(keyword);
 
   console.log(naturalFoodLists);
+
+  const { data: recentNaturalFoodLists } = await fetchRecentNaturalFoodLists(petId);
 
   return (
     <>
@@ -41,7 +45,7 @@ export default async function Page({ searchParams }: { searchParams?: { keyword?
       />
 
       <Search placeholder="검색" />
-      <Table keyword={keyword} rawFoods={naturalFoodLists }/>
+      <Table keyword={keyword} rawFoods={naturalFoodLists } recentRawFoods={recentNaturalFoodLists}/>
       <NaturalFoodButton />
     </>
   );

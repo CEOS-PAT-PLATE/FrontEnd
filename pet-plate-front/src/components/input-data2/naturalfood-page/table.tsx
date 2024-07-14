@@ -5,29 +5,39 @@ import { searchQueryState, consumedRawsState, isValidState, isServing } from '@r
 import styled from 'styled-components';
 import UnifiedCard from '@components/input-data2/naturalfood-page/unified-card';
 import { useState, useEffect } from 'react';
-import { RawFood } from '@lib/types';
+import { RawFood, RecentRawFood } from '@lib/types';
 
-export default function Table({ keyword , rawFoods}: { keyword: string,rawFoods: any }) {
+
+
+export default function Table({ keyword, rawFoods ,recentRawFoods}: { keyword: string; rawFoods: any, recentRawFoods: any }) {
+
+
   //const searchQuery = useRecoilValue(searchQueryState);
   const searchQuery = keyword;
   console.log(searchQuery);
- // const rawFoods = useRecoilValue(rawFoodsState);
+  // const rawFoods = useRecoilValue(rawFoodsState);
   const setIsValid = useSetRecoilState(isValidState);
-  const consumedRaws = useRecoilValue(consumedRawsState);
+  // const consumedRaws = useRecoilValue(consumedRawsState);
+
+  // 불러온 데이터로 변경
+  const consumedRaws = recentRawFoods;
+
   const [clickedId, setClickedId] = useState<string | null>(null);
   const [someClicked, setSomeClicked] = useState(false);
   const [serving, setServing] = useState('');
   const setIsServing = useSetRecoilState(isServing);
   const [isServingValid, setIsServingValid] = useState(false);
 
-  const filteredRawFoods = searchQuery ? rawFoods.filter((food: RawFood ) => food.name.includes(searchQuery)).slice(0, 5) : [];
-  const recentConsumedRaws = !searchQuery ? consumedRaws.slice(0, 5) : [];
+  const filteredRawFoods = searchQuery
+    ? rawFoods.filter((food: RawFood) => food.name.includes(searchQuery)).slice(0, 5)
+    : [];
+  const recentConsumedRaws = !searchQuery ? consumedRaws?.slice(0, 5) : [];
   const fontWeight1 = '400';
   const fontWeight2 = '700';
   const lineHeight1 = '160%';
   const lineHeight2 = '130%';
-  const isRecent = recentConsumedRaws.some((consumed) => consumed.rawId === clickedId);
-  const selectedFood = filteredRawFoods.find((food: RawFood ) => food.name === clickedId);
+  const isRecent = recentConsumedRaws?.some((consumed: RecentRawFood) => consumed.name === clickedId);
+  const selectedFood = filteredRawFoods.find((food: RawFood) => food.name === clickedId);
 
   useEffect(() => {
     setIsValid(isStoreValid());
@@ -66,7 +76,7 @@ export default function Table({ keyword , rawFoods}: { keyword: string,rawFoods:
     <div>
       <TableContainer $searchQuery={keyword}>
         {searchQuery ? (
-          filteredRawFoods.map((food: RawFood ) => (
+          filteredRawFoods.map((food: RawFood) => (
             <UnifiedCard
               key={food.name}
               title={food.name}
@@ -82,17 +92,17 @@ export default function Table({ keyword , rawFoods}: { keyword: string,rawFoods:
           ))
         ) : (
           <RecentContainer>
-            {recentConsumedRaws.map((consumed) => (
+            {recentConsumedRaws?.map((consumed: RecentRawFood) => (
               <UnifiedCard
-                key={consumed.rawId}
-                title={consumed.rawId}
+                key={consumed.dailyRawId}
+                title={consumed.name}
                 description={`${consumed.serving}g`}
                 titleFontWeight={fontWeight1}
                 titleLineHeight={lineHeight1}
                 descriptionFontWeight={fontWeight1}
                 descriptionLineHeight={lineHeight1}
-                isClicked={clickedId === consumed.rawId}
-                onClick={() => handleClick(consumed.rawId)}
+                isClicked={clickedId === consumed.name}
+                onClick={() => handleClick(consumed.name)}
                 someClicked={someClicked}
                 isRecent={true}
               />

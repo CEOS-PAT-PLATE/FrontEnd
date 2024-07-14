@@ -2,6 +2,27 @@
 
 // 영양 정보
 
+// 최근 2일간 섭취한 자연식 데이터
+
+export interface RecentRawFood {
+  dailyRawId: number;
+  name: string;
+  description: string | null;
+  serving: number;
+  kcal: number;
+  carbonHydrate: number;
+  protein: number;
+  fat: number;
+  calcium: number;
+  phosphorus: number;
+  vitaminA: number;
+  vitaminD: number;
+  vitaminE: number;
+}
+
+type RecentRawFoodList = RecentRawFood[];
+
+
 interface Nutrient {
   name: string;
   unit: string;
