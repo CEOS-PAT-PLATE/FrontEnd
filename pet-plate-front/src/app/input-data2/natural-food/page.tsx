@@ -3,6 +3,7 @@ import Table from '@components/input-data2/naturalfood-page/table';
 import InfoLayout from '@components/input-data2/common/info-layout';
 import NaturalFoodButton from '@components/input-data2/naturalfood-page/naturalfood-button';
 import { rawAPI } from '@api/rawAPI';
+import { RecentRawFood } from '@lib/types';
 
 
 const fetchNaturalFoodLists = async (keyword: string) => {
@@ -15,6 +16,12 @@ const fetchRecentNaturalFoodLists = async (petId: number) => {
   return response.data;
 };
 
+// id는 달라도 입력정보가 동일하면 중복으로 처리 (이름, 양으로 필터링)
+const filterUniqueByNameAndServing = (foodList: RecentRawFood[]): RecentRawFood[] => {
+  return foodList.filter((food, index, self) => 
+    index === self.findIndex(f => f.name === food.name && f.serving === food.serving)
+  );
+};
 
 
 
@@ -37,6 +44,9 @@ export default async function Page({ searchParams }: { searchParams?: { keyword?
 
   const { data: recentNaturalFoodLists } = await fetchRecentNaturalFoodLists(petId);
 
+  // name과 serving이 유일한 값만 남기기
+  const uniqueRecentNaturalFoodLists = filterUniqueByNameAndServing(recentNaturalFoodLists);
+
   return (
     <>
       <InfoLayout
@@ -45,7 +55,7 @@ export default async function Page({ searchParams }: { searchParams?: { keyword?
       />
 
       <Search placeholder="검색" />
-      <Table keyword={keyword} rawFoods={naturalFoodLists } recentRawFoods={recentNaturalFoodLists}/>
+      <Table keyword={keyword} rawFoods={naturalFoodLists } recentRawFoods={uniqueRecentNaturalFoodLists}/>
       <NaturalFoodButton />
     </>
   );
