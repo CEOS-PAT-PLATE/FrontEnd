@@ -1,15 +1,20 @@
 'use client';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState,useRecoilState } from 'recoil';
 import { searchQueryState, consumedRawsState, isValidState, isServing } from '@recoil/atoms';
 import styled from 'styled-components';
 import UnifiedCard from '@components/input-data2/naturalfood-page/unified-card';
 import { useState, useEffect } from 'react';
 import { RawFood, RecentRawFood } from '@lib/types';
 
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+
+
 
 
 export default function Table({ keyword, rawFoods ,recentRawFoods}: { keyword: string; rawFoods: any, recentRawFoods: any }) {
+  const [searchQueryrecoil, setSearchQuery] = useRecoilState(searchQueryState);
 
 
   //const searchQuery = useRecoilValue(searchQueryState);
@@ -27,6 +32,13 @@ export default function Table({ keyword, rawFoods ,recentRawFoods}: { keyword: s
   const [serving, setServing] = useState('');
   const setIsServing = useSetRecoilState(isServing);
   const [isServingValid, setIsServingValid] = useState(false);
+
+
+    // 리펙토링을 위한 hooks
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
+
 
   const filteredRawFoods = searchQuery
     ? rawFoods.filter((food: RawFood) => food.name.includes(searchQuery)).slice(0, 5)
@@ -54,10 +66,17 @@ export default function Table({ keyword, rawFoods ,recentRawFoods}: { keyword: s
     setIsServingValid(true);
 
     if (clickedId === id) {
+      // 재클릭시 초기화
       setClickedId(null);
       setSomeClicked(false);
       setServing('');
       setIsServing(false);
+      const params = new URLSearchParams(searchParams);
+      params.delete('keyword');
+      replace(`${pathname}?${params.toString()}`);
+      setSearchQuery('');
+
+
     } else {
       setClickedId(id);
       setSomeClicked(true);
