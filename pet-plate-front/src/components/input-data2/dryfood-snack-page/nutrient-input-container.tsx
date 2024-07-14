@@ -1,7 +1,7 @@
 'use client';
 
 import styled from 'styled-components';
-import NutrientInputFieldsSection from '@components/input-data2/nutrient-input-section';
+import NutrientInputFieldsSection from '@components/input-data2/dryfood-snack-page/nutrient-input-section';
 import { simpleHash } from '@lib/utils';
 
 

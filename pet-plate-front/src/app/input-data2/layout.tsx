@@ -1,5 +1,5 @@
-import Navbar from '@components/input-data2/navbar';
-import StoreButton from '@components/input-data2/store-button';
+import Navbar from '@components/input-data2/common/navbar';
+import StoreButton from '@components/input-data2/common/store-button';
 import ExitButton from '@public/svg/exit-button.svg?url';
 import GridContainer from '@style/input-data2/GridContainer';
 import NavbarContainer from '@style/input-data2/NavbarContainer';

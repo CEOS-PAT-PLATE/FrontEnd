@@ -1,9 +1,7 @@
-import InfoLayout from '@components/input-data2/info-layout';
-import FavoriteContainer from '@components/input-data2/favorite-container';
+import InfoLayout from '@components/input-data2/common/info-layout';
+import FavoriteContainer from '@components/input-data2/favorite-page/favorite-container';
 import FavoriteContainerWrapper from '@style/input-data2/favorite-container-wrapper';
-import FavoritesButton from '@components/input-data2/favorite-page/favoritefood-button'
-
-
+import FavoritesButton from '@components/input-data2/favorite-page/favoritefood-button';
 
 const favoritesFoodList = [
   { type: '자연식', name: '바나나' },

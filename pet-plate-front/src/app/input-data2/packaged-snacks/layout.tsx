@@ -1,17 +1,16 @@
 'use client';
 
 import LabeledInput from '@components/input-data2/labeled-input';
-import InfoLayout from '@components/input-data2/info-layout';
-import NutrientInfoLayout from '@components/input-data2/nutrient-info-layout';
-import NutrientInputFieldsContainer from '@components/input-data2/nutrient-input-container';
-import PackagedSnackButton from '@components/input-data2/packagedsnack-page/packagedsnack-button'
-
+import InfoLayout from '@components/input-data2/common/info-layout';
+import NutrientInfoLayout from '@components/input-data2/dryfood/snack-page/nutrient-info-layout';
+import NutrientInputFieldsContainer from '@components/input-data2/dryfood-snack-page/nutrient-input-container';
+import PackagedSnackButton from '@components/input-data2/dryfood/snack-page/packagedsnack-button';
 
 interface Nutrient {
   name: string;
   unit: string;
   isRequired: boolean;
-  index:number;
+  index: number;
 }
 
 interface NutrientSection {
@@ -26,21 +25,21 @@ const nutrientSections: NutrientSection[] = [
       { name: '지방 (오메가3, 오메가6)', unit: '%', isRequired: true, index: 3 },
       { name: '단백질', unit: '%', isRequired: true, index: 4 },
       { name: '탄수화물', unit: '%', isRequired: false, index: 5 },
-    ]
+    ],
   },
   {
     nutrients: [
       { name: '칼슘', unit: '%', isRequired: false, index: 6 },
       { name: '인', unit: '%', isRequired: false, index: 7 },
-    ]
+    ],
   },
   {
     nutrients: [
       { name: '비타민 A', unit: '%', isRequired: false, index: 8 },
       { name: '비타민 D', unit: '%', isRequired: false, index: 9 },
       { name: '비타민 E', unit: '%', isRequired: false, index: 10 },
-    ]
-  }
+    ],
+  },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {

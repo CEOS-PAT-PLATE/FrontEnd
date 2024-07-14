@@ -3,7 +3,7 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { searchQueryState, rawFoodsState, consumedRawsState, isValidState, isServing } from '@recoil/atoms';
 import styled from 'styled-components';
-import UnifiedCard from '@components/input-data2/unified-card';
+import UnifiedCard from '@components/input-data2/naturalfood-page/unified-card';
 import { useState, useEffect } from 'react';
 
 export default function Table() {

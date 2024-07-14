@@ -1,12 +1,6 @@
-import InfoLayout from '@components/input-data2/info-layout';
-
-
+import InfoLayout from '@components/input-data2/common/info-layout';
 
 export default async function Page() {
-
- 
-
-
   return (
     <InfoLayout
       title="사료 정보를 적어주세요"

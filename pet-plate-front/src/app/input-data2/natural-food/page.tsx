@@ -1,9 +1,8 @@
-import Search from '@components/input-data2/search';
-import Table from '@components/input-data2/table';
-import InfoLayout from '@components/input-data2/info-layout';
+import Search from '@components/input-data2/naturalfood-page/search';
+import Table from '@components/input-data2/naturalfood-page/table';
+import InfoLayout from '@components/input-data2/common/info-layout';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import NaturalFoodButton from '@components/input-data2/naturalfood-page/naturalfood-button'
-
+import NaturalFoodButton from '@components/input-data2/naturalfood-page/naturalfood-button';
 
 export default async function Page() {
   /*const queryClient = new QueryClient();
@@ -26,10 +25,9 @@ export default async function Page() {
         description="가열하지 않은, 날 것 그대로 급여하는 음식을 의미해요. 바나나, 오이, 딸기 등을 포함해요."
       />
 
-        <Search />
-        <Table />
-        <NaturalFoodButton />
-     
+      <Search />
+      <Table />
+      <NaturalFoodButton />
     </>
   );
 }

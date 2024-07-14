@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import NutrientInputField from '@components/input-data2/nutrient-input';
+import NutrientInputField from '@components/input-data2/dryfood-snack-page/nutrient-input';
 import { useRecoilState } from 'recoil';
 import { formDataState, RequiredInputState } from '@recoil/nutrientAtoms';
 

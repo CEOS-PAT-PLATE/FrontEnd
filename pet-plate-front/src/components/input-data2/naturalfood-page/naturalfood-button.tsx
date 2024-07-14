@@ -1,6 +1,6 @@
 'use client';
 
-import StoreButton from '@components/input-data2/StoreButton';
+import StoreButton from '@components/input-data2/common/StoreButton';
 import { useAddDirectlyToDailyMeals } from '@hooks/useAddDirectlyToDailyMeals';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { isValidState } from '@recoil/atoms';
