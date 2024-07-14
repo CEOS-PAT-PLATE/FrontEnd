@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import NutrientInputField from '@components/input-data2/dryfood-snack-page/nutrient-input';
 import { useRecoilState } from 'recoil';
-import { formDataState, RequiredInputState } from '@recoil/nutrientAtoms';
+import {  RequiredInputState } from '@recoil/nutrientAtoms';
+import React, { ChangeEvent } from 'react';
+
 
 interface Nutrient {
   name: string;
@@ -14,24 +16,15 @@ interface NutrientInputFieldsSectionProps {
   nutrients: Nutrient[];
 }
 
+
+
 const NutrientInputFieldsSection = ({ nutrients }: NutrientInputFieldsSectionProps) => {
-  const [formData, setFormData] = useRecoilState(formDataState);
-  const [requiredInputState, setRequiredInputState] = useRecoilState(RequiredInputState);
+  const [requiredInputList, setRequiredInputList] = useRecoilState(RequiredInputState); // 배열 형태임
 
-  const handleChange = (value: string, isRequired: boolean, index: number) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [index]: value,
-    }));
 
-    if (isRequired) {
-      const isValid = value !== '' && !isNaN(Number(value));
-      setRequiredInputState((prevState) =>
-        prevState.map((field) => (field.index === index ? { ...field, isRequired: isValid } : field)),
-      );
-    }
-  };
 
+
+  
   return (
     <NutrientInputSection>
       {nutrients.map((nutrient, index) => (
@@ -41,8 +34,7 @@ const NutrientInputFieldsSection = ({ nutrients }: NutrientInputFieldsSectionPro
           unit={nutrient.unit}
           isRequired={nutrient.isRequired}
           placeholder="00"
-          value={formData[nutrient.index] || ''}
-          onChange={(e) => handleChange(e.target.value, nutrient.isRequired, nutrient.index)}
+          index={nutrient.index}
         />
       ))}
     </NutrientInputSection>

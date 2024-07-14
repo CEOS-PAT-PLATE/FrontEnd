@@ -1,15 +1,34 @@
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { RequiredInputState } from '@recoil/nutrientAtoms';
+import React, { ChangeEvent } from 'react';
 
 interface NutrientInputFieldProps {
   label: string;
   unit: string;
   isRequired: boolean;
   placeholder: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
+  index: number;
 }
 
-const NutrientInputField = ({ label, unit, isRequired, placeholder, onChange, value }: NutrientInputFieldProps) => {
+const NutrientInputField = ({ label, unit, isRequired, placeholder, index }: NutrientInputFieldProps) => {
+  const [requiredInputList, setRequiredInputList] = useRecoilState(RequiredInputState); // 배열 형태임
+
+  const replaceItemAtIndex = <T,>(arr: T[], index: number, newValue: T): T[] => {
+    return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
+  };
+
+  const editItemText = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+
+    const newList = replaceItemAtIndex(requiredInputList, index - 1, {
+      index: index,
+      value: value,
+    });
+
+    setRequiredInputList(newList);
+  };
+
   return (
     <NutrientInput>
       <Label>
@@ -17,7 +36,7 @@ const NutrientInputField = ({ label, unit, isRequired, placeholder, onChange, va
         {isRequired && <Asterisk>*</Asterisk>}
       </Label>
       <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-        <InputField placeholder={placeholder} onChange={onChange} value={value} />
+        <InputField placeholder={placeholder} onChange={editItemText} />
         <UnitLabel>{unit}</UnitLabel>
       </div>
     </NutrientInput>
@@ -35,12 +54,12 @@ export const NutrientInput = styled.div`
   align-items: flex-start;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 1px solid var(--grey2, #ECEEF0);
-  background: var(--white, #FFF);
+  border: 1px solid var(--grey2, #eceef0);
+  background: var(--white, #fff);
 `;
 
 export const Label = styled.div`
-  color: var(--grey7, #959CA4);
+  color: var(--grey7, #959ca4);
   font-family: SUIT;
   font-size: 10px;
   font-style: normal;
@@ -49,7 +68,7 @@ export const Label = styled.div`
 `;
 
 export const Asterisk = styled.span`
-  color: var(--primary, #40C97F);
+  color: var(--primary, #40c97f);
   font-family: SUIT;
   font-size: 10px;
   font-style: normal;
@@ -58,7 +77,7 @@ export const Asterisk = styled.span`
 `;
 
 export const UnitLabel = styled.div`
-  color: var(--grey10, #4F5357);
+  color: var(--grey10, #4f5357);
   text-align: right;
   font-family: SUIT;
   font-size: 16px;
@@ -73,7 +92,7 @@ export const UnitLabel = styled.div`
 export const InputField = styled.input`
   width: 66px;
   flex-shrink: 0;
-  color: var(--grey10, #4F5357);
+  color: var(--grey10, #4f5357);
   font-family: SUIT;
   font-size: 16px;
   font-style: normal;
