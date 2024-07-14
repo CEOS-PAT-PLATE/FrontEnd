@@ -7,7 +7,6 @@ import UnifiedCard from '@components/input-data2/naturalfood-page/unified-card';
 import { useState, useEffect } from 'react';
 
 export default function Table() {
- 
   const searchQuery = useRecoilValue(searchQueryState);
   const rawFoods = useRecoilValue(rawFoodsState);
   const setIsValid = useSetRecoilState(isValidState);
@@ -16,6 +15,7 @@ export default function Table() {
   const [someClicked, setSomeClicked] = useState(false);
   const [serving, setServing] = useState('');
   const setIsServing = useSetRecoilState(isServing);
+  const [isServingValid, setIsServingValid] = useState(false);
 
   const filteredRawFoods = searchQuery ? rawFoods.filter((food) => food.name.includes(searchQuery)).slice(0, 5) : [];
   const recentConsumedRaws = !searchQuery ? consumedRaws.slice(0, 5) : [];
@@ -30,7 +30,19 @@ export default function Table() {
     setIsValid(isStoreValid());
   }, [clickedId, serving, isRecent, setIsValid]);
 
+  useEffect(() => {
+    setIsServingValid(false);
+    setSomeClicked(false);
+    setClickedId(null);
+    setIsServing(false);
+
+
+
+  }, [searchQuery]);
+
   function handleClick(id: string) {
+    setIsServingValid(true);
+
     if (clickedId === id) {
       setClickedId(null);
       setSomeClicked(false);

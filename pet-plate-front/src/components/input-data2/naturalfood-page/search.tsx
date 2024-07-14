@@ -6,14 +6,12 @@ import styled from 'styled-components';
 import SearchbarResetButton from '@public/svg/searchbar-resetbutton.svg?url';
 import SearchbarIcon from '@public/svg/searchbar-searchicon.svg?url';
 import Image from 'next/image';
-import { isValidState,isServing } from '@recoil/atoms';
+import { isValidState, isServing } from '@recoil/atoms';
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const isValid = useRecoilValue(isValidState);
   const isServingState = useRecoilValue(isServing);
-
-
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -23,12 +21,11 @@ export default function Search() {
     setSearchQuery('');
   };
 
-  if (isValid || isServingState) {
-    return null;
-  }
+ // if (isServingState) {
+ //   return null;
+ // }
 
   return (
-  
     <SearchContainer>
       <SearchInputWrapper>
         <SearchIcon src={SearchbarIcon} alt="Icon" priority />
