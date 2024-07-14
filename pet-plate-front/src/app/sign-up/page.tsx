@@ -7,7 +7,7 @@ import Link from 'next/link'
 import signUpGraphic from "@public/svg/signup1.svg?url"
 import mainLogo from "@public/svg/main-logo.svg?url"
 import NaverLogo from "@public/svg/Naver.svg?url"
-import CenterButton from "@components/main/centerbtn"
+import GapButton from "@components/main/gapbtn"
 
 
 export default function page() {
@@ -27,7 +27,7 @@ const buttonContent = (
         <SignUpGraphic src={signUpGraphic} alt="signUpGraphic"/>
       </ContentWrapper>
       <ButtonWrapper>
-        <CenterButton onClick={handleOnclick}
+        <GapButton onClick={handleOnclick}
           backgroundColor= "#03C75A" 
           hoverBackgroundColor= "#03C75A" 
           hoverButtonContentColor= "#fff"

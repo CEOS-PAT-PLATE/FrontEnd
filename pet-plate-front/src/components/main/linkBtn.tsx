@@ -2,19 +2,19 @@
 
 import styled from "styled-components"
 import { ReactNode } from "react"
+import Link from "next/link"
 
 interface CenterButtonProps {
-    onClick: () => void;
+    href : string
     buttonContent: ReactNode;
-    backgroundColor: string;
-    hoverBackgroundColor: string;
-    hoverButtonContentColor: string;
+    backgroundColor: string | ((props: any) => string);
+    hoverBackgroundColor: string | ((props: any) => string);
+    hoverButtonContentColor: string | ((props: any) => string);
 }
 
-export default function CenterButton({onClick, buttonContent, backgroundColor, hoverBackgroundColor, hoverButtonContentColor} : CenterButtonProps) {
+export default function LinkBtn({ href, buttonContent, backgroundColor, hoverBackgroundColor, hoverButtonContentColor} : CenterButtonProps) {
   return (
-    <ButtonContainer 
-      onClick={onClick} 
+    <ButtonContainer href={href}
       backgroundColor={backgroundColor} 
       hoverBackgroundColor={hoverBackgroundColor}
       hoverButtonContentColor={hoverButtonContentColor}
@@ -24,9 +24,10 @@ export default function CenterButton({onClick, buttonContent, backgroundColor, h
   )
 }
 
-const ButtonContainer = styled.div<{ backgroundColor: string, hoverBackgroundColor: string, hoverButtonContentColor: string }>`
+const ButtonContainer = styled(Link)<{ backgroundColor:  string | ((props: any) => string), hoverBackgroundColor: string | ((props: any) => string), hoverButtonContentColor: string | ((props: any) => string) }>`
     width: 19.5rem;
     height: 3.563rem;
+    text-decoration: none;
     border: none;
     border-radius: 0.5rem;
     background-color: ${({ backgroundColor }) => backgroundColor};
