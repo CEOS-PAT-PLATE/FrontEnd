@@ -1,6 +1,6 @@
 'use client';
 import styled from 'styled-components';
-import FavoriteIcon from '@components/input-data2/favorite-page/favorite-icon';
+import FavoriteIcon from '@components/input-data2/common/favorite-icon';
 import { usePathname } from 'next/navigation';
 
 interface InfoLayoutProps {
