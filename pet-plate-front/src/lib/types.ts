@@ -27,7 +27,6 @@ export interface RecentRawFood {
 
 type RecentRawFoodList = RecentRawFood[];
 
-
 interface Nutrient {
   name: string;
   unit: string;

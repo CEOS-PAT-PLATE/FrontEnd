@@ -45,7 +45,7 @@ function checkRequiredInputState(requiredInputState: any[], nutrientNameState: s
 export const RawFoodFormState = atom({
   key: 'rawFoodName',
   default: {
-    rawId: '',
-    serving:'' ,
+    rawId: NaN,
+    serving: NaN,
   },
 });
