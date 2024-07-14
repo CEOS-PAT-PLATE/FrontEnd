@@ -2,7 +2,7 @@
 export default function Page() {
   return (
     <>
-    hi
+    로그인전 안내
     </>
   );
 }
