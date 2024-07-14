@@ -1,8 +1,8 @@
-import LabeledInput from '@components/input-data2/labeled-input';
+import LabeledInput from '@components/input-data2/dryfood-snack-page/labeled-input';
 import InfoLayout from '@components/input-data2/common/info-layout';
-import NutrientInfoLayout from '@components/input-data2/dryfood/snack-page/nutrient-info-layout';
+import NutrientInfoLayout from '@components/input-data2/dryfood-snack-page/nutrient-info-layout';
 import NutrientInputFieldsContainer from '@components/input-data2/dryfood-snack-page/nutrient-input-container';
-import DryFoodButton from '@components/input-data2/dryfood/snack-page/dryfood-button';
+import DryFoodButton from '@components/input-data2/dryfood-snack-page/dryfood-button';
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const title = '영양정보';

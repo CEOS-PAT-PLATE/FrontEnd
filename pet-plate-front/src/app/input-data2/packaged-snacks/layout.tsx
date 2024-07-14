@@ -1,10 +1,10 @@
 'use client';
 
-import LabeledInput from '@components/input-data2/labeled-input';
+import LabeledInput from '@components/input-data2/dryfood-snack-page/labeled-input';
 import InfoLayout from '@components/input-data2/common/info-layout';
-import NutrientInfoLayout from '@components/input-data2/dryfood/snack-page/nutrient-info-layout';
+import NutrientInfoLayout from '@components/input-data2/dryfood-snack-page/nutrient-info-layout';
 import NutrientInputFieldsContainer from '@components/input-data2/dryfood-snack-page/nutrient-input-container';
-import PackagedSnackButton from '@components/input-data2/dryfood/snack-page/packagedsnack-button';
+import PackagedSnackButton from '@components/input-data2/dryfood-snack-page/packagedsnack-button';
 
 interface Nutrient {
   name: string;
