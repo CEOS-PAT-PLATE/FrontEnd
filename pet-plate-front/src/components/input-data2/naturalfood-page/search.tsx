@@ -6,29 +6,54 @@ import styled from 'styled-components';
 import SearchbarResetButton from '@public/svg/searchbar-resetbutton.svg?url';
 import SearchbarIcon from '@public/svg/searchbar-searchicon.svg?url';
 import Image from 'next/image';
-import { isValidState,isServing } from '@recoil/atoms';
+import { isValidState, isServing } from '@recoil/atoms';
+import { useEffect } from 'react';
 
-export default function Search() {
+// 리펙토링을 위한 import
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+export default function Search({ placeholder }: { placeholder: string }) {
   const [searchQuery, setSearchQuery] = useRecoilState(searchQueryState);
   const isValid = useRecoilValue(isValidState);
   const isServingState = useRecoilValue(isServing);
 
+  // 리펙토링을 위한 hooks
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
+  useEffect(() => {
+    // 컴포넌트가 처음 렌더링될 때 query를 제거
+    const params = new URLSearchParams(searchParams);
+    params.delete('keyword');
+    replace(`${pathname}?${params.toString()}`);
+  }, [pathname]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
+    const params = new URLSearchParams(searchParams);
+    if (event.target.value) {
+      params.set('keyword', event.target.value);
+    } else {
+      params.delete('keyword');
+    }
+
+    replace(`${pathname}?${params.toString()}`);
   };
 
   const handleReset = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete('keyword');
+    replace(`${pathname}?${params.toString()}`);
+
     setSearchQuery('');
   };
 
-  if (isValid || isServingState) {
-    return null;
-  }
+  // if (isServingState) {
+  //   return null;
+  // }
 
   return (
-  
     <SearchContainer>
       <SearchInputWrapper>
         <SearchIcon src={SearchbarIcon} alt="Icon" priority />

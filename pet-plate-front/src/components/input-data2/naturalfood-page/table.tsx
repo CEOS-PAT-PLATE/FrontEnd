@@ -1,41 +1,109 @@
 'use client';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { searchQueryState, rawFoodsState, consumedRawsState, isValidState, isServing } from '@recoil/atoms';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+import { searchQueryState, consumedRawsState, isValidState, isServing } from '@recoil/atoms';
 import styled from 'styled-components';
 import UnifiedCard from '@components/input-data2/naturalfood-page/unified-card';
 import { useState, useEffect } from 'react';
+import { RawFood, RecentRawFood } from '@lib/types';
 
-export default function Table() {
- 
-  const searchQuery = useRecoilValue(searchQueryState);
-  const rawFoods = useRecoilValue(rawFoodsState);
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+import { RawFoodFormState } from '@recoil/nutrientAtoms';
+
+export default function Table({
+  keyword,
+  rawFoods,
+  recentRawFoods,
+}: {
+  keyword: string;
+  rawFoods: any;
+  recentRawFoods: any;
+}) {
+  const [searchQueryrecoil, setSearchQuery] = useRecoilState(searchQueryState);
+  const [rawFoodForm, setRawFoodForm] = useRecoilState(RawFoodFormState);
+
+  //const searchQuery = useRecoilValue(searchQueryState);
+  const searchQuery = keyword;
+  console.log(searchQuery);
+  // const rawFoods = useRecoilValue(rawFoodsState);
   const setIsValid = useSetRecoilState(isValidState);
-  const consumedRaws = useRecoilValue(consumedRawsState);
+  // const consumedRaws = useRecoilValue(consumedRawsState);
+
+  // 불러온 데이터로 변경
+  const consumedRaws = recentRawFoods;
+
   const [clickedId, setClickedId] = useState<string | null>(null);
   const [someClicked, setSomeClicked] = useState(false);
   const [serving, setServing] = useState('');
   const setIsServing = useSetRecoilState(isServing);
+  const [isServingValid, setIsServingValid] = useState(false);
 
-  const filteredRawFoods = searchQuery ? rawFoods.filter((food) => food.name.includes(searchQuery)).slice(0, 5) : [];
-  const recentConsumedRaws = !searchQuery ? consumedRaws.slice(0, 5) : [];
+  // 리펙토링을 위한 hooks
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const filteredRawFoods = searchQuery
+    ? rawFoods.filter((food: RawFood) => food.name.includes(searchQuery)).slice(0, 5)
+    : [];
+  const recentConsumedRaws = !searchQuery ? consumedRaws?.slice(0, 5) : [];
   const fontWeight1 = '400';
   const fontWeight2 = '700';
   const lineHeight1 = '160%';
   const lineHeight2 = '130%';
-  const isRecent = recentConsumedRaws.some((consumed) => consumed.rawId === clickedId);
-  const selectedFood = filteredRawFoods.find((food) => food.name === clickedId);
+  const isRecent = recentConsumedRaws?.some((consumed: RecentRawFood) => consumed.name === clickedId);
+  const selectedFood = filteredRawFoods.find((food: RawFood) => food.name === clickedId);
+  const selectedRecentFood = recentConsumedRaws?.find((food: RecentRawFood) => food.name === clickedId);
 
   useEffect(() => {
     setIsValid(isStoreValid());
   }, [clickedId, serving, isRecent, setIsValid]);
 
+  useEffect(() => {
+    setIsServingValid(false);
+    setSomeClicked(false);
+    setClickedId(null);
+    setIsServing(false);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (isRecent) {
+      setRawFoodForm({
+        rawId: selectedRecentFood?.dailyRawId,
+        serving: selectedRecentFood?.serving,
+      });
+      // console.log(selectedRecentFood);
+    } else {
+      const selectedFood = filteredRawFoods.find((food: RawFood) => food.name === clickedId);
+
+      setRawFoodForm({
+        rawId: selectedFood?.rawId,
+        serving: parseInt(serving),
+      });
+      // console.log(selectedFood,serving);
+    }
+  }, [selectedFood, selectedRecentFood, serving, isServing]);
+
+  // console.log(rawFoodForm)
+
+  // console.log(selectedFood);
+  // console.log(selectedRecentFood);
+  //  console.log(serving)
+
   function handleClick(id: string) {
+    setIsServingValid(true);
+
     if (clickedId === id) {
+      // 재클릭시 초기화
       setClickedId(null);
       setSomeClicked(false);
       setServing('');
       setIsServing(false);
+      const params = new URLSearchParams(searchParams);
+      params.delete('keyword');
+      replace(`${pathname}?${params.toString()}`);
+      setSearchQuery('');
     } else {
       setClickedId(id);
       setSomeClicked(true);
@@ -52,11 +120,11 @@ export default function Table() {
 
   return (
     <div>
-      <TableContainer $searchQuery={searchQuery}>
+      <TableContainer $searchQuery={keyword}>
         {searchQuery ? (
-          filteredRawFoods.map((food) => (
+          filteredRawFoods.map((food: RawFood) => (
             <UnifiedCard
-              key={food.id}
+              key={food.name}
               title={food.name}
               description={food.description}
               titleFontWeight={fontWeight2}
@@ -70,17 +138,17 @@ export default function Table() {
           ))
         ) : (
           <RecentContainer>
-            {recentConsumedRaws.map((consumed) => (
+            {recentConsumedRaws?.map((consumed: RecentRawFood) => (
               <UnifiedCard
-                key={consumed.rawId}
-                title={consumed.rawId}
+                key={consumed.dailyRawId}
+                title={consumed.name}
                 description={`${consumed.serving}g`}
                 titleFontWeight={fontWeight1}
                 titleLineHeight={lineHeight1}
                 descriptionFontWeight={fontWeight1}
                 descriptionLineHeight={lineHeight1}
-                isClicked={clickedId === consumed.rawId}
-                onClick={() => handleClick(consumed.rawId)}
+                isClicked={clickedId === consumed.name}
+                onClick={() => handleClick(consumed.name)}
                 someClicked={someClicked}
                 isRecent={true}
               />
