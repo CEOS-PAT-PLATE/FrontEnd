@@ -10,8 +10,6 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-
-
 export default function StoreButton() {
   const pathname = usePathname();
   const isValid = useRecoilValue(isValidState);

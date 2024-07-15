@@ -15,14 +15,13 @@ export default async function Layout({ children }: { children: React.ReactNode }
         <GridContainer>
           <NavbarContainer>
             <Navbar />
-         
           </NavbarContainer>
           <ExitButtonImage src={ExitButton} alt="exit-button" />
           <Content>{children}</Content>
         </GridContainer>
         <Notice />
       </Wrapper>
-   
+
       {/** <StoreButton/> */}
     </>
   );

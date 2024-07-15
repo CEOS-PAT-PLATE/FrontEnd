@@ -7,6 +7,8 @@ import StoreButtonInactive from '@public/svg/btn_cta_inactive.svg?url';
 import StoreButtonActive from '@public/svg/btn_cta_active.svg?url';
 import styled from 'styled-components';
 import Wrapper from '@style/input-data2/Wrapper';
+import Notice from '@components/input-data2/common/notice';
+
 
 import { isValidState } from '@recoil/atoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -17,7 +19,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   function handleClick() {
     if (!isValid) {
-      alert('식단을 추가해주세요.');
+   //   alert('식단을 추가해주세요.');
+   //setNotice({ isVisible: true, message: '식단을 선택해주세요!' });
+
       return;
     }
   }
@@ -33,6 +37,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           onClick={handleClick}
           priority // 이미지 로드 우선순위 지정
         />
+        <NoticeContainer>
+   <Notice />
+   </NoticeContainer>
       </Wrapper>
     </>
   );
@@ -44,4 +51,8 @@ const StoreButtonImage = styled(Image)`
   bottom: 200px;
   left: 24px;
   cursor: pointer;
+`;
+
+const NoticeContainer = styled.div`
+
 `;

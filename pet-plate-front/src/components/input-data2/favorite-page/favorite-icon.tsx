@@ -10,6 +10,10 @@ import { usePathname } from 'next/navigation';
 import { useRecoilState } from 'recoil';
 import { isBookmarkUpdated } from '@recoil/atoms';
 
+
+import { useSetRecoilState } from 'recoil';
+import { noticeState } from '@recoil/atoms';
+
 import bookmarkAPI from '@api/bookmarkAPI';
 
 interface FavoriteIconProps {
@@ -21,7 +25,7 @@ export default function FavoriteIcon({ id, type }: FavoriteIconProps) {
   const [isActive, setIsActive] = useState<boolean>(true);
   const pathName = usePathname();
   const [bookMarkState,setbookarkState] = useRecoilState(isBookmarkUpdated);
-
+  const setNotice = useSetRecoilState(noticeState);
   /*
   function handleClick() {
     if (isActive === true) setIsActive(false);
@@ -42,11 +46,14 @@ export default function FavoriteIcon({ id, type }: FavoriteIconProps) {
           await bookmarkAPI.deleteBookmarkPackagedSnack(id);
         }
         setIsActive(false);
-        alert('즐겨찾기에서 해제되었습니다.');
+      //  alert('즐겨찾기에서 해제되었습니다.');
+      setNotice({ isVisible: true, message: '즐겨찾기에서 해제됐어요!' });
+
+      
         setbookarkState(!bookMarkState);
       } catch (error) {
         console.error('즐겨찾기 해제 중 오류가 발생했습니다:', error);
-        alert('즐겨찾기 해제 중 오류가 발생했습니다.');
+     //   alert('즐겨찾기 해제 중 오류가 발생했습니다.');
       }
     } else {
       setIsActive(true);

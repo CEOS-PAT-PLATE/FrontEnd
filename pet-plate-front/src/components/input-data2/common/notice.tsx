@@ -2,7 +2,7 @@
 
 import styled, { css } from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { noticeState } from '@recoil/atoms'; 
+import { noticeState } from '@recoil/atoms';
 import { useEffect } from 'react';
 
 export default function Notice() {
@@ -14,7 +14,7 @@ export default function Notice() {
     if (notice.isVisible) {
       timer = setTimeout(() => {
         setNotice({ isVisible: false, message: '' });
-      }, 700); // 메시지 숨기는 시간 
+      }, 500); // 메시지 숨기는 시간
     }
     return () => clearTimeout(timer);
   }, [notice, setNotice]);
@@ -33,10 +33,12 @@ const NoticeContainer = styled.div`
   gap: 8px;
   border-radius: 16px;
   background: var(--grey11, #36393c);
-  width: 144px;
+  width: 147px;
   height: 23px;
+
   color: var(--grey1, #fafafc);
   text-align: center;
+
   /* body3_semibold_12pt */
   font-family: SUIT;
   font-size: 12px;
