@@ -4,94 +4,122 @@ import StarActiveIcon from '@public/svg/star-active.svg?url';
 import StarInActiveIcon from '@public/svg/star-inactive.svg?url';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-
-
-
+import bookmarkAPI from '@api/bookmarkAPI';
 
 // api 실연동 위해 추가
 import { useAddBookmarkItem } from '@hooks/useAddBookmarkItem';
 import { useRecoilValue } from 'recoil';
 import { isValidState } from '@recoil/atoms';
-import { isFormValidState} from '@recoil/nutrientAtoms';
+import { isFormValidState } from '@recoil/nutrientAtoms';
 
-import { RequiredInputState, NutrientNameState,RawFoodFormState } from '@recoil/nutrientAtoms';
+import { RequiredInputState, NutrientNameState, RawFoodFormState } from '@recoil/nutrientAtoms';
 
-// api 실연동 중 즐겨찾기 해제 
+// api 실연동 중 즐겨찾기 해제
 import { useCancelBookmarkItem } from '@hooks/useCancelBookmarkItem';
-
-
-
 
 export default function FavoriteIcon() {
   const [isActive, setIsActive] = useState<boolean>(false);
   const { addBookmarkRawItem, addBookmarkFeedItem, addBookmarkPackagedSnackItem } = useAddBookmarkItem();
-  const { cancelBookmarkRawItem, cancelBookmarkFeedItem, cancelBookmarkPackagedSnackItem } =  useCancelBookmarkItem();
+  const { cancelBookmarkRawItem, cancelBookmarkFeedItem, cancelBookmarkPackagedSnackItem } = useCancelBookmarkItem();
 
-
-  // 자연식 페이지 
+  // 자연식 페이지
   const isValidRawForm = useRecoilValue(isValidState);
 
-  // 포장/사료 페이지 
+  // 포장/사료 페이지
   const isValidForm = useRecoilValue(isFormValidState);
-
 
   const requiredInputState = useRecoilValue(RequiredInputState);
   const nutrientName = useRecoilValue(NutrientNameState);
   const rawFoodForm = useRecoilValue(RawFoodFormState);
 
-
   const pathName = usePathname();
 
   let isValid = false;
 
-
-  if(pathName === '/input-data2/natural-food') {
+  if (pathName === '/input-data2/natural-food') {
     isValid = isValidRawForm;
-  }
-  else if(pathName === '/input-data2/dry-food' || pathName === '/input-data2/packaged-snacks') {
-isValid = isValidForm;
+  } else if (pathName === '/input-data2/dry-food' || pathName === '/input-data2/packaged-snacks') {
+    isValid = isValidForm;
   }
 
-  function handleClick() {
+  async function handleClick() {
     if (isActive === true) {
-      setIsActive(false);
-      alert('즐겨찾기가 해제되었습니다.');
-      handleCancelApiCall()
-    } else if (isActive == false && !isValid) {
+      // 즐겨찾기 해제 로직
+      try {
+        const cancelId = await fetchBookmarkId();
+        if (cancelId !== undefined) {
+          await handleCancelApiCall(cancelId);
+          setIsActive(false);
+        } else {
+          alert('취소할 항목을 찾을 수 없습니다.');
+        }
+      } catch (error) {
+        console.error('즐겨찾기 해제 중 오류가 발생했습니다:', error);
+        alert('즐겨찾기 해제 중 오류가 발생했습니다.');
+      }
+    } else if (isActive === false && !isValid) {
       alert('입력 양식을 확인해 주세요.');
       return;
-    } else if (isActive == false && isValid) {
-      setIsActive(true);
+    } else if (isActive === false && isValid) {
       alert('즐겨찾기에 저장되었습니다.');
       handleAddApiCall();
     }
   }
 
+  async function fetchBookmarkId(): Promise<number | undefined> {
+    try {
+      if (pathName === '/input-data2/natural-food') {
+        const response = await bookmarkAPI.getBookmarkRaws();
+        return response.data.data.find((item: any) => item.bookMarkedRawId === rawFoodForm.rawId)?.bookMarkedRawId;
+      } else if (pathName === '/input-data2/dry-food') {
+        const response = await bookmarkAPI.getBookmarkFeeds();
+        return response.data.data.find((item: any) => item.name === nutrientName)?.bookMarkedFeedId;
+      } else if (pathName === '/input-data2/packaged-snacks') {
+        const response = await bookmarkAPI.getBookmarkPackagedSnacks();
+        return response.data.data.find((item: any) => item.name === nutrientName)?.bookMarkedPackagedSnackId;
+      }
+    } catch (error) {
+      console.error('즐겨찾기 아이디 조회 중 오류가 발생했습니다:', error);
+      alert('즐겨찾기 아이디 조회 중 오류가 발생했습니다.');
+    }
+  }
 
-  const cancelId=1;
-
-
-  const rawData = {
-    rawId: rawFoodForm.rawId,
-    serving: rawFoodForm.serving,
-  };
+  // 즐겨찾기 해제 api 연동 함수
+  async function handleCancelApiCall(cancelId: number) {
+    try {
+      if (pathName === '/input-data2/natural-food') {
+        await bookmarkAPI.deleteBookmarkRaw(cancelId);
+      } else if (pathName === '/input-data2/dry-food') {
+        await bookmarkAPI.deleteBookmarkFeed(cancelId);
+      } else if (pathName === '/input-data2/packaged-snacks') {
+        await bookmarkAPI.deleteBookmarkPackagedSnack(cancelId);
+      }
+      alert('즐겨찾기에서 해제되었습니다.');
+    } catch (error) {
+      console.error('즐겨찾기 해제 중 오류가 발생했습니다:', error);
+      alert('즐겨찾기 해제 중 오류가 발생했습니다.');
+    }
+  }
 
   // 즐겨찾기에 추가 api 연동 함수
-
- function handleAddApiCall() {
+  function handleAddApiCall() {
     if (pathName === '/input-data2/natural-food') {
       addBookmarkRawItem.mutate(
-        rawData,
+        {
+          rawId: rawFoodForm.rawId,
+          serving: rawFoodForm.serving,
+        },
         {
           onSuccess: () => {
             alert('즐겨찾기에 추가되었습니다.');
+            setIsActive(true);
           },
           onError: () => {
             alert('즐겨찾기 추가 중 오류가 발생했습니다.');
           },
-        }
+        },
       );
     } else if (pathName === '/input-data2/dry-food') {
       const feedData = {
@@ -107,17 +135,15 @@ isValid = isValidForm;
         vitaminDPercent: parseInt(requiredInputState.find((item) => item.index === 9)?.value || '0', 10),
         vitaminEPercent: parseInt(requiredInputState.find((item) => item.index === 10)?.value || '0', 10),
       };
-      addBookmarkFeedItem.mutate(
-        feedData,
-        {
-          onSuccess: () => {
-            alert('즐겨찾기에 추가되었습니다.');
-          },
-          onError: () => {
-            alert('즐겨찾기 추가 중 오류가 발생했습니다.');
-          },
-        }
-      );
+      addBookmarkFeedItem.mutate(feedData, {
+        onSuccess: () => {
+          alert('즐겨찾기에 추가되었습니다.');
+          setIsActive(true);
+        },
+        onError: () => {
+          alert('즐겨찾기 추가 중 오류가 발생했습니다.');
+        },
+      });
     } else if (pathName === '/input-data2/packaged-snacks') {
       const snackData = {
         serving: parseInt(requiredInputState.find((item) => item.index === 1)?.value || '0', 10),
@@ -132,64 +158,18 @@ isValid = isValidForm;
         vitaminDPercent: parseInt(requiredInputState.find((item) => item.index === 9)?.value || '0', 10),
         vitaminEPercent: parseInt(requiredInputState.find((item) => item.index === 10)?.value || '0', 10),
       };
-      addBookmarkPackagedSnackItem.mutate(
-        snackData,
-        {
-          onSuccess: () => {
-            alert('즐겨찾기에 추가되었습니다.');
-          },
-          onError: () => {
-            alert('즐겨찾기 추가 중 오류가 발생했습니다.');
-          },
-        }
-      );
+      addBookmarkPackagedSnackItem.mutate(snackData, {
+        onSuccess: () => {
+          alert('즐겨찾기에 추가되었습니다.');
+          setIsActive(true);
+        },
+        onError: () => {
+          alert('즐겨찾기 추가 중 오류가 발생했습니다.');
+        },
+      });
     }
   }
 
-
-  // 즐겨찾기 해제 api 연동 함수
-  function handleCancelApiCall() {
-    if (pathName === '/input-data2/natural-food') {
-      cancelBookmarkRawItem.mutate(
-        cancelId,
-        {
-          onSuccess: () => {
-            alert('즐겨찾기에서 해제되었습니다.');
-          },
-          onError: () => {
-            alert('즐겨찾기 해제 중 오류가 발생했습니다.');
-          },
-        }
-      );
-    } else if (pathName === '/input-data2/dry-food') {
-   
-     cancelBookmarkFeedItem.mutate(
-        cancelId,
-        {
-          onSuccess: () => {
-            alert('즐겨찾기에서 해제되었습니다.');
-          },
-          onError: () => {
-            alert('즐겨찾기 해제 중 오류가 발생했습니다.');
-          },
-        }
-      );
-    } else if (pathName === '/input-data2/packaged-snacks') {
-     
-      cancelBookmarkPackagedSnackItem.mutate(
-        cancelId,
-        {
-          onSuccess: () => {
-            alert('즐겨찾기에서 해제되었습니다.');
-          },
-          onError: () => {
-            alert('즐겨찾기 해제 중 오류가 발생했습니다.');
-          },
-        }
-      );
-    }
-  }
-  
   return (
     <FavoriteIconImage
       src={isActive ? StarActiveIcon : StarInActiveIcon}
