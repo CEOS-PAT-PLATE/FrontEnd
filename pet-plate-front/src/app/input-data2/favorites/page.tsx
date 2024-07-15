@@ -9,6 +9,7 @@ import bookmarkAPI from '@api/bookmarkAPI';
 import { useRecoilValue } from 'recoil';
 import { isBookmarkUpdated } from '@recoil/atoms';
 
+
 interface Foodlist {
   id: number;
   type: string;
