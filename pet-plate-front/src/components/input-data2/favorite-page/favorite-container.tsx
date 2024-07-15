@@ -57,8 +57,8 @@ const Container = styled.div<{ $isClicked: boolean }>`
   ${({ $isClicked }) =>
     $isClicked &&
     css`
-      border: 1px solid var(--primary, #40C97F);
-      background: var(--50, #ECFAF2);
+      border: 1px solid var(--primary, #40c97f);
+      background: var(--50, #ecfaf2);
     `}
 
   ${({ $isClicked }) =>
@@ -89,4 +89,5 @@ const FavoriteIconWrapper = styled.div`
   left: 275px;
   top: 14px;
   left: 264px;
+  background-color: none;
 `;
