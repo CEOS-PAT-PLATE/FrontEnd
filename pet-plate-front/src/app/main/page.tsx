@@ -1,7 +1,9 @@
-import React from 'react'
+import ScrollCarousel from "@components/main/scrollCarousel"
 
 export default function page() {
   return (
-    <div>home</div>
+    <div>
+      <ScrollCarousel/>
+    </div>
   )
 }

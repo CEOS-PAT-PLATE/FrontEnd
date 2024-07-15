@@ -29,5 +29,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   `
  const Contents = styled.div`
     width: 100%;
-    flex-grow: 1;
+    height: 42.063rem;
  `
