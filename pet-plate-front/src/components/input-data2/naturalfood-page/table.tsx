@@ -77,7 +77,7 @@ export default function Table({
     if (isRecent && selectedRecentFood) {
       const matchingFood = filteredRawFoods.find((food: RawFood) => food.name === clickedItem?.id);
       setRawFoodForm({
-        rawId: matchingFood?.rawId || selectedRecentFood.dailyRawId,
+        rawId: selectedRecentFood.rawId,
         serving: selectedRecentFood.serving,
         name: selectedRecentFood.name,
       });
