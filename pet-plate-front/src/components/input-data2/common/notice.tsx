@@ -41,7 +41,7 @@ const NoticeContainer = styled.div`
 
   /* body3_semibold_12pt */
   font-family: SUIT;
-  font-size: 12px;
+  font-size: 11px;
   font-style: normal;
   font-weight: 600;
   line-height: 160%; /* 19.2px */

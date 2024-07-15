@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import InfoLayout from '@components/input-data2/common/info-layout';
 import FavoriteContainer from '@components/input-data2/favorite-page/favorite-container';
@@ -9,7 +9,9 @@ import FavoritesButton from '@components/input-data2/favorite-page/favoritefood-
 import bookmarkAPI from '@api/bookmarkAPI';
 import { useRecoilValue } from 'recoil';
 import { selectedItemState } from '@recoil/favoritePageAtoms';
-import {isBookmarkUpdated} from '@recoil/atoms';
+import {isBookmarkUpdated,isValidState,} from '@recoil/atoms';
+
+
 interface Foodlist {
   id: number;
   type: string;
@@ -20,6 +22,7 @@ export default function Page() {
   const [favoritesFoodList, setFavoritesFoodList] = useState<Foodlist[]>([]);
   const bookmarkUpdated = useRecoilValue(isBookmarkUpdated);
   const setSelectedItem = useSetRecoilState(selectedItemState);
+  const setIsValid = useSetRecoilState(isValidState);
 
   // 클릭된 카드 필터링
   const [clickedId, setClickedId] = useState<number | null>(null);
@@ -104,6 +107,15 @@ export default function Page() {
       setSelectedItem(item);
     }
   };
+
+  useEffect(() => {
+    if (clickedId !== null) {
+      setIsValid(true);
+    }else{
+      setIsValid(false);
+    }
+  }, [clickedId]);
+
 
   return (
     <>

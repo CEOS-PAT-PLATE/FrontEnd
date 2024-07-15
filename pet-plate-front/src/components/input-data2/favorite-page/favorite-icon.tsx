@@ -47,7 +47,7 @@ export default function FavoriteIcon({ id, type }: FavoriteIconProps) {
         }
         setIsActive(false);
       //  alert('즐겨찾기에서 해제되었습니다.');
-      setNotice({ isVisible: true, message: '즐겨찾기에서 해제됐어요!' });
+      setNotice({ isVisible: true, message: '즐겨찾기에서 삭제했어요!' });
 
       
         setbookarkState(!bookMarkState);

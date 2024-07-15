@@ -7,6 +7,7 @@ import { selectedItemState } from '@recoil/favoritePageAtoms';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
+
 import { noticeState } from '@recoil/atoms';
 
 export default function FavoriteButton() {
@@ -15,6 +16,7 @@ export default function FavoriteButton() {
   const selectedItem = useRecoilValue(selectedItemState);
 
   const setNotice = useSetRecoilState(noticeState);
+
 
   const handleClick = () => {
     if (!selectedItem) {
