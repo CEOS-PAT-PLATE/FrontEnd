@@ -21,7 +21,7 @@ const GlobalStyles = createGlobalStyle`
 
   ${reset}
 
-  html,body {
+  html {
     /* width:100%;
     height: 100vh; */
     width: 360px;
@@ -30,6 +30,10 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'SUIT', sans-serif;
   }
 
+  body{
+    width: 100%;
+    height: 100%;
+  }
 
 * {
   box-sizing: border-box;
