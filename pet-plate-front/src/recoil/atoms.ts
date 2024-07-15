@@ -49,3 +49,10 @@ export const clickedItemState = atom<{ id: string; serving?: number }>({
   key: 'clickedItemState',
   default: { id: '', serving: 0 },
 });
+
+
+// 자연식 
+export const isNoticeVisibleState = atom({
+  key: 'isNoticeVisibleState',
+  default: false,
+});
