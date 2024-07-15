@@ -21,6 +21,7 @@ export default function Page() {
   );
     return (
       <PageWrapper>
+        <Padding/>
         <ContentWrapper>
           <Text>회원가입을 축하드려요</Text>
           <WelcomeGraphic src={welcomeGraphic} alt="signUpGraphic"/>
