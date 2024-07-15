@@ -9,7 +9,6 @@ import bookmarkAPI from '@api/bookmarkAPI';
 import { useRecoilValue } from 'recoil';
 import { isBookmarkUpdated } from '@recoil/atoms';
 
-
 interface Foodlist {
   id: number;
   type: string;
@@ -19,6 +18,10 @@ interface Foodlist {
 export default function Page() {
   const [favoritesFoodList, setFavoritesFoodList] = useState<Foodlist[]>([]);
   const bookmarkUpdated = useRecoilValue(isBookmarkUpdated);
+
+  // 클릭된 카드 필터링
+  const [clickedId, setClickedId] = useState<number | null>(null);
+
   useEffect(() => {
     const fetchBookmarks = async () => {
       try {
@@ -55,6 +58,16 @@ export default function Page() {
     fetchBookmarks();
   }, [bookmarkUpdated]);
 
+  const handleClick = (id: number) => {
+    console.log(id, clickedId);
+    if (clickedId === id) {
+      setClickedId(null); // 재클릭 시 초기화
+    } else {
+      setClickedId(id);
+      
+    }
+  };
+
   return (
     <>
       <InfoLayout
@@ -63,7 +76,14 @@ export default function Page() {
       />
       <FavoriteContainerWrapper>
         {favoritesFoodList.map((item) => (
-          <FavoriteContainer key={item.id + item.type} id={item.id} type={item.type} name={item.name} />
+          <FavoriteContainer
+            key={item.id + item.type}
+            id={item.id}
+            type={item.type}
+            name={item.name}
+            isClicked={clickedId === item.id}
+            onClick={() => handleClick(item.id)}
+          />
         ))}
       </FavoriteContainerWrapper>
       <FavoritesButton />
