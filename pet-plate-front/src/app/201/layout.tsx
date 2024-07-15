@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   function handleClick() {
     if (!isValid) {
-      alert('입력 양식을 확인해 주세요.');
+      alert('식단을 추가해주세요.');
       return;
     }
   }
