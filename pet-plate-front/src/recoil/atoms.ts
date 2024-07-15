@@ -43,3 +43,9 @@ export const noticeState = atom({
     message: '',
   },
 });
+
+
+export const clickedItemState = atom<{ id: string; serving?: number }>({
+  key: 'clickedItemState',
+  default: { id: '', serving: 0 },
+});
