@@ -7,6 +7,9 @@ import { isFormValidState, RequiredInputState, NutrientNameState } from '@recoil
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 
+import { useSetRecoilState } from 'recoil';
+import { noticeState } from '@recoil/atoms';
+
 export default function NutrientButton() {
   const { addFeed, addPackagedSnack } = useAddDirectlyToDailyMeals();
   const router = useRouter();
@@ -15,6 +18,9 @@ export default function NutrientButton() {
   const [requiredInputState, setRequiredInputState] = useRecoilState(RequiredInputState);
   const [nutrientName, setNutrientName] = useRecoilState(NutrientNameState);
   const pathName = usePathname();
+
+  const setNotice = useSetRecoilState(noticeState);
+
   const apiCall = pathName === '/input-data2/dry-food' ? addFeed : addPackagedSnack;
 
   const nutrientData = {
@@ -33,7 +39,9 @@ export default function NutrientButton() {
 
   const handleClick = () => {
     if (!isValid) {
-      alert('입력 양식을 확인해 주세요.');
+      //  alert('입력 양식을 확인해 주세요.');
+      setNotice({ isVisible: true, message: '미입력된 정보가 있어요!' });
+
       return;
     }
 
@@ -41,7 +49,8 @@ export default function NutrientButton() {
       { petId: 3, data: nutrientData },
       {
         onSuccess: () => {
-          alert('하루 식사에 저장되었습니다.');
+          //    alert('하루 식사에 저장되었습니다.');
+          setNotice({ isVisible: true, message: '식단에 추가됐어요!' });
 
           setRequiredInputState([
             { index: 1, value: '' },
@@ -60,7 +69,7 @@ export default function NutrientButton() {
           router.push('/201', { scroll: false });
         },
         onError: () => {
-          alert('저장 중 오류가 발생했습니다.');
+          //    alert('저장 중 오류가 발생했습니다.');
         },
       },
     );

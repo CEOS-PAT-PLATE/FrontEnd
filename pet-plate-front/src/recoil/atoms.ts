@@ -34,3 +34,25 @@ export const isBookmarkUpdated = atom({
   key: 'bookMarkUpdateState',
   default: false,
 });
+
+
+export const noticeState = atom({
+  key: 'noticeState',
+  default: {
+    isVisible: false,
+    message: '',
+  },
+});
+
+
+export const clickedItemState = atom<{ id: string; serving?: number }>({
+  key: 'clickedItemState',
+  default: { id: '', serving: 0 },
+});
+
+
+// 자연식 
+export const isNoticeVisibleState = atom({
+  key: 'isNoticeVisibleState',
+  default: false,
+});

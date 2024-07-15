@@ -11,6 +11,7 @@ export interface RawMealData {
 
 export interface RecentRawFood {
   dailyRawId: number;
+  rawId: number;
   name: string;
   description: string | null;
   serving: number;

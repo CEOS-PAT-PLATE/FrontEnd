@@ -3,6 +3,8 @@ import { Option } from '@lib/types';
 import styled, { css } from 'styled-components';
 import { searchQueryState, isValidState, isServing } from '@recoil/atoms';
 import { useRecoilState, useResetRecoilState } from 'recoil';
+import { usePathname } from 'next/navigation';
+
 
 interface NavElementsProps {
   option: Option;
@@ -14,13 +16,16 @@ export default function NavElements({ option, isActive }: NavElementsProps) {
   const resetIsValid = useResetRecoilState(isValidState);
   const resetIsServing = useResetRecoilState(isServing);
 
+  const pathname = usePathname();
+
   function resetGlobalState() {
     // 전역 상태 초기화 함수
     resetSearchQuery();
-    resetIsValid();
+    if (pathname !== `/${option.link}`) {
+      resetIsValid();
+    }
     resetIsServing();
   }
-
   return (
     <NavItem $isActive={isActive}>
       <StyledLink href={`/${option.link}`} $isActive={isActive} onClick={resetGlobalState}>

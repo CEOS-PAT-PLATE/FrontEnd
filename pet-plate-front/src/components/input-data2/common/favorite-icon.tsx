@@ -19,11 +19,14 @@ import { RequiredInputState, NutrientNameState, RawFoodFormState } from '@recoil
 // api 실연동 중 즐겨찾기 해제
 import { useCancelBookmarkItem } from '@hooks/useCancelBookmarkItem';
 
+import { useSetRecoilState } from 'recoil';
+import { noticeState } from '@recoil/atoms';
+
 export default function FavoriteIcon() {
   const [isActive, setIsActive] = useState<boolean>(false);
   const { addBookmarkRawItem, addBookmarkFeedItem, addBookmarkPackagedSnackItem } = useAddBookmarkItem();
   const { cancelBookmarkRawItem, cancelBookmarkFeedItem, cancelBookmarkPackagedSnackItem } = useCancelBookmarkItem();
-
+  const setNotice = useSetRecoilState(noticeState);
   // 자연식 페이지
   const isValidRawForm = useRecoilValue(isValidState);
 
@@ -40,7 +43,7 @@ export default function FavoriteIcon() {
 
   if (pathName === '/input-data2/natural-food') {
     isValid = isValidRawForm;
-    console.log(isValid)
+    console.log(isValid);
   } else if (pathName === '/input-data2/dry-food' || pathName === '/input-data2/packaged-snacks') {
     isValid = isValidForm;
   }
@@ -57,10 +60,12 @@ export default function FavoriteIcon() {
         }
       } catch (error) {
         console.error('즐겨찾기 해제 중 오류가 발생했습니다:', error);
-        alert('즐겨찾기 해제 중 오류가 발생했습니다.');
+        //  alert('즐겨찾기 해제 중 오류가 발생했습니다.');
       }
     } else if (isActive === false && !isValid) {
-      alert('입력 양식을 확인해 주세요.');
+      setNotice({ isVisible: true, message: '미입력된 정보가 있어요!' });
+
+      //  alert('입력 양식을 확인해 주세요.');
       return;
     } else if (isActive === false && isValid) {
       // alert('즐겨찾기에 저장되었습니다.');
@@ -84,8 +89,8 @@ export default function FavoriteIcon() {
         return response.data.data.find((item: any) => item.name === nutrientName)?.bookMarkedPackagedSnackId;
       }
     } catch (error) {
-      console.error('즐겨찾기 아이디 조회 중 오류가 발생했습니다:', error);
-      alert('즐겨찾기 아이디 조회 중 오류가 발생했습니다.');
+      // console.error('즐겨찾기 아이디 조회 중 오류가 발생했습니다:', error);
+      // alert('즐겨찾기 아이디 조회 중 오류가 발생했습니다.');
     }
   }
 
@@ -99,10 +104,11 @@ export default function FavoriteIcon() {
       } else if (pathName === '/input-data2/packaged-snacks') {
         await bookmarkAPI.deleteBookmarkPackagedSnack(cancelId);
       }
-      alert('즐겨찾기에서 해제되었습니다.');
+      // alert('즐겨찾기에서 해제되었습니다.');
+      setNotice({ isVisible: true, message: '즐겨찾기에서 해제됐어요!' });
     } catch (error) {
       console.error('즐겨찾기 해제 중 오류가 발생했습니다:', error);
-      alert('즐겨찾기 해제 중 오류가 발생했습니다.');
+      //   alert('즐겨찾기 해제 중 오류가 발생했습니다.');
     }
   }
 
@@ -116,12 +122,15 @@ export default function FavoriteIcon() {
         },
         {
           onSuccess: () => {
-            alert('즐겨찾기에 추가되었습니다.');
+            //   alert('즐겨찾기에 추가되었습니다.');
+            setNotice({ isVisible: true, message: '즐겨찾기에 저장됐어요!' });
+
             setIsActive(true);
           },
           onError: () => {
             //  alert('즐겨찾기 추가 중 오류가 발생했습니다.');
-            alert('이미 즐겨찾기에 존재합니다.');
+            //   alert('이미 즐겨찾기에 존재합니다.');
+            setNotice({ isVisible: true, message: '이미 즐겨찾기에 존재해요!' });
           },
         },
       );
@@ -141,11 +150,14 @@ export default function FavoriteIcon() {
       };
       addBookmarkFeedItem.mutate(feedData, {
         onSuccess: () => {
-          alert('즐겨찾기에 추가되었습니다.');
+          //   alert('즐겨찾기에 추가되었습니다.');
+          setNotice({ isVisible: true, message: '즐겨찾기에 저장됐어요!' });
+
           setIsActive(true);
         },
         onError: () => {
-          alert('즐겨찾기 추가 중 오류가 발생했습니다.');
+          //  alert('즐겨찾기 추가 중 오류가 발생했습니다.');
+          setNotice({ isVisible: true, message: '이미 즐겨찾기에 존재해요!' });
         },
       });
     } else if (pathName === '/input-data2/packaged-snacks') {
@@ -164,11 +176,14 @@ export default function FavoriteIcon() {
       };
       addBookmarkPackagedSnackItem.mutate(snackData, {
         onSuccess: () => {
-          alert('즐겨찾기에 추가되었습니다.');
+      
+          setNotice({ isVisible: true, message: '즐겨찾기에 저장됐어요!' });
+
           setIsActive(true);
         },
         onError: () => {
-          alert('즐겨찾기 추가 중 오류가 발생했습니다.');
+        
+          setNotice({ isVisible: true, message: '이미 즐겨찾기에 존재해요!' });
         },
       });
     }

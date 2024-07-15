@@ -2,19 +2,27 @@
 
 import StoreButton from '@components/input-data2/common/StoreButton';
 import { useAddBookmarkToDailyMeals } from '@hooks/useAddBookmarkToDailyMeals';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { selectedItemState } from '@recoil/favoritePageAtoms';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
+
+
+import { noticeState } from '@recoil/atoms';
 
 export default function FavoriteButton() {
   const { addBookmarkRaw, addBookmarkFeed, addBookmarkPackagedSnack } = useAddBookmarkToDailyMeals();
   const router = useRouter();
   const selectedItem = useRecoilValue(selectedItemState);
 
+  const setNotice = useSetRecoilState(noticeState);
+
+
   const handleClick = () => {
     if (!selectedItem) {
-      alert('입력 양식을 확인해 주세요.');
+      //   alert('입력 양식을 확인해 주세요.');
+      setNotice({ isVisible: true, message: '식단을 선택해주세요!' });
+
       return;
     }
 
@@ -24,11 +32,13 @@ export default function FavoriteButton() {
           { petId: 3, bookMarkedRawId: selectedItem.id },
           {
             onSuccess: () => {
-              alert('하루 식단에 저장되었습니다.');
+              //   alert('하루 식단에 저장되었습니다.');
+              setNotice({ isVisible: true, message: '식단에 추가됐어요!' });
+
               router.push('/201', { scroll: false });
             },
             onError: () => {
-              alert('저장 중 오류가 발생했습니다.');
+              //   alert('저장 중 오류가 발생했습니다.');
             },
           },
         );
@@ -39,11 +49,13 @@ export default function FavoriteButton() {
           { petId: 3, bookMarkedFeedId: selectedItem.id },
           {
             onSuccess: () => {
-              alert('하루 식단에 저장되었습니다.');
+              //       alert('하루 식단에 저장되었습니다.');
+              setNotice({ isVisible: true, message: '식단에 추가됐어요!' });
+
               router.push('/201', { scroll: false });
             },
             onError: () => {
-              alert('저장 중 오류가 발생했습니다.');
+              //    alert('저장 중 오류가 발생했습니다.');
             },
           },
         );
@@ -54,18 +66,20 @@ export default function FavoriteButton() {
           { petId: 3, bookMarkedPackagedSnackId: selectedItem.id },
           {
             onSuccess: () => {
-              alert('하루 식단에 저장되었습니다.');
+              //     alert('하루 식단에 저장되었습니다.');
+              setNotice({ isVisible: true, message: '식단에 추가됐어요!' });
+
               router.push('/201', { scroll: false });
             },
             onError: () => {
-              alert('저장 중 오류가 발생했습니다.');
+              //    alert('저장 중 오류가 발생했습니다.');
             },
           },
         );
         break;
 
       default:
-        alert('알 수 없는 음식 유형입니다.');
+      //   alert('알 수 없는 음식 유형입니다.');
     }
   };
 

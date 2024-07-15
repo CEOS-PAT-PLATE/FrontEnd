@@ -10,6 +10,8 @@ import { isFormValidState } from '@recoil/nutrientAtoms';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+
+
 interface StoreButtonProps {
   onClick: () => void;
 }
@@ -20,6 +22,10 @@ export default function StoreButton({ onClick }: StoreButtonProps) {
 
   const formValidState = useRecoilValue(isFormValidState);
   const validState = useRecoilValue(isValidState);
+
+
+
+
 
   useEffect(() => {
     if (pathname === '/input-data2/packaged-snacks' || pathname === '/input-data2/dry-food') {
