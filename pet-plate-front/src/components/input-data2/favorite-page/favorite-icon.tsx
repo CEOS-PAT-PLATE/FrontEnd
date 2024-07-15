@@ -7,6 +7,9 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
+import { useRecoilState } from 'recoil';
+import { isBookmarkUpdated } from '@recoil/atoms';
+
 import bookmarkAPI from '@api/bookmarkAPI';
 
 interface FavoriteIconProps {
@@ -17,6 +20,7 @@ interface FavoriteIconProps {
 export default function FavoriteIcon({ id, type }: FavoriteIconProps) {
   const [isActive, setIsActive] = useState<boolean>(true);
   const pathName = usePathname();
+  const [bookMarkState,setbookarkState] = useRecoilState(isBookmarkUpdated);
 
   /*
   function handleClick() {
@@ -39,6 +43,7 @@ export default function FavoriteIcon({ id, type }: FavoriteIconProps) {
         }
         setIsActive(false);
         alert('즐겨찾기에서 해제되었습니다.');
+        setbookarkState(!bookMarkState);
       } catch (error) {
         console.error('즐겨찾기 해제 중 오류가 발생했습니다:', error);
         alert('즐겨찾기 해제 중 오류가 발생했습니다.');

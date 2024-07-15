@@ -6,7 +6,8 @@ import FavoriteContainer from '@components/input-data2/favorite-page/favorite-co
 import FavoriteContainerWrapper from '@style/input-data2/favorite-container-wrapper';
 import FavoritesButton from '@components/input-data2/favorite-page/favoritefood-button';
 import bookmarkAPI from '@api/bookmarkAPI';
-
+import { useRecoilValue } from 'recoil';
+import { isBookmarkUpdated } from '@recoil/atoms';
 
 interface Foodlist {
   id: number;
@@ -16,7 +17,7 @@ interface Foodlist {
 
 export default function Page() {
   const [favoritesFoodList, setFavoritesFoodList] = useState<Foodlist[]>([]);
-
+  const bookmarkUpdated = useRecoilValue(isBookmarkUpdated);
   useEffect(() => {
     const fetchBookmarks = async () => {
       try {
@@ -51,7 +52,7 @@ export default function Page() {
     };
 
     fetchBookmarks();
-  }, []);
+  }, [bookmarkUpdated]);
 
   return (
     <>
@@ -61,7 +62,7 @@ export default function Page() {
       />
       <FavoriteContainerWrapper>
         {favoritesFoodList.map((item) => (
-          <FavoriteContainer key={item.id+item.type} id={item.id} type={item.type} name={item.name} />
+          <FavoriteContainer key={item.id + item.type} id={item.id} type={item.type} name={item.name} />
         ))}
       </FavoriteContainerWrapper>
       <FavoritesButton />
