@@ -40,6 +40,7 @@ export default function FavoriteIcon() {
 
   if (pathName === '/input-data2/natural-food') {
     isValid = isValidRawForm;
+    console.log(isValid)
   } else if (pathName === '/input-data2/dry-food' || pathName === '/input-data2/packaged-snacks') {
     isValid = isValidForm;
   }

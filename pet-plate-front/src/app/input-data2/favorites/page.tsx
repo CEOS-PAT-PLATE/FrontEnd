@@ -31,7 +31,9 @@ export default function Page() {
           bookmarkAPI.getBookmarkRaws(),
           bookmarkAPI.getBookmarkFeeds(),
           bookmarkAPI.getBookmarkPackagedSnacks(),
+          
         ]);
+        console.log(response1, response2, response3)
 
         const rawList = response1.data.data.map((item: any) => ({
           id: item.bookMarkedRawId,

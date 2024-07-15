@@ -33,7 +33,7 @@ export default function Table({
   // 불러온 데이터로 변경
   const consumedRaws = recentRawFoods;
 
-  const [clickedId, setClickedId] = useState<string | null>(null);
+  const [clickedItem, setClickedItem] = useState<{ id: string; serving?: number } | null>(null);
   const [someClicked, setSomeClicked] = useState(false);
   const [serving, setServing] = useState('');
   const setIsServing = useSetRecoilState(isServing);
@@ -45,60 +45,59 @@ export default function Table({
   const { replace } = useRouter();
 
   const filteredRawFoods = searchQuery
-    ? rawFoods.filter((food: RawFood) => food.name.includes(searchQuery)).slice(0, 5)
+    ? rawFoods.filter((food: RawFood) => food.name.includes(searchQuery)).slice(0, 10)
     : [];
-  const recentConsumedRaws = !searchQuery ? consumedRaws?.slice(0, 5) : [];
+  //const recentConsumedRaws = !searchQuery ? consumedRaws?.slice(0, 10) : [];
+  const recentConsumedRaws = !searchQuery ? consumedRaws : [];
+
   const fontWeight1 = '400';
   const fontWeight2 = '700';
   const lineHeight1 = '160%';
   const lineHeight2 = '130%';
-  const isRecent = recentConsumedRaws?.some((consumed: RecentRawFood) => consumed.name === clickedId);
-  const selectedFood = filteredRawFoods.find((food: RawFood) => food.name === clickedId);
-  const selectedRecentFood = recentConsumedRaws?.find((food: RecentRawFood) => food.name === clickedId);
+  const isRecent = recentConsumedRaws?.some(
+    (consumed: RecentRawFood) => consumed.name === clickedItem?.id && consumed.serving === clickedItem?.serving,
+  );
+  const selectedFood = filteredRawFoods.find((food: RawFood) => food.name === clickedItem?.id);
+  const selectedRecentFood = recentConsumedRaws?.find(
+    (food: RecentRawFood) => food.name === clickedItem?.id && food.serving === clickedItem?.serving,
+  );
 
   useEffect(() => {
     setIsValid(isStoreValid());
-  }, [clickedId, serving, isRecent, setIsValid]);
+  }, [clickedItem, serving, isRecent, setIsValid]);
 
   useEffect(() => {
     setIsServingValid(false);
     setSomeClicked(false);
-    setClickedId(null);
+    setClickedItem(null);
     setIsServing(false);
   }, [searchQuery]);
 
   useEffect(() => {
-    if (isRecent) {
+    if (isRecent && selectedRecentFood) {
+      const matchingFood = filteredRawFoods.find((food: RawFood) => food.name === clickedItem?.id);
       setRawFoodForm({
-        rawId: selectedRecentFood?.dailyRawId,
-        serving: selectedRecentFood?.serving,
-        name: selectedRecentFood?.name,
+        rawId: matchingFood?.rawId || selectedRecentFood.dailyRawId,
+        serving: selectedRecentFood.serving,
+        name: selectedRecentFood.name,
       });
-      // console.log(selectedRecentFood);
     } else {
-      const selectedFood = filteredRawFoods.find((food: RawFood) => food.name === clickedId);
+      const selectedFood = filteredRawFoods.find((food: RawFood) => food.name === clickedItem?.id);
 
       setRawFoodForm({
         rawId: selectedFood?.rawId,
         serving: parseInt(serving),
         name: selectedFood?.name,
       });
-      // console.log(selectedFood,serving);
     }
   }, [selectedFood, selectedRecentFood, serving, isServing]);
 
-  // console.log(rawFoodForm)
-
-  // console.log(selectedFood);
-  // console.log(selectedRecentFood);
-  //  console.log(serving)
-
-  function handleClick(id: string) {
+  function handleClick(id: string, clickedserving?: number) {
     setIsServingValid(true);
 
-    if (clickedId === id) {
+    if (clickedItem?.id === id && clickedItem?.serving === clickedserving) {
       // 재클릭시 초기화
-      setClickedId(null);
+      setClickedItem(null);
       setSomeClicked(false);
       setServing('');
       setIsServing(false);
@@ -107,14 +106,14 @@ export default function Table({
       replace(`${pathname}?${params.toString()}`);
       setSearchQuery('');
     } else {
-      setClickedId(id);
+      setClickedItem({ id, serving: clickedserving });
       setSomeClicked(true);
       setIsServing(true);
     }
   }
 
   function isStoreValid(): boolean {
-    if (!clickedId) return false;
+    if (!clickedItem) return false;
     if (isRecent) return true;
     if (selectedFood && serving !== '') return true;
     return false;
@@ -133,7 +132,7 @@ export default function Table({
               titleLineHeight={lineHeight1}
               descriptionFontWeight={fontWeight1}
               descriptionLineHeight={lineHeight2}
-              isClicked={clickedId === food.name}
+              isClicked={clickedItem?.id === food.name}
               onClick={() => handleClick(food.name)}
               someClicked={someClicked}
             />
@@ -149,8 +148,8 @@ export default function Table({
                 titleLineHeight={lineHeight1}
                 descriptionFontWeight={fontWeight1}
                 descriptionLineHeight={lineHeight1}
-                isClicked={clickedId === consumed.name}
-                onClick={() => handleClick(consumed.name)}
+                isClicked={clickedItem?.id === consumed.name && clickedItem?.serving === consumed.serving}
+                onClick={() => handleClick(consumed.name, consumed.serving)}
                 someClicked={someClicked}
                 isRecent={true}
               />

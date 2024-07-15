@@ -24,7 +24,7 @@ export default function FavoriteButton() {
           { petId: 3, bookMarkedRawId: selectedItem.id },
           {
             onSuccess: () => {
-              alert('즐겨찾기에 저장되었습니다.');
+              alert('하루 식단에 저장되었습니다.');
               router.push('/201', { scroll: false });
             },
             onError: () => {
@@ -39,7 +39,7 @@ export default function FavoriteButton() {
           { petId: 3, bookMarkedFeedId: selectedItem.id },
           {
             onSuccess: () => {
-              alert('즐겨찾기에 저장되었습니다.');
+              alert('하루 식단에 저장되었습니다.');
               router.push('/201', { scroll: false });
             },
             onError: () => {
@@ -54,7 +54,7 @@ export default function FavoriteButton() {
           { petId: 3, bookMarkedPackagedSnackId: selectedItem.id },
           {
             onSuccess: () => {
-              alert('즐겨찾기에 저장되었습니다.');
+              alert('하루 식단에 저장되었습니다.');
               router.push('/201', { scroll: false });
             },
             onError: () => {
