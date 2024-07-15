@@ -1,21 +1,58 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import InfoLayout from '@components/input-data2/common/info-layout';
 import FavoriteContainer from '@components/input-data2/favorite-page/favorite-container';
 import FavoriteContainerWrapper from '@style/input-data2/favorite-container-wrapper';
 import FavoritesButton from '@components/input-data2/favorite-page/favoritefood-button';
+import bookmarkAPI from '@api/bookmarkAPI';
 
-const favoritesFoodList = [
-  { type: '자연식', name: '바나나' },
-  { type: '사료', name: '나우 어덜트 스몰브리드' },
-  { type: '사료', name: '로얄 캐닌 어덜트 인도어' },
-  { type: '포장 간식', name: '흑미고구마칩' },
-];
 
 interface Foodlist {
+  id: number;
   type: string;
   name: string;
 }
 
 export default function Page() {
+  const [favoritesFoodList, setFavoritesFoodList] = useState<Foodlist[]>([]);
+
+  useEffect(() => {
+    const fetchBookmarks = async () => {
+      try {
+        const [response1, response2, response3] = await Promise.all([
+          bookmarkAPI.getBookmarkRaws(),
+          bookmarkAPI.getBookmarkFeeds(),
+          bookmarkAPI.getBookmarkPackagedSnacks(),
+        ]);
+
+        const rawList = response1.data.data.map((item: any) => ({
+          id: item.bookMarkedRawId,
+          type: '자연식',
+          name: item.name,
+        }));
+
+        const feedList = response2.data.data.map((item: any) => ({
+          id: item.bookMarkedFeedId,
+          type: '사료',
+          name: item.name,
+        }));
+
+        const snackList = response3.data.data.map((item: any) => ({
+          id: item.bookMarkedPackagedSnackId,
+          type: '포장 간식',
+          name: item.name,
+        }));
+
+        setFavoritesFoodList([...rawList, ...feedList, ...snackList]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchBookmarks();
+  }, []);
+
   return (
     <>
       <InfoLayout
@@ -23,8 +60,8 @@ export default function Page() {
         description="반려견에게 이전과 같은 사료를, 같은 양만큼 급여 중이라면 이전 기록을 사용해주세요!"
       />
       <FavoriteContainerWrapper>
-        {favoritesFoodList.map((item, index) => (
-          <FavoriteContainer key={index} type={item.type} name={item.name} />
+        {favoritesFoodList.map((item) => (
+          <FavoriteContainer key={item.id+item.type} id={item.id} type={item.type} name={item.name} />
         ))}
       </FavoriteContainerWrapper>
       <FavoritesButton />

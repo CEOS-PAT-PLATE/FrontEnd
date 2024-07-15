@@ -1,6 +1,5 @@
 'use client';
 
-import { Option } from '@lib/types';
 import SnackIcon from '@public/svg/간식_circle.svg?url';
 import DryfoodIcon from '@public/svg/사료_circle.svg?url';
 import NaturalfoodIcon from '@public/svg/자연식_circle.svg?url';
@@ -15,11 +14,12 @@ const foodIconList = [
 ];
 
 interface Foodlist {
+  id: number;
   type: string;
   name: string;
 }
 
-export default function FavoriteContainer({ type, name }: Foodlist) {
+export default function FavoriteContainer({ id, type, name }: Foodlist) {
   const foodIcon = foodIconList.find((icon) => icon.type === type);
 
   return (
@@ -27,7 +27,7 @@ export default function FavoriteContainer({ type, name }: Foodlist) {
       <IconImage src={foodIcon?.img || ''} alt={type} />
       <FavoriteText>{name}</FavoriteText>
       <FavoriteIconWrapper>
-        <FavoriteIcon />
+        <FavoriteIcon id={id} type={type} />
       </FavoriteIconWrapper>
     </Container>
   );
@@ -51,22 +51,19 @@ const Container = styled.div`
   border: 1px solid var(--grey2, #eceef0);
   background: var(--white, #fff);
   margin-bottom: 8px;
-  position: relatvie;
+  position: relative;
 `;
 
 const FavoriteText = styled.div`
   position: absolute;
   width: 180px;
   height: 32px;
-
   color: var(--grey10, #4f5357);
-
-  /* title1_regular_18pt */
   font-family: SUIT;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 180%; /* 32.4px */
+  line-height: 180%;
   letter-spacing: -0.75px;
   left: 58px;
 `;
