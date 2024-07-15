@@ -6,10 +6,7 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { isValidState } from '@recoil/atoms';
 import { useRouter } from 'next/navigation';
 
-import {RawFoodFormState } from '@recoil/nutrientAtoms';
-
-
-
+import { RawFoodFormState } from '@recoil/nutrientAtoms';
 
 export default function NaturalFoodButton() {
   const { addRawMeal } = useAddDirectlyToDailyMeals();
@@ -20,7 +17,6 @@ export default function NaturalFoodButton() {
   const isValid = useRecoilValue(isValidState);
   const [rawFoodForm, setRawFoodForm] = useRecoilState(RawFoodFormState);
 
-
   const handleClick = () => {
     if (!isValid) {
       alert('입력 양식을 확인해 주세요.');
@@ -30,18 +26,20 @@ export default function NaturalFoodButton() {
     const rawData = {
       rawId: rawFoodForm.rawId,
       serving: rawFoodForm.serving,
+      name: rawFoodForm.name,
     };
 
     addRawMeal.mutate(
-      { petId: 3, rawData: rawData },
+      { petId: 3, rawData: { rawId: rawData.rawId, serving: rawData.serving } },
       {
         onSuccess: () => {
           alert('하루 식사에 자연식이 저장되었습니다.');
           setIsValid(false);
-          setRawFoodForm( {
+          setRawFoodForm({
             rawId: NaN,
             serving: NaN,
-          })
+            name: '',
+          });
           router.push('/201', { scroll: false });
         },
         onError: () => {

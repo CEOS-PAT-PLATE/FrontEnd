@@ -72,6 +72,7 @@ export default function Table({
       setRawFoodForm({
         rawId: selectedRecentFood?.dailyRawId,
         serving: selectedRecentFood?.serving,
+        name: selectedRecentFood?.name,
       });
       // console.log(selectedRecentFood);
     } else {
@@ -80,6 +81,7 @@ export default function Table({
       setRawFoodForm({
         rawId: selectedFood?.rawId,
         serving: parseInt(serving),
+        name: selectedFood?.name,
       });
       // console.log(selectedFood,serving);
     }
