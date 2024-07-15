@@ -16,7 +16,6 @@ export const searchQueryState = atom<string>({
   default: '',
 });
 
-
 export const consumedRawsState = atom<ConsumedRaw[]>({
   key: 'consumedRawsState',
   default: [
@@ -29,4 +28,9 @@ export const consumedRawsState = atom<ConsumedRaw[]>({
     { petId: 3, rawId: '양고기', serving: 180, date: '2023-07-03' },
     { petId: 3, rawId: '당근', serving: 110, date: '2023-07-03' },
   ],
+});
+
+export const isBookmarkUpdated = atom({
+  key: 'bookMarkUpdateState',
+  default: false,
 });

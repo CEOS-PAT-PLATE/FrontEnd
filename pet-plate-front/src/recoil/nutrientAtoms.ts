@@ -47,5 +47,6 @@ export const RawFoodFormState = atom({
   default: {
     rawId: NaN,
     serving: NaN,
+    name:'',
   },
 });

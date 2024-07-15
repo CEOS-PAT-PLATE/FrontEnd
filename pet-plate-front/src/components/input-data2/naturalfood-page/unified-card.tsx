@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Description, Title } from '@style/input-data2/TextStyle';
 import { CardProps } from '@lib/types';
-import { useState } from 'react';
 
 export default function UnifiedCard({
   title,
@@ -15,7 +14,6 @@ export default function UnifiedCard({
   onClick,
   isRecent = false,
 }: CardProps & { isRecent?: boolean }) {
-
   return (
     <CardContainer onClick={onClick} $isClicked={isClicked} $someClicked={someClicked} $isRecent={isRecent}>
       <Title $fontWeight={titleFontWeight} $lineHeight={titleLineHeight}>
@@ -45,8 +43,7 @@ const CardContainer = styled.div<{ $isClicked: boolean, $someClicked: boolean, $
   font-style: normal;
   font-weight: 400;
   line-height: 160%; /* 25.6px */
-      cursor: pointer;
-
+  cursor: pointer;
 
   ${({ $isRecent,$isClicked }) => 
     $isRecent &&!$isClicked &&
@@ -59,13 +56,10 @@ const CardContainer = styled.div<{ $isClicked: boolean, $someClicked: boolean, $
       }
     `}
 
-      ${({ $isRecent,$isClicked }) => 
+  ${({ $isRecent,$isClicked }) => 
     $isRecent &&$isClicked &&
     css`
-     
-        margin-left: -14px;
-    
-     
+      margin-left: -14px;
     `}
 
   ${({ $someClicked, $isClicked }) =>
@@ -81,14 +75,12 @@ const CardContainer = styled.div<{ $isClicked: boolean, $someClicked: boolean, $
       background: var(--50, #ECFAF2);
     `}
 
-
   ${({ $isClicked }) =>
     !$isClicked &&
     css`
       border: 1px solid var(--grey2, #eceef0);
       background: var(--white, #fff);
     `}
-    
 `;
 
 // 1. 자신 이외의 나머지 카드 중 하나가 클릭되어 있을 때, 카드의 스타일 (자신을 display none으로 처리)

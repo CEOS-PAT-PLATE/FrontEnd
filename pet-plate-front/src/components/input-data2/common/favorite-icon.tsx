@@ -40,6 +40,7 @@ export default function FavoriteIcon() {
 
   if (pathName === '/input-data2/natural-food') {
     isValid = isValidRawForm;
+    console.log(isValid)
   } else if (pathName === '/input-data2/dry-food' || pathName === '/input-data2/packaged-snacks') {
     isValid = isValidForm;
   }
@@ -49,11 +50,10 @@ export default function FavoriteIcon() {
       // 즐겨찾기 해제 로직
       try {
         const cancelId = await fetchBookmarkId();
+        console.log(cancelId);
         if (cancelId !== undefined) {
           await handleCancelApiCall(cancelId);
           setIsActive(false);
-        } else {
-          alert('취소할 항목을 찾을 수 없습니다.');
         }
       } catch (error) {
         console.error('즐겨찾기 해제 중 오류가 발생했습니다:', error);
@@ -63,7 +63,7 @@ export default function FavoriteIcon() {
       alert('입력 양식을 확인해 주세요.');
       return;
     } else if (isActive === false && isValid) {
-      alert('즐겨찾기에 저장되었습니다.');
+      // alert('즐겨찾기에 저장되었습니다.');
       handleAddApiCall();
     }
   }
@@ -72,7 +72,10 @@ export default function FavoriteIcon() {
     try {
       if (pathName === '/input-data2/natural-food') {
         const response = await bookmarkAPI.getBookmarkRaws();
-        return response.data.data.find((item: any) => item.bookMarkedRawId === rawFoodForm.rawId)?.bookMarkedRawId;
+        console.log(rawFoodForm);
+        return response.data.data.find(
+          (item: any) => item.name === rawFoodForm.name && item.serving === rawFoodForm.serving,
+        )?.bookMarkedRawId;
       } else if (pathName === '/input-data2/dry-food') {
         const response = await bookmarkAPI.getBookmarkFeeds();
         return response.data.data.find((item: any) => item.name === nutrientName)?.bookMarkedFeedId;
@@ -117,7 +120,8 @@ export default function FavoriteIcon() {
             setIsActive(true);
           },
           onError: () => {
-            alert('즐겨찾기 추가 중 오류가 발생했습니다.');
+            //  alert('즐겨찾기 추가 중 오류가 발생했습니다.');
+            alert('이미 즐겨찾기에 존재합니다.');
           },
         },
       );
