@@ -16,7 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const Container = styled.div`
     width: 100%;
-    height: 100%;
+    height: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,9 +25,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const Padding = styled.div`
     width: 100%;
     height: 44px;
+    background-color: transparent;
     //상단 탭 임의 설정
   `
  const Contents = styled.div`
     width: 100%;
     height: 42.063rem;
+    overflow: scroll;
  `

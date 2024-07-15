@@ -27,6 +27,7 @@ const CarouselContainer = styled.div`
     width: 21rem;
     overflow: scroll;
     scroll-behavior: smooth;
+    background-color: transparent;
 `
 
 const Step = styled(Image)`
