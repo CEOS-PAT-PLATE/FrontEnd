@@ -33,11 +33,8 @@ flex-direction: column;
 align-items: center;
 position: relative;
 `
-const Padding = styled.div`
-width: 100%;
-height: 44px;
-//상단 탭 임의 설정
-`
+
+
 const ContentWrapper = styled.div`
 display: flex;
 flex-direction: column;

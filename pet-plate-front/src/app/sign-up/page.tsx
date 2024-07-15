@@ -11,13 +11,23 @@ import GapButton from "@components/main/gapbtn"
 
 
 export default function page() {
-const handleOnclick = () =>{}
+const loginNaver = () =>{
+  window.location.href = NAVER_AUTH_URL;
+}
+const API_BASE_URL = "http://13.209.156.246:8080";
+const NAVER_AUTH_URL =
+  API_BASE_URL +
+  "/oauth2/authorization/naver?redirect_uri=" +
+  window.location.href;
+
+
 const buttonContent = (
   <>
       <Image src={NaverLogo} alt="Naver-logo"/>
       <span style={{color : "#fff", marginLeft : "1.438rem"}}>네이버로 시작하기</span>
   </>
 );
+
   return (
     <PageWrapper>
       <Padding/>
@@ -27,7 +37,7 @@ const buttonContent = (
         <SignUpGraphic src={signUpGraphic} alt="signUpGraphic"/>
       </ContentWrapper>
       <ButtonWrapper>
-        <GapButton onClick={handleOnclick}
+        <GapButton onClick={loginNaver}
           backgroundColor= "#03C75A" 
           hoverBackgroundColor= "#03C75A" 
           hoverButtonContentColor= "#fff"

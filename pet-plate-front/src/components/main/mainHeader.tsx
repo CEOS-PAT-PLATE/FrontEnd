@@ -19,7 +19,6 @@ const MainHeaderWrapper = styled.div`
     width: 100%;
     height: 3.25rem;
     background-color: transparent;
-    position: absolute;
     top: 44px; //상단 인디케이터
 
     display: flex;
