@@ -34,3 +34,12 @@ export const isBookmarkUpdated = atom({
   key: 'bookMarkUpdateState',
   default: false,
 });
+
+
+export const noticeState = atom({
+  key: 'noticeState',
+  default: {
+    isVisible: false,
+    message: '',
+  },
+});
