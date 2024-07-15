@@ -1,14 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import InfoLayout from '@components/input-data2/common/info-layout';
 import FavoriteContainer from '@components/input-data2/favorite-page/favorite-container';
 import FavoriteContainerWrapper from '@style/input-data2/favorite-container-wrapper';
 import FavoritesButton from '@components/input-data2/favorite-page/favoritefood-button';
 import bookmarkAPI from '@api/bookmarkAPI';
 import { useRecoilValue } from 'recoil';
-import { isBookmarkUpdated } from '@recoil/atoms';
-
+import { selectedItemState } from '@recoil/favoritePageAtoms';
+import {isBookmarkUpdated} from '@recoil/atoms';
 interface Foodlist {
   id: number;
   type: string;
@@ -18,6 +19,7 @@ interface Foodlist {
 export default function Page() {
   const [favoritesFoodList, setFavoritesFoodList] = useState<Foodlist[]>([]);
   const bookmarkUpdated = useRecoilValue(isBookmarkUpdated);
+  const setSelectedItem = useSetRecoilState(selectedItemState);
 
   // 클릭된 카드 필터링
   const [clickedId, setClickedId] = useState<number | null>(null);
@@ -35,18 +37,51 @@ export default function Page() {
           id: item.bookMarkedRawId,
           type: '자연식',
           name: item.name,
+          description: item.description,
+          serving: item.serving,
+          kcal: item.kcal,
+          carbonHydrate: item.carbonHydrate,
+          protein: item.protein,
+          fat: item.fat,
+          calcium: item.calcium,
+          phosphorus: item.phosphorus,
+          vitaminA: item.vitaminA,
+          vitaminD: item.vitaminD,
+          vitaminE: item.vitaminE,
         }));
 
         const feedList = response2.data.data.map((item: any) => ({
           id: item.bookMarkedFeedId,
           type: '사료',
           name: item.name,
+          description: item.description,
+          serving: item.serving,
+          kcal: item.kcal,
+          carbonHydrate: item.carbonHydrate,
+          protein: item.protein,
+          fat: item.fat,
+          calcium: item.calcium,
+          phosphorus: item.phosphorus,
+          vitaminA: item.vitaminA,
+          vitaminD: item.vitaminD,
+          vitaminE: item.vitaminE,
         }));
 
         const snackList = response3.data.data.map((item: any) => ({
           id: item.bookMarkedPackagedSnackId,
           type: '포장 간식',
           name: item.name,
+          description: item.description,
+          serving: item.serving,
+          kcal: item.kcal,
+          carbonHydrate: item.carbonHydrate,
+          protein: item.protein,
+          fat: item.fat,
+          calcium: item.calcium,
+          phosphorus: item.phosphorus,
+          vitaminA: item.vitaminA,
+          vitaminD: item.vitaminD,
+          vitaminE: item.vitaminE,
         }));
 
         setFavoritesFoodList([...rawList, ...feedList, ...snackList]);
@@ -58,13 +93,13 @@ export default function Page() {
     fetchBookmarks();
   }, [bookmarkUpdated]);
 
-  const handleClick = (id: number) => {
-    console.log(id, clickedId);
-    if (clickedId === id) {
+  const handleClick = (item: Foodlist) => {
+    if (clickedId === item.id) {
       setClickedId(null); // 재클릭 시 초기화
+      setSelectedItem(null);
     } else {
-      setClickedId(id);
-      
+      setClickedId(item.id);
+      setSelectedItem(item);
     }
   };
 
@@ -82,7 +117,7 @@ export default function Page() {
             type={item.type}
             name={item.name}
             isClicked={clickedId === item.id}
-            onClick={() => handleClick(item.id)}
+            onClick={() => handleClick(item)}
           />
         ))}
       </FavoriteContainerWrapper>
