@@ -55,6 +55,8 @@ h1{
   font-size: 1.25rem;
   font-weight: bold;
   line-height: 160%;
+  color: #36393C;
+
 }
   
 ::-webkit-scrollbar {
