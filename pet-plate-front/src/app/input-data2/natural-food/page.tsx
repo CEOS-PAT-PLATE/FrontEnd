@@ -6,6 +6,9 @@ import { rawAPI } from '@api/rawAPI';
 import { RecentRawFood } from '@lib/types';
 import NoticeText from '@style/input-data2/NoticeText';
 import  InfoCardAndButton from '@components/input-data2/naturalfood-page/naturalfood-notice';
+
+import SuggestionButton from '@components/input-data2/naturalfood-page/suggestion-button'; // 경로를 실제 파일 위치에 맞게 수정하세요
+
 const fetchNaturalFoodLists = async (keyword: string) => {
   const response = await rawAPI.getRawsByKeyword(keyword);
   return response.data;
@@ -50,6 +53,7 @@ export default async function Page({ searchParams }: { searchParams?: { keyword?
       <Search placeholder="검색" />
       <Table keyword={keyword} rawFoods={naturalFoodLists} recentRawFoods={uniqueRecentNaturalFoodLists} />
       <NoticeText>자연식이 뭔지 모르겠어요!</NoticeText>
+      <SuggestionButton />
       <NaturalFoodButton />
       < InfoCardAndButton />
     </>
