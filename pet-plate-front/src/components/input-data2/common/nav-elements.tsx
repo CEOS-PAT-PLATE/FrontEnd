@@ -4,6 +4,8 @@ import styled, { css } from 'styled-components';
 import { searchQueryState, isValidState, isServing } from '@recoil/atoms';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { usePathname } from 'next/navigation';
+import { selectedItemState } from '@recoil/favoritePageAtoms';
+
 
 
 interface NavElementsProps {
@@ -15,6 +17,7 @@ export default function NavElements({ option, isActive }: NavElementsProps) {
   const resetSearchQuery = useResetRecoilState(searchQueryState);
   const resetIsValid = useResetRecoilState(isValidState);
   const resetIsServing = useResetRecoilState(isServing);
+  const resetselectedItem = useResetRecoilState( selectedItemState);
 
   const pathname = usePathname();
 
@@ -25,6 +28,7 @@ export default function NavElements({ option, isActive }: NavElementsProps) {
       resetIsValid();
     }
     resetIsServing();
+    resetselectedItem();
   }
   return (
     <NavItem $isActive={isActive}>

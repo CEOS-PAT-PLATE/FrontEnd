@@ -19,7 +19,7 @@ export default function FavoriteButton() {
 
 
   const handleClick = () => {
-    if (!selectedItem) {
+    if (!selectedItem || !selectedItem.id) {
       //   alert('입력 양식을 확인해 주세요.');
       setNotice({ isVisible: true, message: '식단을 선택해주세요!' });
 
