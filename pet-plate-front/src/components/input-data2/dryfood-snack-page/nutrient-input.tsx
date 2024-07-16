@@ -100,4 +100,6 @@ export const InputField = styled.input`
   line-height: 160%; /* 25.6px */
   margin-right: 0px;
   border: none;
+  outline: none;
 `;
+
