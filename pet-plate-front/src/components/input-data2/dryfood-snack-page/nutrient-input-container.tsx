@@ -4,12 +4,11 @@ import styled from 'styled-components';
 import NutrientInputFieldsSection from '@components/input-data2/dryfood-snack-page/nutrient-input-section';
 import { simpleHash } from '@lib/utils';
 
-
 interface Nutrient {
   name: string;
   unit: string;
   isRequired: boolean;
-  index:number;
+  index: number;
 }
 
 interface NutrientSection {
@@ -21,17 +20,13 @@ interface NutrientInputFieldsContainerProps {
 }
 
 const NutrientInputFieldsContainer = ({ nutrientSections }: NutrientInputFieldsContainerProps) => {
-
-
-
   return (
-     <NutrientInputContainer>
+    <NutrientInputContainer>
       {nutrientSections.map((section, index) => (
-         <div key={simpleHash(JSON.stringify(section))}>
-         <NutrientInputFieldsSection nutrients={section.nutrients} />
-         <SectionBorder />
-       </div>
-      
+        <div key={simpleHash(JSON.stringify(section))}>
+          <NutrientInputFieldsSection nutrients={section.nutrients} />
+          <SectionBorder />
+        </div>
       ))}
     </NutrientInputContainer>
   );

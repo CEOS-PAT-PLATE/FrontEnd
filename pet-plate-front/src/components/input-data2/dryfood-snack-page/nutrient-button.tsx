@@ -70,6 +70,7 @@ export default function NutrientButton() {
         },
         onError: () => {
           //    alert('저장 중 오류가 발생했습니다.');
+          setNotice({ isVisible: true, message: '양식에 맞게 입력해주세요!' });
         },
       },
     );
