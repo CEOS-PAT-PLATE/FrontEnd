@@ -1,42 +1,38 @@
-'use client'
+'use client';
 
-import styled from "styled-components"
-import InputDataFirstHeader from "@components/input-data1/inputDataFirstHeader"
-import Progressbar from "@components/input-data1/progressbar"
-import NextButton from "@components/input-data1/nextButton"
-import ResultList from "@components/input-data1/resultList"
+import styled from 'styled-components';
+import InputDataFirstHeader from '@components/input-data1/inputDataFirstHeader';
+import Progressbar from '@components/input-data1/progressbar';
+import NextButton from '@components/input-data1/nextButton';
+import ResultList from '@components/input-data1/resultList';
 
-import {useRecoilValue} from 'recoil'
-import {petInfoState} from "@lib/atoms"
+import { useRecoilValue } from 'recoil';
+import { petInfoState } from '@lib/atoms';
 
 export default function page() {
-const  petInfo = useRecoilValue(petInfoState);
-    
-const navigte = () =>{
+  const petInfo = useRecoilValue(petInfoState);
 
-}
+  const navigte = () => {};
 
-const handleAlert = () => {
-
-}
+  const handleAlert = () => {};
 
   return (
     <>
-    <InputDataFirstHeader onClickBackButton = {navigte}/>
-    <Progressbar/>
-    <PageContainer>
-        <ResultList title = '반려견의 이름' value={petInfo[0].name}/>
-        <ResultList title = '나이' value={`${petInfo[0].age}세`}/>
-        <ResultList title = '몸무게' value={`${petInfo[0].weight}kg`}/>
-        <ResultList title = '활동량' value={petInfo[0].activity}/>
-        <ResultList title = '중성화 여부' value={petInfo[0].neutering}/>
-        
+      <InputDataFirstHeader onClickBackButton={navigte} />
+      <Progressbar />
+      <PageContainer>
+        <ResultList title="반려견의 이름" value={petInfo[0].name} />
+        <ResultList title="나이" value={`${petInfo[0].age}세`} />
+        <ResultList title="몸무게" value={`${petInfo[0].weight}kg`} />
+        <ResultList title="활동량" value={petInfo[0].activity} />
+        <ResultList title="중성화 여부" value={petInfo[0].neutering} />
+
         <FixedButtonContainer>
-            <NextButton onClick={handleAlert} />
+          <NextButton onClick={handleAlert} />
         </FixedButtonContainer>
-    </PageContainer>
+      </PageContainer>
     </>
-  )
+  );
 }
 
 const PageContainer = styled.div`
@@ -47,7 +43,6 @@ const PageContainer = styled.div`
   height: 42rem;
   overflow: hidden;
 `;
-
 
 const FixedButtonContainer = styled.div`
   position: absolute;
