@@ -36,7 +36,7 @@ const fetchdailyMealLists = async (petId: number, dailyMealId: number) => {
 };
 
 export default function Page() {
-  const petId = 3;
+  const petId = 2;
   const date = getTodayDate();
   const [dailyMeals, setDailyMeals] = useState<any>(null);
   const pathname = usePathname();
@@ -45,7 +45,7 @@ export default function Page() {
 
   const fetchDailyMeals = async () => {
     try {
-      const dailyMealResponse = await fetchdailyMealId(petId, '2024-07-16');
+      const dailyMealResponse = await fetchdailyMealId(petId,date);
       if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
         const dailyMealId = dailyMealResponse.data[0].dailyMealId;
         console.log('dailyMealId:', dailyMealId);

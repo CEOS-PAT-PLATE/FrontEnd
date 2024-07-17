@@ -36,7 +36,7 @@ export default function NaturalFoodButton() {
     };
 
     addRawMeal.mutate(
-      { petId: 3, rawData: { rawId: rawData.rawId, serving: rawData.serving } },
+      { petId: 2, rawData: { rawId: rawData.rawId, serving: rawData.serving } },
       {
         onSuccess: () => {
           //   alert('하루 식사에 자연식이 저장되었습니다.');

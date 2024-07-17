@@ -176,13 +176,11 @@ export default function FavoriteIcon() {
       };
       addBookmarkPackagedSnackItem.mutate(snackData, {
         onSuccess: () => {
-      
           setNotice({ isVisible: true, message: '즐겨찾기에 저장됐어요!' });
 
           setIsActive(true);
         },
         onError: () => {
-        
           setNotice({ isVisible: true, message: '이미 즐겨찾기에 존재해요!' });
         },
       });

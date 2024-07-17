@@ -29,7 +29,7 @@ export default function FavoriteButton() {
     switch (selectedItem.type) {
       case '자연식':
         addBookmarkRaw.mutate(
-          { petId: 3, bookMarkedRawId: selectedItem.id },
+          { petId: 2, bookMarkedRawId: selectedItem.id },
           {
             onSuccess: () => {
               //   alert('하루 식단에 저장되었습니다.');
@@ -46,7 +46,7 @@ export default function FavoriteButton() {
 
       case '사료':
         addBookmarkFeed.mutate(
-          { petId: 3, bookMarkedFeedId: selectedItem.id },
+          { petId: 2, bookMarkedFeedId: selectedItem.id },
           {
             onSuccess: () => {
               //       alert('하루 식단에 저장되었습니다.');
@@ -63,7 +63,7 @@ export default function FavoriteButton() {
 
       case '포장 간식':
         addBookmarkPackagedSnack.mutate(
-          { petId: 3, bookMarkedPackagedSnackId: selectedItem.id },
+          { petId: 2, bookMarkedPackagedSnackId: selectedItem.id },
           {
             onSuccess: () => {
               //     alert('하루 식단에 저장되었습니다.');

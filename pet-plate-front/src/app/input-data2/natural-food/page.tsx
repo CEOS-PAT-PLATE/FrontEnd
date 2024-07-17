@@ -28,7 +28,7 @@ const filterUniqueByNameAndServing = (foodList: RecentRawFood[]): RecentRawFood[
 };
 
 export default async function Page({ searchParams }: { searchParams?: { keyword?: string } }) {
-  const petId = 3;
+  const petId = 2;
 
   // 최근 2일동안 섭취한 자연식
   // 쿼리 클라이언트

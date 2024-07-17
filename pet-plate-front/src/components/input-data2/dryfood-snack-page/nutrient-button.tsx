@@ -46,7 +46,7 @@ export default function NutrientButton() {
     }
 
     apiCall.mutate(
-      { petId: 3, data: nutrientData },
+      { petId: 2, data: nutrientData },
       {
         onSuccess: () => {
           //    alert('하루 식사에 저장되었습니다.');
