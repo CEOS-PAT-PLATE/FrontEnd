@@ -1,4 +1,4 @@
-import axiosInstance from '@api/index';
+import axiosInstance from '@lib/axiosInstance';
 
 // 식사(섭취 내역) 컨트롤러
 

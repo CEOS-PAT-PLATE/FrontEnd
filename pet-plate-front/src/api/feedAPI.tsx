@@ -1,4 +1,4 @@
-import axiosInstance from './index';
+import axiosInstance from '@lib/axiosInstance';
 
 export const feedAPI = {
   // 오늘 식사내역에 해당 사료의 정보를 추가

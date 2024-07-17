@@ -1,32 +1,29 @@
-import axiosInstance from '@api/index';
+import axiosInstance from '@lib/axiosInstance';
 
 export const bookmarkAPI = {
-
-
   // ** 즐겨찾기한 자연식 API **//
 
-
-// [오늘] 식사내역에 섭취한 즐겨찾기 자연식 저장 
+  // [오늘] 식사내역에 섭취한 즐겨찾기 자연식 저장
   addBookmarkRaw: async (petId: number, bookMarkedRawId: number) => {
     return await axiosInstance.post(`/pet/${petId}/bookmark/raws`, { bookMarkedRawId });
   },
 
-  // 유저의 즐겨찾기한 자연식 모두 조회 
+  // 유저의 즐겨찾기한 자연식 모두 조회
   getBookmarkRaws: async () => {
     return await axiosInstance.get(`/bookmark/raws`);
   },
 
-  // 자연식을 즐겨찾기에 추가 
+  // 자연식을 즐겨찾기에 추가
   addBookmarkRawItem: async (rawData: { rawId: number; serving: number }) => {
     return await axiosInstance.post(`/bookmark/raws`, rawData);
   },
 
-  // 유저의 즐겨찾기한 자연식 단건 조회 
+  // 유저의 즐겨찾기한 자연식 단건 조회
   getBookmarkRaw: async (bookMarkedRawId: number) => {
     return await axiosInstance.get(`/bookmark/raws/${bookMarkedRawId}`);
   },
 
-  // 즐겨찾기한 자연식 제거 
+  // 즐겨찾기한 자연식 제거
   deleteBookmarkRaw: async (bookMarkedRawId: number) => {
     return await axiosInstance.delete(`/bookmark/raws/${bookMarkedRawId}`);
   },
@@ -80,14 +77,12 @@ export const bookmarkAPI = {
     return await axiosInstance.delete(`/pet/${petId}/bookmark/feeds/${dailyBookMarkedFeedId}`);
   },
 
+  // ** 즐겨찾기한 포장 간식 API **//
 
-    // ** 즐겨찾기한 포장 간식 API **//
-
-    // [오늘] 식사내역에 즐겨찾기한 포장 간식 저장
+  // [오늘] 식사내역에 즐겨찾기한 포장 간식 저장
   addBookmarkPackagedSnack: async (petId: number, bookMarkedPackagedSnackId: number) => {
     return await axiosInstance.post(`/pet/${petId}/bookmark/PackagedSnacks`, { bookMarkedPackagedSnackId });
   },
-
 
   // 유저의 즐겨찾기한 포장 간식 모두 조회
   getBookmarkPackagedSnacks: async () => {
@@ -111,16 +106,16 @@ export const bookmarkAPI = {
     return await axiosInstance.post(`/bookmark/PackagedSnacks`, snackData);
   },
 
-// 유저가 즐겨찾기한 포장 간식 단건 조회
+  // 유저가 즐겨찾기한 포장 간식 단건 조회
   getBookmarkPackagedSnack: async (bookMarkedPackagedSnackId: number) => {
     return await axiosInstance.get(`/bookmark/PackagedSnacks/${bookMarkedPackagedSnackId}`);
   },
 
-// 즐겨찾기한 포장 간식 제거
+  // 즐겨찾기한 포장 간식 제거
   deleteBookmarkPackagedSnack: async (bookMarkedPackagedSnackId: number) => {
     return await axiosInstance.delete(`/bookmark/PackagedSnacks/${bookMarkedPackagedSnackId}`);
   },
-  
+
   // [오늘] 식사 내역에서 섭취한 즐겨찾기 포장 간식 제거
   deleteBookmarkPackagedSnackMeal: async (petId: number, dailyBookMarkedPackagedSnackId: number) => {
     return await axiosInstance.delete(`/pet/${petId}/bookmark/PackagedSnacks/${dailyBookMarkedPackagedSnackId}`);

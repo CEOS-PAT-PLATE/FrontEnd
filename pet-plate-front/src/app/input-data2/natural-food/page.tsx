@@ -1,3 +1,4 @@
+
 import Search from '@components/input-data2/naturalfood-page/search';
 import Table from '@components/input-data2/naturalfood-page/table';
 import InfoLayout from '@components/input-data2/common/info-layout';

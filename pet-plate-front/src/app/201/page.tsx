@@ -25,13 +25,13 @@ const getTodayDate = () => {
 
 const fetchdailyMealId = async (petId: number, date?: string) => {
   const response = await dailyMealsAPI.getPetDailyMeals(petId, date);
-  console.log('fetchdailyMealId response:', response); // Debugging line
+  console.log('fetchdailyMealId response:', response);
   return response.data;
 };
 
 const fetchdailyMealLists = async (petId: number, dailyMealId: number) => {
   const response = await dailyMealsAPI.getSpecificMeal(petId, dailyMealId);
-  console.log('fetchdailyMealLists response:', response); // Debugging line
+  console.log('응답:', response);
   return response.data;
 };
 
@@ -45,7 +45,7 @@ export default function Page() {
 
   const fetchDailyMeals = async () => {
     try {
-      const dailyMealResponse = await fetchdailyMealId(petId, date);
+      const dailyMealResponse = await fetchdailyMealId(petId, '2024-07-16');
       if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
         const dailyMealId = dailyMealResponse.data[0].dailyMealId;
         console.log('dailyMealId:', dailyMealId);
@@ -110,8 +110,11 @@ export default function Page() {
           <Notice />
         </NoticeContainer>
         <ContentContainer>
-          {dailyMeals ? <FoodCardsContainer dailyMeals={dailyMeals} /> :         <EmptyMessage>식단을 불러오는 중이에요!</EmptyMessage>
-        }
+          {dailyMeals ? (
+            <FoodCardsContainer dailyMeals={dailyMeals} />
+          ) : (
+            <EmptyMessage>식단을 불러오는 중이에요!</EmptyMessage>
+          )}
         </ContentContainer>
       </Wrapper>
     </>
@@ -140,25 +143,23 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-
 `;
 
 const EmptyMessage = styled.div`
+  position: absolute;
 
-position: absolute;
+  left: 28%;
+  top: 160px;
 
-left: 28%;
-top:160px;
+  z-index: 10;
 
-z-index: 10;
+  color: var(--grey8, #7c8389);
+  text-align: center;
 
-color: var(--grey8, #7C8389);
-text-align: center;
-
-/* body2_regular_14pt */
-font-family: SUIT;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 160%; /* 22.4px */
+  /* body2_regular_14pt */
+  font-family: SUIT;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 22.4px */
 `;

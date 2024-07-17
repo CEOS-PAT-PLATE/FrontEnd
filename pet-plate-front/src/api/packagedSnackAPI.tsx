@@ -1,4 +1,4 @@
-import axiosInstance from '@api/index';
+import axiosInstance from '@lib/axiosInstance';
 
 export const packagedSnackAPI = {
 

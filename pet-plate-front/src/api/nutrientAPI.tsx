@@ -1,4 +1,4 @@
-import axiosInstance from '@api/index';
+import axiosInstance from '@lib/axiosInstance';
 
 export const nutrientAPI = {
   // 반려견이 하루 섭취한 영양소 정보 조회 (날짜 미입력시 오늘 정보 조회)
