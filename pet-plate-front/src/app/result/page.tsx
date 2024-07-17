@@ -22,6 +22,8 @@ const getTodayDate = () => {
   };
 
 
+
+
 import Wrapper from '@style/input-data2/Wrapper';
 
 const fetchdailyMealId = async (petId: number, date?: string) => {
@@ -82,7 +84,7 @@ const fetchDailyMeals = async () => {
           ),
         };
 
- 
+
 
 
         setDailyMeals(filteredData);
