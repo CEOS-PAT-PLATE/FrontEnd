@@ -1,3 +1,5 @@
+
+
 'use client';
 
 import { dailyMealsAPI } from '@api/dailyMealsAPI';
@@ -45,7 +47,7 @@ export default function Page() {
 
   const fetchDailyMeals = async () => {
     try {
-      const dailyMealResponse = await fetchdailyMealId(petId,date);
+      const dailyMealResponse = await fetchdailyMealId(petId, date);
       if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
         const dailyMealId = dailyMealResponse.data[0].dailyMealId;
         console.log('dailyMealId:', dailyMealId);
@@ -123,11 +125,15 @@ export default function Page() {
 
 const StoreButtonImage = styled(Image)`
   width: 312px;
-  position: relative; /* 절대적인 위치를 고정 */
+  position: relative; 
   bottom: 200px;
   left: 24px;
   cursor: pointer;
 `;
+
+
+
+
 
 const NoticeContainer = styled.div``;
 
@@ -156,10 +162,12 @@ const EmptyMessage = styled.div`
   color: var(--grey8, #7c8389);
   text-align: center;
 
-  /* body2_regular_14pt */
+  
   font-family: SUIT;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 160%; /* 22.4px */
+  line-height: 160%; 
 `;
+
+
