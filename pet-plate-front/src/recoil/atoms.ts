@@ -71,3 +71,7 @@ export const isCompleteValid = atom({
   default: false,
 });
 
+export const dailyMealsState = atom<any>({
+  key: 'dailyMealsState',
+  default: null,
+});

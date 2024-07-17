@@ -10,12 +10,10 @@ import StoreButtonActive from '@public/svg/btn_cta_active.svg?url';
 import styled from 'styled-components';
 import Wrapper from '@style/input-data2/Wrapper';
 import Notice from '@components/input-data2/common/notice';
-import { isCompleteValid } from '@recoil/atoms';
+import { isCompleteValid, noticeState, isCompleteModalOpenState, dailyMealsState } from '@recoil/atoms';
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-
-import { noticeState, isCompleteModalOpenState } from '@recoil/atoms';
 
 const getTodayDate = () => {
   const today = new Date();
@@ -25,7 +23,7 @@ const getTodayDate = () => {
   return `${year}-${month}-${day}`;
 };
 
-function isConpleteValid(dailyMealList: any) {
+function CheckCompleteValid(dailyMealList: any) {
   return (
     dailyMealList.dailyRaws.length +
       dailyMealList.dailyFeeds.length +
@@ -52,18 +50,17 @@ const fetchdailyMealLists = async (petId: number, dailyMealId: number) => {
 export default function Page() {
   const petId = 2;
   const date = getTodayDate();
-  const [dailyMeals, setDailyMeals] = useState<any>(null);
   const pathname = usePathname();
   const isValid = useRecoilValue(isCompleteValid);
   const setIsValid = useSetRecoilState(isCompleteValid);
 
   const setNotice = useSetRecoilState(noticeState);
-
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useRecoilState(isCompleteModalOpenState);
+  const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
 
   const fetchDailyMeals = async () => {
     try {
-      const dailyMealResponse = await fetchdailyMealId(petId, '2024-07-17');
+      const dailyMealResponse = await fetchdailyMealId(petId, date);
       if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
         const dailyMealId = dailyMealResponse.data[0].dailyMealId;
         console.log('dailyMealId:', dailyMealId);
@@ -91,7 +88,7 @@ export default function Page() {
           ),
         };
 
-        const isCompleteValid = isConpleteValid(filteredData);
+        const isCompleteValid = CheckCompleteValid(filteredData);
         console.log('isCompleteValid:', isCompleteValid);
 
         setIsValid(isCompleteValid);
@@ -110,10 +107,10 @@ export default function Page() {
 
   const handleClick = () => {
     console.log('isValid:', isValid);
-    if(!isValid) {
+    if (!isValid) {
       setNotice({ isVisible: true, message: '추가된 식단이 없어요!' });
       return;
-    }else {
+    } else {
       console.log('응:', isValid);
       setIsCompleteModalOpen(true);
     }
@@ -125,9 +122,9 @@ export default function Page() {
         <Image src={id_200} alt="id-200" priority />
         <AddButton />
         <div onClick={handleClick}>
-        <StoreButton >
-          <Image src={isValid ? StoreButtonActive : StoreButtonInactive} alt="store-button" />
-        </StoreButton>
+          <StoreButton>
+            <Image src={isValid ? StoreButtonActive : StoreButtonInactive} alt="store-button" />
+          </StoreButton>
         </div>
         <NoticeContainer>
           <Notice />

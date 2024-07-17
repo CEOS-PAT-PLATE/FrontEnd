@@ -14,3 +14,6 @@ const WrapperStyleWrapper = styled.div`
 export default function FavoriteContainerWrapper({ children }: { children: React.ReactNode }) {
   return <WrapperStyleWrapper>{children}</WrapperStyleWrapper>;
 }
+
+
+
