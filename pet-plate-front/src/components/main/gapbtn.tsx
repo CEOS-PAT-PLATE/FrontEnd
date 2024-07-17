@@ -15,28 +15,28 @@ export default function gapbtn({onClick, buttonContent, backgroundColor, hoverBa
   return (
     <ButtonContainer 
       onClick={onClick} 
-      backgroundColor={backgroundColor} 
-      hoverBackgroundColor={hoverBackgroundColor}
-      hoverButtonContentColor={hoverButtonContentColor}
+      $backgroundColor={backgroundColor} 
+      $hoverBackgroundColor={hoverBackgroundColor}
+      $hoverButtonContentColor={hoverButtonContentColor}
     >
         <ButtonContent>{buttonContent}</ButtonContent>
     </ButtonContainer>
   )
 }
 
-const ButtonContainer = styled.div<{ backgroundColor:  string | ((props: any) => string), hoverBackgroundColor: string | ((props: any) => string), hoverButtonContentColor: string | ((props: any) => string) }>`
+const ButtonContainer = styled.div<{ $backgroundColor:  string | ((props: any) => string), $hoverBackgroundColor: string | ((props: any) => string), $hoverButtonContentColor: string | ((props: any) => string) }>`
     width: 19.5rem;
     height: 3.563rem;
     border: none;
     border-radius: 0.5rem;
-    background-color: ${({ backgroundColor }) => backgroundColor};
+    background-color: ${({ $backgroundColor }) => $backgroundColor};
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 
     &:hover{
-        background-color: ${({ hoverBackgroundColor }) => hoverBackgroundColor};
+        background-color: ${({ $hoverBackgroundColor }) => $hoverBackgroundColor};
 
     }
 `

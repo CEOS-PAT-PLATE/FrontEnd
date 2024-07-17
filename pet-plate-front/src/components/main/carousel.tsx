@@ -44,7 +44,7 @@ export default function Carousel() {
 
   return (
     <CarouselContainer>
-      <CarouselTrack currentIndex={currentIndex}>
+      <CarouselTrack $currentIndex={currentIndex}>
         {carouselItems.map((item, index) => (
           <CarouselItemWrapper key={index}>
             <Title>{item.title1}<br/>{item.title2}</Title>
@@ -56,7 +56,7 @@ export default function Carousel() {
       </CarouselTrack>
       <Indicators>
         {carouselItems.map((_, index) => (
-          <Indicator key={index} isActive={index === currentIndex} />
+          <Indicator key={index}  $isActive={index === currentIndex} />
         ))}
       </Indicators>
     </CarouselContainer>
@@ -69,10 +69,10 @@ const CarouselContainer = styled.div`
   position: relative;
 `
 
-const CarouselTrack = styled.div<{ currentIndex: number }>`
+const CarouselTrack = styled.div<{  $currentIndex: number }>`
   display: flex;
   transition: transform 0.5s ease-in-out;
-  transform: ${({ currentIndex }) => `translateX(-${currentIndex * 100}%)`};
+  transform: ${({  $currentIndex }) => `translateX(-${ $currentIndex * 100}%)`};
 `
 
 const CarouselItemWrapper = styled.div`
@@ -105,9 +105,9 @@ const Indicators = styled.div`
   margin-top: 2.599rem;
 `
 
-const Indicator = styled.div<{ isActive: boolean }>`
+const Indicator = styled.div<{  $isActive: boolean }>`
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background-color: ${({ isActive, theme }) => isActive ? theme.colors.green : theme.colors.grey3};
+  background-color: ${({  $isActive, theme }) =>  $isActive ? theme.colors.green : theme.colors.grey3};
 `
