@@ -31,8 +31,6 @@ interface FoodCardsContainerProps {
 export default function FoodCardsContainer({ dailyMeals }: FoodCardsContainerProps) {
   const [clickedId, setClickedId] = useState<number | null>(null);
 
-  
-
   const handleCardClick = (id: number) => {
     setClickedId(clickedId === id ? null : id);
   };
@@ -40,7 +38,7 @@ export default function FoodCardsContainer({ dailyMeals }: FoodCardsContainerPro
   const renderCards = (mealType: string, meals: any[]) => {
     return meals.map((meal) => (
       <FavoriteContainer
-        key={meal.dailyRawId}
+        key={meal.dailyRawId + mealType+meal.name}
         id={meal.dailyRawId}
         type={mealType}
         name={meal.name}
@@ -77,8 +75,7 @@ const FavoriteContainer = ({ id, type, name, onClick, isClicked }: Foodlist) => 
     <Container onClick={onClick} $isClicked={isClicked}>
       <IconImage src={foodIcon?.img || ''} alt={type} />
       <FavoriteText>{name}</FavoriteText>
-      <FavoriteIconWrapper>
-      </FavoriteIconWrapper>
+      <FavoriteIconWrapper></FavoriteIconWrapper>
     </Container>
   );
 };
