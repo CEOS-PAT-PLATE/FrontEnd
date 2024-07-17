@@ -16,6 +16,8 @@ export const searchQueryState = atom<string>({
   default: '',
 });
 
+'ㅇㅇ'
+
 export const consumedRawsState = atom<ConsumedRaw[]>({
   key: 'consumedRawsState',
   default: [
