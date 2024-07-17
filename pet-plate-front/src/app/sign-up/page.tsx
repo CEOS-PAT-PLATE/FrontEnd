@@ -9,17 +9,19 @@ const SignUp = () => {
   useEffect(() => {
     const accessToken = new URL(window.location.href).searchParams.get('accessToken');
     const refreshToken = new URL(window.location.href).searchParams.get('refreshToken');
+    const enrollPet = new URL(window.location.href).searchParams.get('enrollPet');
 
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken && enrollPet) {
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('enrollPet', enrollPet);
 
       fetch('/api', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ accessToken, refreshToken }),
+        body: JSON.stringify({ accessToken, refreshToken, enrollPet }),
       }).then(() => {
         // 토큰 저장 후 리다이렉트
         router.push('/sign-up/welcome');
