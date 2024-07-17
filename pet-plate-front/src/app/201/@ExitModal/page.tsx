@@ -1,19 +1,38 @@
 'use client';
 
+// 종료 모달
+
 import React from 'react';
 import styled, { css } from 'styled-components';
+import Button from '@components/modal/button';
+
+import { useRecoilState } from 'recoil';
+
+import { isExitModalOpenState } from '@recoil/atoms';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const isOpen = true;
   if (!isOpen) return null;
 
+  const color1 = true; //grey
+  const color2 = false; //primary
 
+  const router = useRouter();
 
+  const [isExitModalOpen, setIsExitModalOpen] = useRecoilState(isExitModalOpenState);
 
-const color1 = true; //grey
-const color2=false; //primary
+  const handleModalCancel = () => {
+    setIsExitModalOpen(false);
+    // router.push('/201'); // 201로
+    // 계속 남아있음
+  };
 
-
+  const handleModalConfirm = () => {
+    router.push('/main'); // 201로
+    setIsExitModalOpen(false);
+    // 아예 입력 취소하고 나가게끔!
+  };
 
   return (
     <Overlay>
@@ -21,8 +40,12 @@ const color2=false; //primary
         <Header>식단 입력을 종료하시겠어요?</Header>
         <Content>지금 종료하면 이제까지 작성한 내용이 저장되지 않고 모두 사라져요.</Content>
         <ButtonContainer>
-        <Button $color={color1}>종료 할래요</Button>
-        <Button $color={color2}>다시 볼게요</Button>
+          <Button color={color1} onClick={handleModalConfirm}>
+            종료 할래요
+          </Button>
+          <Button color={color2} onClick={handleModalCancel}>
+            다시 볼게요
+          </Button>
         </ButtonContainer>
       </Modal>
     </Overlay>
@@ -30,8 +53,7 @@ const color2=false; //primary
 }
 
 export const Overlay = styled.div`
-  cursor: pointer;
-  z-index: 1;
+
   position: absolute;
 
   display: flex;
@@ -52,9 +74,9 @@ export const Modal = styled.div`
   padding: 36px 24px 24px 24px;
   flex-direction: column;
 
-height:203px;
+  height: 203px;
   width: 290px;
-    align-items: center;
+  align-items: center;
 
   gap: 10px;
   border-radius: 12px;
@@ -94,56 +116,4 @@ export const ButtonContainer = styled.div`
   gap: 16px;
   position: absolute;
   bottom: 24px;
-`;
-
-export const Button = styled.button<{ $color: boolean }>`
-  display: flex;
-  width: 113px;
-  height: 48px;
-  padding: 14px 24px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-
-  border-radius: 8px;
-  background: ${(props) => (props.$color? 'var(--grey2, #ECEEF0)' : 'var(--primary, #40C97F)')};
-  border: none;
-
-  cursor: pointer;
-
-  &:hover {
-    background: ${(props) => (props.$color? 'var(--grey3, #DDE0E4)' : 'var(--600, #33A165)')};
-
-  }
-
-
-   ${({ $color }) =>
-    $color &&
-    css`
-      color: var(--grey11, #36393C);
-text-align: center;
-
-/* body2_semibold_14pt */
-font-family: SUIT;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: 160%; /* 22.4px */
-    `}
-
-
-
-   ${({ $color }) =>
-   !$color &&
-    css`
- color: var(--white, #FFF);
-text-align: center;
-
-/* body2_semibold_14pt */
-font-family: SUIT;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: 160%; /* 22.4px */
-    `}
 `;

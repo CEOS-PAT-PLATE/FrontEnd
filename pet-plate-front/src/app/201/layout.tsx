@@ -1,5 +1,10 @@
 'use client';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import ExitButtonImage from '@style/201/ExitButtonImage';
+import ExitButton from '@public/svg/exit-button.svg?url';
+
+import { isExitModalOpenState, isCompleteModalOpenState } from '@recoil/atoms';
 
 export default function Layout({
   children,
@@ -10,21 +15,30 @@ export default function Layout({
   CompletionModal: React.ReactNode;
   ExitModal: React.ReactNode;
 }) {
+  const [isCompleteModalOpen, setIsCompleteModalOpen] = useRecoilState(isCompleteModalOpenState);
+  const [isExitModalOpen, setIsExitModalOpen] = useRecoilState(isExitModalOpenState);
+
   return (
     <Wrapper>
-      <div> {ExitModal}</div>
-
-      <div>{CompletionModal}</div>
+      <ExitButtonImage
+        src={ExitButton}
+        alt="exit-button"
+        onClick={() => {
+          setIsExitModalOpen(true);
+          console.log('클릭');
+        }}
+      />
+      {isExitModalOpen && <div>{ExitModal}</div>}
+      {isCompleteModalOpen && <div>{CompletionModal}</div>}
       <div>{children}</div>
-      </Wrapper>
+    </Wrapper>
   );
 }
 
-
 const Wrapper = styled.div`
-    flex-direction: column;
-    align-items: center;
-    width: 360px;
-    height: 800px;
-    position: relative;
-    `;
+  flex-direction: column;
+  align-items: center;
+  width: 360px;
+  height: 800px;
+  position: relative;
+`;

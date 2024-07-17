@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import { dailyMealsAPI } from '@api/dailyMealsAPI';
@@ -12,10 +10,12 @@ import StoreButtonActive from '@public/svg/btn_cta_active.svg?url';
 import styled from 'styled-components';
 import Wrapper from '@style/input-data2/Wrapper';
 import Notice from '@components/input-data2/common/notice';
-import { isValidState } from '@recoil/atoms';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isCompleteValid } from '@recoil/atoms';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+
+import { noticeState, isCompleteModalOpenState } from '@recoil/atoms';
 
 const getTodayDate = () => {
   const today = new Date();
@@ -24,6 +24,18 @@ const getTodayDate = () => {
   const day = String(today.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
+
+function isConpleteValid(dailyMealList: any) {
+  return (
+    dailyMealList.dailyRaws.length +
+      dailyMealList.dailyFeeds.length +
+      dailyMealList.dailyPackagedSnacks.length +
+      dailyMealList.dailyBookMarkedRaws.length +
+      dailyMealList.dailyBookMarkedFeeds.length +
+      dailyMealList.dailyBookMarkedPackagedSnacks.length >
+    0
+  );
+}
 
 const fetchdailyMealId = async (petId: number, date?: string) => {
   const response = await dailyMealsAPI.getPetDailyMeals(petId, date);
@@ -42,12 +54,16 @@ export default function Page() {
   const date = getTodayDate();
   const [dailyMeals, setDailyMeals] = useState<any>(null);
   const pathname = usePathname();
-  const isValid = useRecoilValue(isValidState);
-  const setIsValid = useSetRecoilState(isValidState);
+  const isValid = useRecoilValue(isCompleteValid);
+  const setIsValid = useSetRecoilState(isCompleteValid);
+
+  const setNotice = useSetRecoilState(noticeState);
+
+  const [isCompleteModalOpen, setIsCompleteModalOpen] = useRecoilState(isCompleteModalOpenState);
 
   const fetchDailyMeals = async () => {
     try {
-      const dailyMealResponse = await fetchdailyMealId(petId, date);
+      const dailyMealResponse = await fetchdailyMealId(petId, '2024-07-17');
       if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
         const dailyMealId = dailyMealResponse.data[0].dailyMealId;
         console.log('dailyMealId:', dailyMealId);
@@ -75,8 +91,11 @@ export default function Page() {
           ),
         };
 
+        const isCompleteValid = isConpleteValid(filteredData);
+        console.log('isCompleteValid:', isCompleteValid);
+
+        setIsValid(isCompleteValid);
         setDailyMeals(filteredData);
-        //   setDailyMeals(dailyMealListsResponse.data);
       } else {
         console.log('추가 식단x');
       }
@@ -90,10 +109,13 @@ export default function Page() {
   }, [pathname]);
 
   const handleClick = () => {
-    if (!isValid) {
-      // alert('식단을 추가해주세요.');
-      // setNotice({ isVisible: true, message: '식단을 선택해주세요!' });
+    console.log('isValid:', isValid);
+    if(!isValid) {
+      setNotice({ isVisible: true, message: '추가된 식단이 없어요!' });
       return;
+    }else {
+      console.log('응:', isValid);
+      setIsCompleteModalOpen(true);
     }
   };
 
@@ -102,12 +124,11 @@ export default function Page() {
       <Wrapper>
         <Image src={id_200} alt="id-200" priority />
         <AddButton />
-        <StoreButtonImage
-          src={isValid ? StoreButtonActive : StoreButtonInactive}
-          alt="store-button"
-          onClick={handleClick}
-          priority // 이미지 로드 우선순위 지정
-        />
+        <div onClick={handleClick}>
+        <StoreButton >
+          <Image src={isValid ? StoreButtonActive : StoreButtonInactive} alt="store-button" />
+        </StoreButton>
+        </div>
         <NoticeContainer>
           <Notice />
         </NoticeContainer>
@@ -123,17 +144,13 @@ export default function Page() {
   );
 }
 
-const StoreButtonImage = styled(Image)`
+const StoreButton = styled.div`
   width: 312px;
-  position: relative; 
+  position: relative;
   bottom: 200px;
   left: 24px;
   cursor: pointer;
 `;
-
-
-
-
 
 const NoticeContainer = styled.div``;
 
@@ -162,12 +179,9 @@ const EmptyMessage = styled.div`
   color: var(--grey8, #7c8389);
   text-align: center;
 
-  
   font-family: SUIT;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 160%; 
+  line-height: 160%;
 `;
-
-

@@ -1,7 +1,14 @@
 'use client';
 
+// 완료 모달
+
 import React from 'react';
 import styled, { css } from 'styled-components';
+import Button from '@components/modal/button';
+import { useRouter } from 'next/navigation';
+
+import { useRecoilState } from 'recoil';
+import { isCompleteModalOpenState } from '@recoil/atoms';
 
 export default function Page() {
   const isOpen = true;
@@ -10,14 +17,32 @@ export default function Page() {
   const color1 = true; //grey
   const color2 = false; //primary
 
+  const [isCompleteModalOpen, setIsCompleteModalOpen] = useRecoilState(isCompleteModalOpenState);
+
+  const router = useRouter();
+
+  const handleModalCancel = () => {
+    setIsCompleteModalOpen(false);
+    // router.push('/201'); // 201로
+  };
+
+  const handleModalConfirm = () => {
+    router.push('/result'); // 201로
+    // 분석 요청 미구현
+  };
+
   return (
     <Overlay>
       <Modal>
-        <Header>식단 입력을 종료하시겠어요?</Header>
-        <Content>지금 종료하면 이제까지 작성한 내용이 저장되지 않고 모두 사라져요.</Content>
+        <Header>이 식단으로 분석 요청하시겠어요?</Header>
+        <Content>한번 분석한 식단은 수정할 수 없어요.</Content>
         <ButtonContainer>
-          <Button $color={color1}>다시 볼게요</Button>
-          <Button $color={color2}>네</Button>
+          <Button color={color1} onClick={handleModalCancel}>
+            다시 볼게요
+          </Button>
+          <Button color={color2} onClick={handleModalConfirm}>
+            네
+          </Button>
         </ButtonContainer>
       </Modal>
     </Overlay>
@@ -25,9 +50,8 @@ export default function Page() {
 }
 
 export const Overlay = styled.div`
-  cursor: pointer;
   position: absolute;
-
+  z-index: 1000;
   display: flex;
   justify-content: center;
   top: 0;
@@ -42,14 +66,13 @@ export const Overlay = styled.div`
 
 export const Modal = styled.div`
   display: inline-flex;
-  padding: 36px 24px 24px 24px;
+  padding: 0px 24px 24px 24px;
   flex-direction: column;
   gap: 14px;
-
   align-items: center;
   height: 225px;
   width: 290px;
-
+justify-content: center;
   border-radius: 12px;
   background: #fff;
   box-shadow: 2px 2px 6px 0px rgba(153, 159, 165, 0.2);
@@ -67,6 +90,7 @@ export const Header = styled.h2`
   font-weight: 600;
   line-height: 160%; /* 28.8px */
   letter-spacing: -0.2px;
+
 `;
 
 export const Content = styled.p`
@@ -76,6 +100,7 @@ export const Content = styled.p`
   display: flex;
   flex-direction: column;
   height: 44px;
+
 
   /* body2_regular_14pt */
   font-family: SUIT;
@@ -91,52 +116,4 @@ export const ButtonContainer = styled.div`
   gap: 16px;
   position: absolute;
   bottom: 24px;
-`;
-
-export const Button = styled.button<{ $color: boolean }>`
-  display: flex;
-  width: 113px;
-  height: 48px;
-  padding: 14px 24px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-
-  border-radius: 8px;
-  background: ${(props) => (props.$color ? 'var(--grey2, #ECEEF0)' : 'var(--primary, #40C97F)')};
-  border: none;
-
-  cursor: pointer;
-
-  &:hover {
-    background: ${(props) => (props.$color ? 'var(--grey3, #DDE0E4)' : 'var(--600, #33A165)')};
-  }
-
-  ${({ $color }) =>
-    $color &&
-    css`
-      color: var(--grey11, #36393c);
-      text-align: center;
-
-      /* body2_semibold_14pt */
-      font-family: SUIT;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: 160%; /* 22.4px */
-    `}
-
-  ${({ $color }) =>
-    !$color &&
-    css`
-      color: var(--white, #fff);
-      text-align: center;
-
-      /* body2_semibold_14pt */
-      font-family: SUIT;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: 160%; /* 22.4px */
-    `}
 `;

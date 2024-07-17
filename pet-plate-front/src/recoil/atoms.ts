@@ -53,3 +53,21 @@ export const isNoticeVisibleState = atom({
   key: 'isNoticeVisibleState',
   default: false,
 });
+
+// 모달
+export const isExitModalOpenState = atom({
+  key: 'isExitModalOpenState',
+  default: false,
+});
+
+export const isCompleteModalOpenState = atom({
+  key: 'issCompleteModalOpenState',
+  default: false,
+});
+
+
+export const isCompleteValid = atom({
+  key: 'issCompleteValidState',
+  default: false,
+});
+
