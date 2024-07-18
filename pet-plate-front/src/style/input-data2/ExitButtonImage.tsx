@@ -1,6 +1,7 @@
 // ExitButtonImage.tsx
 'use client';
 import styled from 'styled-components';
+
 import Image from 'next/image';
 
 const ExitButtonStyleWrapper = styled(Image)`
