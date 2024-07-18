@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import nutrientAPI from '@api/nutrientAPI';
 import RightArrow from '@components/result/right-arrow';
-import nutritionInfo from '@lib/descriptionData';
+import {nutritionDeficientInfo}  from '@lib/descriptionData';
 
 import Image from 'next/image';
 
@@ -48,6 +48,8 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
   const fetchSupplements = async (petId: number, dailyMealId: number) => {
     try {
       const response = await nutrientAPI.getRecommendedSupplements(petId, dailyMealId);
+
+      // 추천 영양소 가지고!
       const uniqueNutrientGroups = filterUniqueNutrientGroups(response.data.data);
       setNutrientGroups(uniqueNutrientGroups);
     } catch (error) {
@@ -79,12 +81,15 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
 
   // 부족한 영양소만 필터링
   const deficientNutrientGroups = nutrientGroups.filter(group =>
-    nutritionInfo.some(info => info.nutrientName === group.nutrientName)
+    nutritionDeficientInfo.some(info => info.nutrientName === group.nutrientName)
   );
 
 
   return (
     <>
+     {nutritionDeficientInfo.length === 0 ? (
+        <EmptyMessage>부족 영양소가 없어요!</EmptyMessage>
+      ) : (
       <Content>
         {deficientNutrientGroups.map((group, index) => (
           <div key={group.nutrientName}>
@@ -120,6 +125,7 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
           </div>
         ))}
       </Content>
+      )}
     </>
   );
 }
@@ -138,7 +144,7 @@ const orderArray = [
 ];
 
 const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number }) => {
-  const nutrientData = nutritionInfo.find((info) => info.nutrientName === nutrient);
+  const nutrientData = nutritionDeficientInfo .find((info) => info.nutrientName === nutrient);
   return (
     <Section>
       <OrderText>{`${orderArray[index].word}번째 부족 영양소`}</OrderText>
@@ -248,7 +254,12 @@ const Name = styled.span`
 const EmptyMessage = styled.div`
   font-family: SUIT;
   font-size: 14px;
-  color: #999;
+  font-weight: 400;
+  position: absolute;
+  top: 430px;
+left: 125px;
+  color: var(--grey8, #7c8389);
+
 `;
 
 const Text1 = styled.div`

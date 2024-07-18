@@ -8,6 +8,8 @@ import Content from '@style/input-data2//Content';
 import Wrapper from '@style/input-data2/Wrapper';
 import Notice from '@components/input-data2/common/notice';
 
+
+
 export default async function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>

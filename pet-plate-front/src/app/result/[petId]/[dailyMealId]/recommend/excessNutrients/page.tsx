@@ -3,52 +3,94 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
-import nutrientAPI from '@api/nutrientAPI';
+import  dailyMealsAPI from '@api/dailyMealsAPI';
 import RightArrow from '@components/result/right-arrow';
+import { nutrientExcessInfo } from '@lib/descriptionData';
 
 interface ResultProps {
   params: { petId: number; dailyMealId: number };
 }
 
+interface ExcessNutrient {
+  name: string;
+  unit: string;
+  description: string;
+  amount: number;
+  properAmount: number;
+  maximumAmount: number;
+  maximumAmountRatioPerProperAmount: number;
+  amountRatioPerProperAmount: number;
+  amountRatioPerMaximumAmount: number;
+}
+
 export default function ExcessNutrientsPage({ params }: ResultProps) {
   const [petId, setPetId] = useState<number | null>(null);
   const [dailyMealId, setDailyMealId] = useState<number | null>(null);
-
-  const excessNutrient = '비타민 D와 칼슘';
-
-  const nutritionAdvice = getNutritionAdvice(excessNutrient);
+  const [excessNutrients, setExcessNutrients] = useState<ExcessNutrient[]>([]);
 
   useEffect(() => {
-    const petId = params.petId;
-    const dailyMealId = params.dailyMealId;
+    const { petId, dailyMealId } = params;
 
     setPetId(petId);
     setDailyMealId(dailyMealId);
 
     if (petId && dailyMealId) {
-      // 여기서, 흠.. 어떻게 하지?
+      fetchExcessNutrients(petId, dailyMealId);
     }
-  }, []);
+  }, [params]);
+
+  const fetchExcessNutrients = async (petId: number, dailyMealId: number) => {
+    try {
+      const response = await dailyMealsAPI.getExcessNutrients(petId, dailyMealId);
+      setExcessNutrients(response.data.data);
+    } catch (error) {
+      console.error('과잉 영양소 불러오기 오류', error);
+    }
+  };
+
+  const filteredNutrientExcessInfo = nutrientExcessInfo.filter((info) =>
+    excessNutrients.some((nutrient) => nutrient.name === info.nutrientName)
+  );
+
 
   return (
     <>
-      <ContainerWrapper>
-        <Text1>비슷한 고민을 가진</Text1>
-        <Text2>반려인들은 이런 점을 신경써요!</Text2>
-        <Container>
-          {nutritionAdvice.map((advice, index) => (
-            <Card key={index}>
-              <Info>
-                <Vendor>{advice.title}</Vendor>
-                <Name>{advice.content}</Name>
-              </Info>
-            </Card>
-          ))}
-        </Container>
-      </ContainerWrapper>
+      {filteredNutrientExcessInfo.length === 0 ? (
+        <EmptyMessage>과잉 영양소가 없어요!</EmptyMessage>
+      ) : (
+        <div>
+          <Content>
+            {filteredNutrientExcessInfo.map((group, index) => (
+              <NutrientInfoSection nutrient={group.nutrientName} index={index} key={group.nutrientName} />
+            ))}
+          </Content>
+          <ContainerWrapper>
+            <Text1>비슷한 고민을 가진</Text1>
+            <Text2>반려인들은 이런 점을 신경써요!</Text2>
+            <Container>
+              {getNutritionAdvice(excessNutrients.map(n => n.name).join('과 ')).map((advice, index) => (
+                <Card key={index}>
+                  <Info>
+                    <Vendor>{advice.title}</Vendor>
+                    <Name>{advice.content}</Name>
+                  </Info>
+                </Card>
+              ))}
+            </Container>
+          </ContainerWrapper>
+        </div>
+      )}
     </>
   );
 }
+
+const Content = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  position: absolute;
+  top: 150px;
+  height: 650px;
+`;
 
 const getNutritionAdvice = (excessNutrient: string) => [
   {
@@ -111,11 +153,6 @@ const Card = styled.div`
   margin-left: 8px;
 `;
 
-const ImageWrapper = styled.div`
-  flex-shrink: 0;
-  margin-right: 10px;
-`;
-
 const Info = styled.div`
   display: flex;
   flex-direction: column;
@@ -147,7 +184,12 @@ const Name = styled.span`
 const EmptyMessage = styled.div`
   font-family: SUIT;
   font-size: 14px;
-  color: #999;
+  font-weight: 400;
+  position: absolute;
+  top: 430px;
+left: 125px;
+  color: var(--grey8, #7c8389);
+
 `;
 
 const Text1 = styled.div`
@@ -180,3 +222,175 @@ const Text2 = styled.div`
   padding: 0px 16px;
   width: 360px;
 `;
+
+const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number }) => {
+  const nutrientData = nutrientExcessInfo.find((info) => info.nutrientName === nutrient);
+  return (
+    <Section>
+      <OrderText>{`${orderArray[index].word}번째 과잉 영양소`}</OrderText>
+      <NutrientTitle>{nutrientData?.title}</NutrientTitle>
+      <NutrientContent>{nutrientData?.content}</NutrientContent>
+      <NutrientSymptomsTitle>{`${nutrient}가 과잉 섭취될 때 발생할 수 있는 증상`}</NutrientSymptomsTitle>
+      <SymptomsList>
+        {nutrientData?.symptoms.map((symptom, i) => (
+          <SymptomWrapper key={i}>
+            <SymptomIcon src={symptom.src} alt="아이콘" />
+            <SymptomItem key={i}>
+              <SymptomName>{symptom.name}</SymptomName>
+              <SymptomDescription>{symptom.description}</SymptomDescription>
+            </SymptomItem>
+          </SymptomWrapper>
+        ))}
+      </SymptomsList>
+      <NutrientDefinitionTitle>{`${nutrient}이란?`}</NutrientDefinitionTitle>
+      <NutrientDefinition>{nutrientData?.definition}</NutrientDefinition>
+    </Section>
+  );
+};
+
+const Section = styled.div`
+  margin-bottom: 40px;
+  margin-left: 25px;
+  margin-top: 40px;
+`;
+
+const OrderText = styled.div`
+  color: var(--grey7, #959ca4);
+  font-family: SUIT;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 160%; /* 19.2px */
+  margin-bottom: 4px;
+`;
+
+const NutrientTitle = styled.div`
+  color: var(--primary, #40c97f);
+  /* header_bold_20pt */
+  font-family: SUIT;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 160%; /* 32px */
+  letter-spacing: -0.75px;
+`;
+
+const NutrientContent = styled.div`
+  color: var(--grey11, #36393c);
+  width: 312px;
+  /* body2_regular_14pt */
+  font-family: SUIT;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 22.4px */
+  margin-bottom: 16px;
+`;
+
+const NutrientSymptomsTitle = styled.div`
+  color: var(--grey11, #36393c);
+
+  /* title2_bold_16pt */
+  font-family: SUIT;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 6px;
+
+  line-height: 160%;
+`;
+
+const SymptomsList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 165px;
+  color: var(--grey11, #36393c);
+
+  /* body2_semibold_14pt */
+  font-family: SUIT;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%; /* 22.4px */
+`;
+
+const SymptomWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 14px;
+`;
+
+const SymptomItem = styled.li`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 256px;
+`;
+
+const SymptomIcon = styled.img`
+  width: 36px;
+  height: 36px;
+  background-size: contain;
+  margin-right: 15px;
+`;
+
+const SymptomName = styled.div`
+  width: 165px;
+  margin-right: 8px;
+
+  color: var(--grey11, #36393c);
+
+  /* body2_semibold_14pt */
+  font-family: SUIT;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%; /* 22.4px */
+  margin-bottom: 0px;
+`;
+
+const SymptomDescription = styled.div`
+  color: var(--grey11, #36393c);
+
+  /* body3_regular_12pt */
+  font-family: SUIT;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 19.2px */
+
+  width: 256px;
+`;
+
+const NutrientDefinitionTitle = styled.div`
+  color: var(--grey11, #36393c);
+  font-family: SUIT variable;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 160%;
+  margin-bottom: 6px;
+  margin-top: 25px;
+`;
+
+const NutrientDefinition = styled.div`
+  color: var(--grey11, #36393c);
+  font-family: SUIT;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 160%; /* 22.4px */
+  align-self: stretch;
+  width: 312px;
+`;
+
+const orderArray = [
+  { index: 1, word: '첫' },
+  { index: 2, word: '두' },
+  { index: 3, word: '세' },
+  { index: 4, word: '네' },
+  { index: 5, word: '다섯' },
+  { index: 6, word: '여섯' },
+  { index: 7, word: '일곱' },
+  { index: 8, word: '여덟' },
+  { index: 9, word: '아홉' },
+  { index: 10, word: '열' },
+];

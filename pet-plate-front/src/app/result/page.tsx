@@ -16,8 +16,6 @@ import { dailyMealsAPI } from '@api/dailyMealsAPI';
 import { saveDailyMealsNutrients, fetchPetNutrientData } from '@lib/apiService';
 
 
-
-
 const getTodayDate = () => {
   const today = new Date();
   const year = today.getFullYear();
@@ -76,10 +74,19 @@ export default function Page({ params }: ResultProps) {
       console.log('오늘 섭취 총 칼로리 정보', todayKcal.data);
       console.log('오늘 섭취 칼로리/적정 섭취 칼로리 정보', todaykcalRatio.data);
       console.log('하루동안 섭취해야할 적정 칼로리', todayProperKcal.data);
+
+       // 과잉 영양소 개수
+       const ExcessiveNutrientsCount = excessNutrients.data.data.length;
+       const InsufficientNutrientsCount = deficientNutrients.data.data.length / 2; // 배열 길이를 2로 나눔
+    
+
+
+ 
     } catch (error) {
       console.error('오류', error);
     }
   };
+
 
   // 2
 
