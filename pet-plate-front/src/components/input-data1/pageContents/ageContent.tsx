@@ -9,7 +9,7 @@ import { petInfoState } from '@lib/atoms';
 
 
 
-export default function ageContent({ width, placeholder, value, onChange } : InputFieldProps) {
+export default function ageContent() {
     const [petInfo, setPetInfo] = useRecoilState(petInfoState);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
