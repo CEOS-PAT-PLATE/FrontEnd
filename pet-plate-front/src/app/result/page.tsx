@@ -13,6 +13,9 @@ import { useEffect } from 'react';
 
 import { dailyMealsAPI } from '@api/dailyMealsAPI';
 
+import { saveDailyMealsNutrients } from '@lib/apiService';
+
+
 const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -46,7 +49,7 @@ interface ResultProps {
 export default function Page({ params }: ResultProps) {
   const router = useRouter();
   //const { petId, dailyMealId } = params;
-  const petId = 2;
+  const petId = 3;
   const dailyMealId = 2;
  // const dailyMeals = useRecoilValue(dailyMealsState);
  const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
@@ -54,8 +57,19 @@ export default function Page({ params }: ResultProps) {
 
  const date = getTodayDate();
 
+ // ** 1,2 별도로 비동기요청 보내기
+//1 
+
+
+
+ // 2 
+
 const fetchDailyMeals = async () => {
     try {
+
+
+    
+ 
       const dailyMealResponse = await fetchdailyMealId(petId, date);
       if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
         const dailyMealId = dailyMealResponse.data[0].dailyMealId;
@@ -97,6 +111,7 @@ const fetchDailyMeals = async () => {
   };
 
   useEffect(() => {
+    saveDailyMealsNutrients(petId);
     fetchDailyMeals();
   }, []);
 

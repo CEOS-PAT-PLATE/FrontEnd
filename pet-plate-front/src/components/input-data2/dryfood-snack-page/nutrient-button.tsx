@@ -11,6 +11,7 @@ import { useSetRecoilState } from 'recoil';
 import { noticeState } from '@recoil/atoms';
 
 export default function NutrientButton() {
+  const petId = 3;
   const { addFeed, addPackagedSnack } = useAddDirectlyToDailyMeals();
   const router = useRouter();
   const isValid = useRecoilValue(isFormValidState);
@@ -46,7 +47,7 @@ export default function NutrientButton() {
     }
 
     apiCall.mutate(
-      { petId: 2, data: nutrientData },
+      { petId: petId, data: nutrientData },
       {
         onSuccess: () => {
           //    alert('하루 식사에 저장되었습니다.');

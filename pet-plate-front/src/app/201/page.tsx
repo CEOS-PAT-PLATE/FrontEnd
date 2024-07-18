@@ -48,7 +48,7 @@ const fetchdailyMealLists = async (petId: number, dailyMealId: number) => {
 };
 
 export default function Page() {
-  const petId = 2;
+  const petId = 3;
   const date = getTodayDate();
   const pathname = usePathname();
   const isValid = useRecoilValue(isCompleteValid);
