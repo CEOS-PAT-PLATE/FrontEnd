@@ -15,7 +15,7 @@ const GlobalStyles = createGlobalStyle`
   font-family: 'SUIT Variable';
   src: url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.woff2') format('woff2');
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   font-display: swap;
 }
 
