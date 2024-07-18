@@ -435,7 +435,7 @@ const EmptyMessage = styled.div`
 
 const EmptyBottom = styled.div`
   position: absolute;
-  z-index: 1000;
+  z-index: 2000;
   bottom: 0px;
   height: 500px;
   max-height: 13px;
