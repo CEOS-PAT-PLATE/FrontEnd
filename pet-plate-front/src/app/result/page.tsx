@@ -61,15 +61,28 @@ export default function Page({ params }: ResultProps) {
 //1 
 
 
+// 영양소 불러오는 함수 
+const fetchNutrientData = async () => {
+    try {
+      const [excessNutrients, properNutrients, deficientNutrients] = await Promise.all([
+        dailyMealsAPI.getExcessNutrients(petId, dailyMealId),
+        dailyMealsAPI.getProperNutrients(petId, dailyMealId),
+        dailyMealsAPI.getDeficientNutrients(petId, dailyMealId),
+      ]);
+
+      console.log('초과 영양소:', excessNutrients);
+      console.log('적정 영양소:', properNutrients);
+      console.log('부족 영양소:', deficientNutrients);
+    } catch (error) {
+      console.error('오류', error);
+    }
+  };
 
  // 2 
 
 const fetchDailyMeals = async () => {
     try {
 
-
-    
- 
       const dailyMealResponse = await fetchdailyMealId(petId, date);
       if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
         const dailyMealId = dailyMealResponse.data[0].dailyMealId;
@@ -110,11 +123,17 @@ const fetchDailyMeals = async () => {
     }
   };
 
-  useEffect(() => {
-    saveDailyMealsNutrients(petId);
-    fetchDailyMeals();
-  }, []);
 
+  // 초기화 비동기 함수 use effect 내에서 실행
+  useEffect(() => {
+    const initialize = async () => {
+      await saveDailyMealsNutrients(petId);
+      await fetchDailyMeals();
+      await fetchNutrientData();
+    };
+
+    initialize();
+  }, []);
 
 
 
