@@ -1,6 +1,6 @@
 'use client';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -21,23 +21,28 @@ export default function Navbar({ deficientCount, excessCount, params }: NavbarPr
 
   return (
     <NavWrapper>
-      
-        <NavItem>
-          <ImageWrapper>
-            <Image src={isExcessPath ? NavBarExcess : NavBarDeficient} alt="Nutrients" />
-            <StyledLink1 href={`/result/${params.petId}/${params.dailyMealId}/recommend/deficientNutrients`}>
-            <Text>{'부족  '+deficientCount}</Text>
-            </StyledLink1>
-            <StyledLink2 href={`/result/${params.petId}/${params.dailyMealId}/recommend/excessNutrients`}>
-            <Text>{'과잉  '+excessCount}</Text>
-            </StyledLink2>
-          </ImageWrapper>
-        
-        </NavItem>
-    
+      <NavItem>
+        <ImageWrapper>
+          <Image src={isExcessPath ? NavBarExcess : NavBarDeficient} alt="Nutrients" />
+          <StyledLink1 href={`/result/${params.petId}/${params.dailyMealId}/recommend/deficientNutrients`}>
+            <Text1>부족</Text1>
+            <Text3 $isExcessPath={isExcessPath}>{deficientCount}</Text3>
+          </StyledLink1>
+          <StyledLink2 href={`/result/${params.petId}/${params.dailyMealId}/recommend/excessNutrients`}>
+            <Text1>과잉</Text1>
+            <Text2 $isExcessPath={isExcessPath}>{excessCount}</Text2>
+          </StyledLink2>
+        </ImageWrapper>
+      </NavItem>
     </NavWrapper>
   );
 }
+
+const Space = styled.div`
+  display: inline-block;
+  width: 18px;
+  background-color: ${(props) => props.theme.colors['grey1']}; // body 배경색 설정
+`;
 
 const NavWrapper = styled.div`
   position: absolute;
@@ -53,38 +58,89 @@ const NavItem = styled.div`
   flex: 1;
 `;
 
-const ImageWrapper = styled.div`
-  
-`;
+const ImageWrapper = styled.div``;
 
-const Text = styled.span`
+const Text = styled.div`
   font-family: SUIT;
   font-size: 16px;
   font-weight: 600;
-  margin-left: 8px;
+  margin-right: 10px;
   color: var(--grey11, #36393c);
   position: absolute;
-
- 
+  width: 40px;
 `;
 
 const StyledLink1 = styled(Link)`
   position: absolute;
   z-index: 100;
-    top: 18px;
-    left:70px;
-    width:55px;
-
+  top: 18px;
+  left: 38px;
+  width: 55px;
 `;
-
 
 const StyledLink2 = styled(Link)`
   text-decoration: none;
-    position: absolute;
+  position: absolute;
   z-index: 100;
-    top: 18px;
-    left:150px;
-        width:55px;
+  top: 18px;
+  left: 110px;
+  width: 55px;
+`;
 
+const Text1 = styled.div`
+  font-family: SUIT;
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 10px;
+  color: var(--grey11, #36393c);
+  position: absolute;
+  width: 40px;
+`;
+
+const Text2 = styled.div<{ $isExcessPath: boolean }>`
+  font-family: SUIT;
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 10px;
+  position: absolute;
+  margin-left: 40px;
+
+  width: 40px;
+
+  ${({ $isExcessPath }) =>
+    $isExcessPath &&
+    css`
+     color: #40c97f;
+    `}
+
+  ${({ $isExcessPath }) =>
+    !$isExcessPath &&
+    css`
+    color:  ${(props) => props.theme.colors['grey3']}
+    `}
+`;
+
+
+const Text3= styled.div<{ $isExcessPath: boolean }>`
+  font-family: SUIT;
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 10px;
+  position: absolute;
+  margin-left: 40px;
+
+  width: 40px;
+
+  ${({ $isExcessPath }) =>
+    !$isExcessPath &&
+    css`
+     color: #40c97f;
+    `}
+
+  ${({ $isExcessPath }) =>
+    $isExcessPath &&
+    css`
+    color:  ${(props) => props.theme.colors['grey3']}
+    `}
 `;
 
