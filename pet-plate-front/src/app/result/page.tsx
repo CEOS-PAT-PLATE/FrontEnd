@@ -144,7 +144,7 @@ export default function Page({ params }: ResultProps) {
             </FirstLine>
             <SecondLine>몸무게 1.6kg | 활동량 보통</SecondLine>
           </SVGContent>
-          <StyledLink href={`result/${petId}/${dailyMealId}/recommend`}>
+          <StyledLink href={`result/${petId}/${dailyMealId}/recommend/deficientNutrients`}>
             <RecommendationButton>추천 영양성분 보기</RecommendationButton>
           </StyledLink>
           <GraphContainer>

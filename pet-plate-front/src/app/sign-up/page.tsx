@@ -7,6 +7,8 @@ const SignUp = () => {
   const router = useRouter();
 
   useEffect(() => {
+
+
     const accessToken = new URL(window.location.href).searchParams.get('accessToken');
     const refreshToken = new URL(window.location.href).searchParams.get('refreshToken');
     const enrollPet = new URL(window.location.href).searchParams.get('enrollPet');
