@@ -120,10 +120,18 @@ export interface DailyConsumedRaw {
 
 //반려견 기본 정보
 export interface PetInfo {
-  petId: number;
   name: string;
-  age: number;
-  weight: number;
+  age: number | undefined;
+  weight: number | undefined;
   activity: string;
   neutering: string;
+}
+
+
+//인풋데이터
+export interface InputFieldProps {
+  placeholder: string;
+  width: string;
+  value: string | number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

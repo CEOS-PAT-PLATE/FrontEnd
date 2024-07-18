@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { RawFood, PetInfo } from '@lib/types';
+import { PetInfo } from '@lib/types';
 
 //input-data1
 export const scrollIndexState = atom<number>({
@@ -7,16 +7,12 @@ export const scrollIndexState = atom<number>({
   default: 0,
 });
 
-export const petInfoState = atom<PetInfo[]>({
+export const petInfoState = atom<PetInfo>({
   key: 'petInfoState',
-  default: [
-    {
-      petId: 0,
-      name: '김백순',
-      age: 3,
-      weight: 9,
-      activity: 'ACTIVE',
-      neutering: 'NEUTERED',
-    },
-  ],
-});
+  default: {
+    name: '', // 기본값 설정 예시
+    age: undefined,
+    weight: undefined,
+    activity: '',
+    neutering: '',
+  }})

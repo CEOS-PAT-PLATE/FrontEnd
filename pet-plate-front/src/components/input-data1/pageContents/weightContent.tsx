@@ -1,9 +1,24 @@
 'use Client'
 
+import { useRecoilState } from 'recoil';
 import styled from "styled-components"
 import InputField from "@components/input-data1/inputField"
+import {InputFieldProps} from "@lib/types"
+import { petInfoState } from '@lib/atoms';
 
-export default function weightContent() {
+//NaN 일때 아예 입력 막아두기
+
+
+export default function ageContent({ width, placeholder, value, onChange } : InputFieldProps) {
+    const [petInfo, setPetInfo] = useRecoilState(petInfoState);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        const newWeight = value === '' ? undefined : parseInt(value.trim(), 10); // 입력값을 정수로 파싱하거나 비어 있으면 undefined로 설정
+        const updatedPetInfo = { ...petInfo, weight: newWeight };
+        setPetInfo(updatedPetInfo);
+      };
+
 return (
     <ContentWrapper>
         <Title>반려견의 몸무게를 알려주세요</Title>
@@ -12,6 +27,8 @@ return (
             <InputField
                 placeholder="몸무게"
                 width="17.5rem"
+                value={petInfo.weight !== undefined ? petInfo.weight.toString() : ''} // 숫자를 문자열로 변환하여 전달
+                onChange={handleChange}
             />
             <span>kg</span>
         </InputFieldWrapper>

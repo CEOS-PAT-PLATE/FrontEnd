@@ -1,13 +1,27 @@
 'use Client'
 
+import { useRecoilState } from 'recoil';
 import styled from "styled-components"
 import RadioLists from "@components/input-data1/radioLists"
+import { petInfoState } from '@lib/atoms';
+
 
 export default function neuteringSurgeryContent() {
+  const [petInfo, setPetInfo] = useRecoilState(petInfoState);
+
+  const handleChange = (value : string) => {
+      const updatedPetInfo = { ...petInfo, neutering: value };
+      setPetInfo(updatedPetInfo);
+  };
+
+
   const radioOptions = [
     { name: "neutering", value: "INTACT", text: "중성화 수술을 하지 않았어요" },
     { name: "neutering", value: "NEUTERED", text: "중성화 수술을 했어요" },
 ];
+
+console.log(petInfo)
+
 
   return (
   <ContentWrapper>
@@ -19,11 +33,13 @@ export default function neuteringSurgeryContent() {
                     name={option.name}
                     value={option.value}
                     text={option.text}
+                    onChange={() => handleChange(option.value)}
                 />
             ))}
     </ContentWrapper>
   )
 }
+
 
 const ContentWrapper = styled.div`
     width: 100%;
