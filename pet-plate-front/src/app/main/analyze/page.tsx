@@ -25,9 +25,9 @@ export default function page() {
         <InfoCard src={infoCard} alt="info"/>
         <FixedBtnWrapper>
           <LinkButton href="/input-data1" //login 여부에 따라 수정
-            backgroundColor = {(props) => props.theme.colors.green}
-            hoverBackgroundColor= {(props) => props.theme.colors.green}
-            hoverButtonContentColor= "#fff"
+            backgroundcolor = {(props) => props.theme.colors.green}
+            hoverbackgroundcolor= {(props) => props.theme.colors.green}
+            hoverbuttoncontentcolor= "#fff"
             buttonContent = {buttonContent}
           />
         </FixedBtnWrapper>
