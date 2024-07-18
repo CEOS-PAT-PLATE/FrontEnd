@@ -49,8 +49,7 @@ export default function Page() {
           petInfo.weight !== undefined && !isNaN(Number(petInfo.weight))
         ) {
           // 유효성 검사 통과 시 
-          console.log('done!');
-          route.push('/input-data1/alert1');
+          route.push('/input-data1/alert');
         } else {
           // 유효성 검사 실패 시
           alert("모든 답변을 완료하세요!")
