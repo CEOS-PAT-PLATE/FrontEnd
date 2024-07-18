@@ -10,6 +10,9 @@ import { useRecoilState } from 'recoil';
 
 import { isExitModalOpenState } from '@recoil/atoms';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+import { handleDeleteAllMeals } from '@lib/apiService';
 
 export default function Page() {
   const isOpen = true;
@@ -22,14 +25,20 @@ export default function Page() {
 
   const [isExitModalOpen, setIsExitModalOpen] = useRecoilState(isExitModalOpenState);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleModalCancel = () => {
     setIsExitModalOpen(false);
     // router.push('/201'); // 201로
     // 계속 남아있음
   };
 
+  const petId = 3;
+  const dailyMealId = 5;
+
   const handleModalConfirm = () => {
-    router.push('/main'); // 201로
+    router.push('/main/analyze'); // 201로
+    handleDeleteAllMeals(petId, dailyMealId);
     setIsExitModalOpen(false);
     // 아예 입력 취소하고 나가게끔!
   };
@@ -53,7 +62,6 @@ export default function Page() {
 }
 
 export const Overlay = styled.div`
-
   position: absolute;
 
   display: flex;

@@ -1,5 +1,7 @@
 import axiosInstance from './axiosInstance';
 import { nutrientAPI } from '@api/nutrientAPI';
+import {dailyMealsAPI} from '@api/dailyMealsAPI';
+
 
 // 식단 저장 -> 분석 진행
 export const saveDailyMealsNutrients = async (petId: number) => {
@@ -63,4 +65,25 @@ const petData = {
   weight: 13,
   activity: 'ACTIVE',
   neutering: 'NEUTERED',
+};
+
+
+// 식사 내역 전체 삭제 
+
+export const handleDeleteAllMeals = async (petId:number, dailyMealId:number) => {
+
+  try {
+    await Promise.all([
+      dailyMealsAPI.deleteBookmarkRawMeals(petId, dailyMealId),
+      dailyMealsAPI.deletePackagedSnacks(petId, dailyMealId),
+      dailyMealsAPI.deleteBookmarkFeeds(petId, dailyMealId),
+      dailyMealsAPI.deleteBookmarkPackagedSnacks(petId, dailyMealId),
+      dailyMealsAPI.deleteFeeds(petId, dailyMealId),
+      dailyMealsAPI.deleteRawMeals(petId, dailyMealId),
+    ]);
+    alert('모든 식단이 성공적으로 삭제되었습니다.');
+  } catch (error) {
+    console.error('식단 삭제 중 오류 발생:', error);
+    alert('식단 삭제 중 오류가 발생했습니다.');
+  } 
 };
