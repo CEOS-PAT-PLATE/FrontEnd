@@ -57,6 +57,38 @@ export const dailyMealsAPI = {
   saveDailyMealsNutrients: async (petId: number) => {
     return await axiosInstance.post(`/pet/${petId}/dailyMeals/nutrients`);
   },
+
+  // ** 특정 식사에서 섭취한 음식들 제거 API **//
+
+  // 특정 식사에서 섭취한 즐겨찾기 자연식들 제거
+  deleteBookmarkRawMeals: async (petId: number, dailyMealId: number) => {
+    return await axiosInstance.delete(`/pet/${petId}/dailyMeals/${dailyMealId}/bookmark/raws`);
+  },
+
+  // 특정 식사에서 섭취한 포장 간식들 제거
+  deletePackagedSnacks: async (petId: number, dailyMealId: number) => {
+    return await axiosInstance.delete(`/pet/${petId}/dailyMeals/${dailyMealId}/packagedSnacks`);
+  },
+
+  // 특정 식사에서 섭취한 즐겨찾기 사료들 제거
+  deleteBookmarkFeeds: async (petId: number, dailyMealId: number) => {
+    return await axiosInstance.delete(`/pet/${petId}/dailyMeals/${dailyMealId}/bookmark/feeds`);
+  },
+
+  // 특정 식사에서 섭취한 즐겨찾기 포장 간식들 제거
+  deleteBookmarkPackagedSnacks: async (petId: number, dailyMealId: number) => {
+    return await axiosInstance.delete(`/pet/${petId}/dailyMeals/${dailyMealId}/bookmark/packagedSnacks`);
+  },
+
+  // 특정 식사에서 섭취한 사료들 제거
+  deleteFeeds: async (petId: number, dailyMealId: number) => {
+    return await axiosInstance.delete(`/pet/${petId}/dailyMeals/${dailyMealId}/feeds`);
+  },
+
+  // 특정 식사에서 섭취한 자연식들 제거
+  deleteRawMeals: async (petId: number, dailyMealId: number) => {
+    return await axiosInstance.delete(`/pet/${petId}/dailyMeals/${dailyMealId}/raws`);
+  },
 };
 
 export default dailyMealsAPI;

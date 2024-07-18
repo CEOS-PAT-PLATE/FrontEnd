@@ -19,7 +19,7 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
   const [petId, setPetId] = useState<number | null>(null);
   const [dailyMealId, setDailyMealId] = useState<number | null>(null);
 
-  const excessNutrient="비타민 D";
+  const excessNutrient="비타민 D와 칼슘";
 
 
   const nutritionAdvice = getNutritionAdvice(excessNutrient);
