@@ -14,6 +14,15 @@ import { isCompleteValid, noticeState, isCompleteModalOpenState, dailyMealsState
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+//import { updatePetInfo } from '@lib/apiService';
+
+const petData = {
+  name: '이아지',
+  age: 2,
+  weight: 13,
+  activity: 'ACTIVE',
+  neutering: 'NEUTERED',
+};
 
 const getTodayDate = () => {
   const today = new Date();
@@ -57,6 +66,8 @@ export default function Page() {
   const setNotice = useSetRecoilState(noticeState);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useRecoilState(isCompleteModalOpenState);
   const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
+
+  //updatePetInfo(petId, petData);
 
   const fetchDailyMeals = async () => {
     try {

@@ -15,6 +15,9 @@ import { dailyMealsAPI } from '@api/dailyMealsAPI';
 
 import { saveDailyMealsNutrients, fetchPetNutrientData } from '@lib/apiService';
 
+
+
+
 const getTodayDate = () => {
   const today = new Date();
   const year = today.getFullYear();
