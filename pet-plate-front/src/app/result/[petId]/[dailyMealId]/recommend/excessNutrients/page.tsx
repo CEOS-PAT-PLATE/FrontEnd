@@ -1,4 +1,4 @@
-/**
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -8,24 +8,22 @@ import nutrientAPI from '@api/nutrientAPI';
 import RightArrow from '@components/result/right-arrow';
 
 
-interface Supplement {
-  id: number;
-  name: string;
-  englishName: string;
-  vendor: string;
-  drugImgPath: string;
-}
+
 
 interface ResultProps {
   params: { petId: number; dailyMealId: number };
 }
 
-export default function DeficientNutrientsPage({ excessNutrient }: { excessNutrient: string }) {
-  const [supplements, setSupplements] = useState<Supplement[]>([]);
-  const router = useRouter();
+export default function ExcessNutrientsPage({ params }: ResultProps) {
 
   const [petId, setPetId] = useState<number | null>(null);
   const [dailyMealId, setDailyMealId] = useState<number | null>(null);
+
+  const excessNutrient="비타민 D";
+
+
+  const nutritionAdvice = getNutritionAdvice(excessNutrient);
+
 
   useEffect(() => {
     const petId = params.petId;
@@ -35,28 +33,18 @@ export default function DeficientNutrientsPage({ excessNutrient }: { excessNutri
     setDailyMealId(dailyMealId);
 
     if (petId && dailyMealId) {
-      fetchSupplements(petId, dailyMealId);
+     // 여기서, 흠.. 어떻게 하지?
     }
   }, []);
 
-  const fetchSupplements = async (petId: number, dailyMealId: number) => {
-    try {
-      const response = await nutrientAPI.getRecommendedSupplements(petId, dailyMealId);
-      setSupplements(response.data.data);
-    } catch (error) {
-      console.error('이미지 로딩 오류', error);
-    }
-  };
 
-  const handleImageError = (id: number) => {
-    setSupplements((prevSupplements) => prevSupplements.filter((supplement) => supplement.id !== id));
-  };
+
 
   return (
     <>
     <ContainerWrapper>
-    <Text1>비슷한 고민을 가진 반려인들은</Text1>
-    <Text2> 이 영양제를 많이 써요.</Text2>
+    <Text1>비슷한 고민을 가진</Text1>
+    <Text2>반려인들은 이런 점을 신경써요!</Text2>
     <Container>
     {nutritionAdvice.map((advice, index) => (
          <Card key={index}>
@@ -72,22 +60,7 @@ export default function DeficientNutrientsPage({ excessNutrient }: { excessNutri
       
   );
 }
-const excessNutrient="비타민 D";
 
-function NutritionAdviceList({ excessNutrient }: { excessNutrient: string }) {
-    const nutritionAdvice = getNutritionAdvice(excessNutrient);
-  
-    return (
-      <div>
-        {nutritionAdvice.map((advice, index) => (
-          <div key={index}>
-            <h3>{advice.title}</h3>
-            <p>{advice.content}</p>
-          </div>
-        ))}
-      </div>
-    );
-  };
 
  
 
@@ -155,7 +128,7 @@ const Card = styled.div`
   display: flex;
   align-items: center;
   width:312px;
-  height:100px;
+  
   padding: 16px;
   margin-bottom: 16px;
   margin-left: 8px;
@@ -170,35 +143,38 @@ const ImageWrapper = styled.div`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
+
 `;
 
 const Vendor = styled.span`
 width: 171px;
-color: var(--grey7, #959CA4);
+color: var(--grey11, #36393C);
 
-
-
-font-family: SUIT;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: 160%;
-`;
-
-const Name = styled.span`
-align-self: stretch;
-color: var(--grey10, #4F5357);
-
+/* title2_bold_16pt */
 font-family: SUIT;
 font-size: 16px;
 font-style: normal;
 font-weight: 700;
-max-width: 171px;
-line-height: 160%;
+line-height: 160%; /* 25.6px */
 
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+
+
+`;
+
+const Name = styled.span`
+color: var(--grey8, #7C8389);
+
+/* body3_regular_12pt */
+font-family: SUIT;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 160%; /* 19.2px */
+
+
+
+
 `;
 
 const EmptyMessage = styled.div`
@@ -243,5 +219,3 @@ margin-top: 30px;
 
 
 `;
-
-*/
