@@ -1,16 +1,17 @@
 import styled from "styled-components"
 
 interface radioListProps {
-    name : string
-    value : string
-    text : string
+    name: string;
+    value: string;
+    text: string;
+    onChange: () => void;
 }
 
 
-export default function radioLists({name, value, text} : radioListProps) {
+export default function radioLists({name, value, text, onChange} : radioListProps) {
   return (
     <RadioWrapper>
-        <input type="radio" name={name} value={value}/> 
+        <input type="radio" name={name} value={value} onChange={onChange}/> 
         <span>{text}</span>
     </RadioWrapper>
   )

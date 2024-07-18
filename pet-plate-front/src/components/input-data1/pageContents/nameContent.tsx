@@ -1,18 +1,32 @@
 'use Client'
 
-import styled from "styled-components"
-import InputField from "@components/input-data1/inputField"
+import { useRecoilState } from 'recoil';
+import styled from "styled-components";
+import InputField from "@components/input-data1/inputField";
+import { petInfoState } from '@lib/atoms';
 
-export default function nameContent() {
+
+export default function NameContent() {
+  const [petInfo, setPetInfo] = useRecoilState(petInfoState);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = e.target.value;
+    const updatedPetInfo = { ...petInfo, name: newName };
+    setPetInfo(updatedPetInfo);
+  };
+
+
   return (
     <ContentWrapper>
-        <Title>강아지의 이름은 무엇인가요?</Title>
-        <InputField
-            placeholder="이름"
-            width="19.5rem"
-        />
+      <Title>강아지의 이름은 무엇인가요?</Title>
+      <InputField
+        placeholder="이름"
+        width="19.5rem"
+        value={petInfo.name}
+        onChange={handleChange}
+      />
     </ContentWrapper>
-  )
+  );
 }
 
 

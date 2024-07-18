@@ -1,9 +1,18 @@
 'use Client'
 
+import { useRecoilState } from 'recoil';
 import styled from "styled-components"
 import RadioLists from "@components/input-data1/radioLists"
+import { petInfoState } from '@lib/atoms';
 
 export default function activenessContent() {
+const [petInfo, setPetInfo] = useRecoilState(petInfoState);
+
+const handleChange = (value : string) => {
+    const updatedPetInfo = { ...petInfo, activity: value };
+    setPetInfo(updatedPetInfo);
+};
+
 // 라디오 버튼에 대한 객체 배열
 const radioOptions = [
     { name: "activity", value: "VERY_ACTIVE", text: "초활발 | 평균보다 매우 많이 움직여요" },
@@ -11,6 +20,7 @@ const radioOptions = [
     { name: "activity", value: "SOMEWHAT_ACTIVE", text: "보통 | 하루 평균 산책량을 준수해요" },
     { name: "activity", value: "INACTIVE", text: "차분 | 평균보다 적게 움직여요" }
 ];
+
 
   return (
     <ContentWrapper>
@@ -27,6 +37,7 @@ const radioOptions = [
                     name={option.name}
                     value={option.value}
                     text={option.text}
+                    onChange={() => handleChange(option.value)}
                 />
             ))}
     </ContentWrapper>

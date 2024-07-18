@@ -1,18 +1,17 @@
 'use client'
 
 import styled from "styled-components"
+import {InputFieldProps} from "@lib/types"
 
-interface InputFieldProps {
-    width: string;
-    placeholder: string;
-}
 
-export default function inputField({ width, placeholder } : InputFieldProps) {
+export default function inputField({ width, placeholder, value, onChange } : InputFieldProps) {
   return (
     <InputFiledWrapper>
         <InputFileld type="text"
          placeholder={placeholder} 
          width={width}
+         value={value}
+         onChange={onChange}
         />
     </InputFiledWrapper>
   )
