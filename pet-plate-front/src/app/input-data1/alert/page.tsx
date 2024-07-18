@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { petInfoState } from '@lib/atoms';
 import { petAPI } from '@api/petAPI';
-import EndBtn from "@components/main/gapbtn"
 
 export default function Page() {
   const [petInfo] = useRecoilState(petInfoState);
