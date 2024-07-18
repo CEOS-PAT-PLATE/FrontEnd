@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 
 import { dailyMealsAPI } from '@api/dailyMealsAPI';
 
-import { saveDailyMealsNutrients } from '@lib/apiService';
+import { saveDailyMealsNutrients, fetchPetNutrientData } from '@lib/apiService';
 
 
 const getTodayDate = () => {
@@ -50,7 +50,7 @@ export default function Page({ params }: ResultProps) {
   const router = useRouter();
   //const { petId, dailyMealId } = params;
   const petId = 3;
-  const dailyMealId = 2;
+  const dailyMealId = 4;
  // const dailyMeals = useRecoilValue(dailyMealsState);
  const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
 
@@ -70,9 +70,17 @@ const fetchNutrientData = async () => {
         dailyMealsAPI.getDeficientNutrients(petId, dailyMealId),
       ]);
 
-      console.log('초과 영양소:', excessNutrients);
-      console.log('적정 영양소:', properNutrients);
-      console.log('부족 영양소:', deficientNutrients);
+      const { todayNutrients,todayKcal,todaykcalRatio,todayProperKcal} = await fetchPetNutrientData(petId, date);
+
+
+      console.log('초과 영양소:', excessNutrients.data);
+      console.log('적정 영양소:', properNutrients.data);
+      console.log('부족 영양소:', deficientNutrients.data);
+
+      console.log( '오늘 섭취 영양소 정보',todayNutrients.data)
+        console.log('오늘 섭취 총 칼로리 정보',todayKcal.data)
+        console.log('오늘 섭취 칼로리/적정 섭취 칼로리 정보',todaykcalRatio.data)
+        console.log('하루동안 섭취해야할 적정 칼로리',todayProperKcal.data)
     } catch (error) {
       console.error('오류', error);
     }
