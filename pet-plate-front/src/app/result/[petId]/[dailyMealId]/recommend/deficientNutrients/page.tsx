@@ -76,10 +76,17 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
     );
   };
 
+
+  // 부족한 영양소만 필터링
+  const deficientNutrientGroups = nutrientGroups.filter(group =>
+    nutritionInfo.some(info => info.nutrientName === group.nutrientName)
+  );
+
+
   return (
     <>
       <Content>
-        {nutrientGroups.map((group, index) => (
+        {deficientNutrientGroups.map((group, index) => (
           <div key={group.nutrientName}>
             <NutrientInfoSection nutrient={group.nutrientName} index={index} />
             <ContainerWrapper>
@@ -160,6 +167,7 @@ const Content = styled.div`
   overflow-y: auto;
   position: absolute;
   top: 150px;
+  height:650px;
 `;
 
 const ContainerWrapper = styled.div`
