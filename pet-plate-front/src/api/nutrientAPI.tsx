@@ -25,6 +25,11 @@ export const nutrientAPI = {
   getPetProperKcal: async (petId: number) => {
     return await axiosInstance.get(`/pets/${petId}/kcal/proper`);
   },
+
+  // 반려견의 부족 영양소 기반 추천 영양제 조회
+  getRecommendedSupplements: async (petId: number, dailyMealId: number) => {
+    return await axiosInstance.get(`/drugs/recommend/pet/${petId}/dailyMeals/${dailyMealId}/nutrients/deficient`);
+  },
 };
 
 export default nutrientAPI;
