@@ -12,19 +12,24 @@ interface Nutrient {
 interface ResultItemProps {
   date: string;
   nutrients: Nutrient[];
-  dailyMealId : number
-  key : number
-  petId : number
+  dailyMealId: number;
+  key: number;
+  petId: number;
 }
 
-const ResultList: React.FC<ResultItemProps> = ({key, date, nutrients, dailyMealId, petId}) => {
+const ResultList: React.FC<ResultItemProps> = ({ key, date, nutrients, dailyMealId, petId }) => {
   // 영양소 이름만 추출하여 리스트로 만듭니다.
   const nutrientList = nutrients.length > 0
     ? nutrients.map(nutrient => nutrient.name).join(', ')
     : '';
 
+  const handleClick = () => {
+    // date 로컬 스토리지에 저장
+    localStorage.setItem('selectedDate', date);
+  };
+
   return (
-    <ResultListWrapper href={`/result/${petId}/${dailyMealId}`}>
+    <ResultListWrapper href={`/result/${petId}/${dailyMealId}`} onClick={handleClick}>
       <ResultInfo>
         <DateInfo><span>{date}</span> 분석 결과</DateInfo>
         <Nutrients>
@@ -32,7 +37,7 @@ const ResultList: React.FC<ResultItemProps> = ({key, date, nutrients, dailyMealI
             ? <><span>{nutrientList}</span> 부족해요!</>
             : <span>부족한 영양소가 없어요!</span>
           }
-        </Nutrients>      
+        </Nutrients>
       </ResultInfo>
       <NextIcon src={nextIcon} alt="next-icon" />
     </ResultListWrapper>
