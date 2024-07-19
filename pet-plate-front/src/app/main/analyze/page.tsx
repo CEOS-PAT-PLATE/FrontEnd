@@ -85,6 +85,10 @@ export default function Page() {
             };
           }));
           setResultData(results);
+
+           // `date`만 추출하여 로컬 스토리지에 저장
+           const dates = results.map(result => result.date);
+           localStorage.setItem('resultDates', JSON.stringify(dates));
         } else {
           console.error('예상과 다른 데이터 형식:', meals);
         }

@@ -21,13 +21,18 @@ const ResultList: React.FC<ResultItemProps> = ({key, date, nutrients, dailyMealI
   // 영양소 이름만 추출하여 리스트로 만듭니다.
   const nutrientList = nutrients.length > 0
     ? nutrients.map(nutrient => nutrient.name).join(', ')
-    : '정보 없음';
+    : '';
 
   return (
     <ResultListWrapper href={`/result/${petId}/${dailyMealId}`}>
       <ResultInfo>
         <DateInfo><span>{date}</span> 분석 결과</DateInfo>
-        <Nutrients><span>{nutrientList}</span> 부족해요!</Nutrients>
+        <Nutrients>
+          {nutrients.length > 0
+            ? <><span>{nutrientList}</span> 부족해요!</>
+            : <span>부족한 영양소가 없어요!</span>
+          }
+        </Nutrients>      
       </ResultInfo>
       <NextIcon src={nextIcon} alt="next-icon" />
     </ResultListWrapper>
