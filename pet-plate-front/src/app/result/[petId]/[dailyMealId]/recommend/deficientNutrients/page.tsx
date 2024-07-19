@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import nutrientAPI from '@api/nutrientAPI';
 import RightArrow from '@components/result/right-arrow';
 import {nutritionDeficientInfo}  from '@lib/descriptionData';
+import SupplementModal from '@components/modal/SupplementModal';
+
 
 import Image from 'next/image';
 
@@ -87,6 +89,7 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
 
   return (
     <>
+     <SupplementModal />
      {nutritionDeficientInfo.length === 0 ? (
         <EmptyMessage>부족 영양소가 없어요!</EmptyMessage>
       ) : (
@@ -114,8 +117,8 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
                         <Vendor>{supplement.vendor}</Vendor>
                         <Name>{supplement.name}</Name>
                       </Info>
-                      <RightArrow />
-                    </Card>
+                      <RightArrow detail={{ supplement, nutrient: group.nutrientName }} />
+                      </Card>
                   ))
                 ) : (
                   <EmptyMessage>추천 영양제를 불러오는 중입니다...</EmptyMessage>

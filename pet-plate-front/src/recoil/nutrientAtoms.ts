@@ -52,3 +52,24 @@ export const RawFoodFormState = atom({
 });
 
 
+// 결과 - 부족 영양소 : 영양제 추천 모달
+
+
+export const isModalVisibleState = atom<boolean>({
+  key: 'isModalVisibleState',
+  default: false,
+});
+
+interface Supplement {
+  id: number;
+  name: string;
+  englishName: string;
+  vendor: string;
+  drugImgPath: string;
+
+}
+
+export const selectedSupplementState = atom<{ supplement: Supplement | null, nutrient: string | null }>({
+  key: 'selectedSupplementState',
+  default: { supplement: null, nutrient: null },
+});
