@@ -46,9 +46,6 @@ export default function Page() {
         </BtnWrapper>
         
       </AlertWrapper>
-      <div>
-        {JSON.stringify(petInfo)}
-      </div>
     </PageContainer>
   );
 }
@@ -56,7 +53,7 @@ export default function Page() {
 const PageContainer = styled.div`
   width: 100%;
   height: 47.25rem;
-  background-color: aliceblue;
+  background-color: rgba(75, 147, 125, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;

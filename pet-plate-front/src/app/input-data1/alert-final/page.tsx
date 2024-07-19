@@ -15,7 +15,7 @@ export default function page() {
             <AlertGraphic src={alertGraphic} alt="alert-graphic"/>
             <Text2>오늘의 식단을 입력해주시면 <br/> 맞춤형 영양정보를 알려드릴게요.</Text2>
             <AlertTip src={alertTip} alt="tip"/>
-            <ContinueBtn href="/input-data2">다음으로</ContinueBtn>
+            <ContinueBtn href="/201">다음으로</ContinueBtn>
         </AlertWrapper>
     </PageContainer>
 );
@@ -24,7 +24,7 @@ export default function page() {
 const PageContainer = styled.div`
 width: 100%;
 height: 47.25rem;
-background-color: aliceblue;
+background-color: rgba(75, 147, 125, 0.3);
 display: flex;
 flex-direction: column;
 align-items: center;
