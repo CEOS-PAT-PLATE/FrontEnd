@@ -1,5 +1,15 @@
 import axiosInstance from '@lib/axiosInstance';
 
+interface Pet {
+  petId: number;
+  name: string;
+  age: number | undefined;
+  weight: number | undefined;
+  activity: string;
+  neutering: string;
+  profileImgPath: string | null;
+}
+
 export const petAPI = {
   // 반려견 추가
   addPetInfo: async (newPetInfo: any) => {
@@ -17,10 +27,11 @@ export const petAPI = {
     return await axiosInstance.get(`/pets/${petId}`);
   },
 
-  // 반려견 정보 수정
-  putPetInfo: async (petId: number) => {
-    return await axiosInstance.put(`/pets/${petId}`);
+    // 반려견 정보 수정
+  putPetInfo: async (petId: number, petInfo: Pet) => {
+    return await axiosInstance.put(`/pets/${petId}`, petInfo);
   },
+
 };
 /**
    * 

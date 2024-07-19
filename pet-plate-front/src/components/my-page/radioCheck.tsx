@@ -1,17 +1,17 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-interface radioListProps {
+interface RadioListProps {
     name: string;
     value: string;
     text: string;
+    checked: boolean;
     onChange: () => void;
 }
 
-
-export default function radioCheck({name, value, text, onChange} : radioListProps) {
+export default function RadioCheck({ name, value, text, checked, onChange }: RadioListProps) {
   return (
     <RadioWrapper>
-        <input type="radio" name={name} value={value} onChange={onChange}/> 
+        <input type="radio" name={name} value={value} checked={checked} onChange={onChange}/> 
         <span>{text}</span>
     </RadioWrapper>
   )
@@ -34,7 +34,6 @@ const RadioWrapper = styled.div`
         border: solid 0.063rem ${(props) => props.theme.colors['green-400']};
         background-color: ${(props) => props.theme.colors['green-100']};
     }
-
 
     input{
         appearance: none;
@@ -59,4 +58,4 @@ const RadioWrapper = styled.div`
         font-weight: 400;
         line-height: 160%;
     }
-`
+`;
