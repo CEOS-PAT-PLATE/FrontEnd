@@ -45,6 +45,7 @@ const getPetInfoFromLocalStorage = () => {
   }
 };
 
+
 const getTodayDate = () => {
   const today = new Date();
   const year = today.getFullYear();
@@ -152,9 +153,10 @@ setDeficientNutrients(deficientNutrientsData.filter((_: any, index: number) => i
 
   const fetchDailyMeals = async () => {
     try {
-      const dailyMealResponse = await fetchdailyMealId(petId, date);
-      if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
-        const dailyMealId = dailyMealResponse.data[0].dailyMealId;
+    //  const dailyMealResponse = await fetchdailyMealId(petId, date);
+     // if (dailyMealResponse.data && dailyMealResponse.data.length > 0) {
+      if (dailyMealId) {
+      //  const dailyMealId = dailyMealResponse.data[0].dailyMealId;
         console.log('dailyMealId:', dailyMealId);
         const dailyMealListsResponse = await fetchdailyMealLists(petId, dailyMealId);
 
