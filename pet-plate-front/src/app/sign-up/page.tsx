@@ -26,10 +26,10 @@ const SignUp = () => {
         body: JSON.stringify({ accessToken, refreshToken, enrollPet }),
       }).then(() => {
         // 토큰 저장 후 리다이렉트
-        router.push('/sign-up/welcome');
+        router.push('/sign-up/load');
       });
     } else {
-      router.push('/sign-up/welcome');
+      router.push('/sign-up/load');
     }
   }, [router]);
 
