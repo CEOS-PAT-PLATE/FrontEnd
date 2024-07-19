@@ -19,6 +19,14 @@ const GlobalStyles = createGlobalStyle`
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'SUIT Middle';
+  src: url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
   ${reset}
 
   html {
