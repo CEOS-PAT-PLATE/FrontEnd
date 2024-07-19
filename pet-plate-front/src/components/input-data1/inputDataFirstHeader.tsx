@@ -48,5 +48,5 @@ const Header = styled.h2`
 `;
 
 const ExitButtonWrapper = styled(Link)`
-  
+  //나중에 클릭시 작성중이던 정보 삭제로 수정
 `

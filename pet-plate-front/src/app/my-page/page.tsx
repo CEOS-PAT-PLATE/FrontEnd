@@ -40,10 +40,11 @@ export default function page() {
 
 const PageWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: 47.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `
 
 const MypageHeader = styled.h1`
