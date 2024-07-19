@@ -45,15 +45,14 @@ export default function Page() {
       <InputDataFirstHeader onClickBackButton={navigate} />
       <Progressbar />
       <PageContainer>
-        {pets.map((pet) => (
-          <React.Fragment key={pet.petId}>
-            <ResultList title="반려견의 이름" value={pet.name} />
-            <ResultList title="나이" value={`${pet.age}세`} />
-            <ResultList title="몸무게" value={`${pet.weight}kg`} />
-            <ResultList title="활동량" value={pet.activity} />
-            <ResultList title="중성화 여부" value={pet.neutering} />
+          <React.Fragment key={pets[0]?.petId}>
+            <ResultList title="반려견의 이름" value={pets[0]?.name} />
+            <ResultList title="나이" value={`${pets[0]?.age}세`} />
+            <ResultList title="몸무게" value={`${pets[0]?.weight}kg`} />
+            <ResultList title="활동량" value={pets[0]?.activity} />
+            <ResultList title="중성화 여부" value={pets[0]?.neutering} />
           </React.Fragment>
-        ))}
+
         <FixedButtonContainer>
           <NextButton onClick={handleAlert} />
         </FixedButtonContainer>
