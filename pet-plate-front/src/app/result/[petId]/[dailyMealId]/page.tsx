@@ -16,6 +16,7 @@ import { saveDailyMealsNutrients, fetchPetNutrientData } from '@lib/apiService';
 
 import DoughnutChart from '@components/result/doughnut-chart';
 import LineChart from '@components/result/line-chart';
+import {nutrientDataState } from '@recoil/nutrientAtoms';
 
 import { useEffect, useState } from 'react';
 
@@ -91,6 +92,7 @@ export default function Page({params}: ResultProps) {
   const [nutrientData, setNutrientData] = useState<any>(null);
   const [deficientNutrients, setDeficientNutrients] = useState<string[]>([]);
 
+  const [nutriensData, setNutrientsData] = useRecoilState(nutrientDataState);
 
 
  /// const petId = 3;
@@ -143,6 +145,16 @@ setDeficientNutrients(deficientNutrientsData.filter((_: any, index: number) => i
         todayKcal: todayKcal?.data.kcal,
         todaykcalRatio: todaykcalRatio.data.kcalRatio,
         todayProperKcal:todayProperKcal?.data.kcal
+      });
+
+      setNutrientsData({
+        excessNutrients: ExcessiveNutrientsCount,
+        properNutrients: properNutrients.data,
+        deficientNutrients: InsufficientNutrientsCount,
+        todayNutrients: todayNutrients.data,
+        todayKcal: todayKcal?.data.kcal,
+        todaykcalRatio: todaykcalRatio.data.kcalRatio,
+        todayProperKcal: todayProperKcal?.data.kcal,
       });
     } catch (error) {
       console.error('오류', error);

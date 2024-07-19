@@ -73,3 +73,23 @@ export const selectedSupplementState = atom<{ supplement: Supplement | null, nut
   key: 'selectedSupplementState',
   default: { supplement: null, nutrient: null },
 });
+
+
+
+
+
+// 분석 영양소 관련
+
+
+export const nutrientDataState = atom({
+  key: 'nutrientDataState',
+  default: {
+    excessNutrients: 0,
+    properNutrients: [],
+    deficientNutrients: 0,
+    todayNutrients: [],
+    todayKcal: 0,
+    todaykcalRatio: 0,
+    todayProperKcal: 0,
+  },
+});
