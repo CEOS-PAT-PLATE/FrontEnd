@@ -65,7 +65,7 @@ export default function DoughnutChart() {
       <Doughnut data={doughnutData}></Doughnut>
 
       <Text1>
-        {consumedTotalKcal}/{properTotalKcal}
+      
       </Text1>
       <Text2>kcal</Text2>
     </DoughnutWrapper>

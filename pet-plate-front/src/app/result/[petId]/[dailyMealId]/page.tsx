@@ -236,6 +236,10 @@ setDeficientNutrients(deficientNutrientsData.filter((_: any, index: number) => i
               <GreenText>{petInfo?.name}</GreenText>의 하루 권장 섭취량은 {Math.round(nutrientData?.todayProperKcal)}kcal예요
             </GraphText2>
             <DoughnutChart/>
+            <Text1>
+        {Math.round(nutrientData?.todayKcal)}/{Math.round(nutrientData?.todayProperKcal)}
+      </Text1>
+
             <LineChart/>
             {/*그래프 */}
           </GraphContainer>
@@ -523,3 +527,27 @@ const EmptyBottom = styled.div`
   width: 360px;
   background-color: ${(props) => props.theme.colors['grey1']}; // body 배경색 설정
 `;
+
+
+// 도넛
+
+const Text1 = styled.div`
+  color: var(--grey11, #36393c);
+  text-align: center;
+  position: absolute;
+  top: 200px;
+  /* display_bold_25pt */
+  font-family: SUIT Middle;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 14.083px; /* 56.332% */
+  letter-spacing: -1px;
+  z-index: 100;
+  width: 300px;
+  margin-top: 240px;
+  left:-35px;
+`;
+
+
+
