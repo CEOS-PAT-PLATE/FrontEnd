@@ -14,15 +14,15 @@ import { isCompleteValid, noticeState, isCompleteModalOpenState, dailyMealsState
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-//import { updatePetInfo } from '@lib/apiService';
 
+/*
 const petData = {
   name: '이아지',
   age: 2,
   weight: 13,
   activity: 'ACTIVE',
   neutering: 'NEUTERED',
-};
+};*/
 
 const getTodayDate = () => {
   const today = new Date();
@@ -57,62 +57,77 @@ const fetchdailyMealLists = async (petId: number, dailyMealId: number) => {
 };
 
 export default function Page() {
-  const petId = 3;
-  const date = getTodayDate();
   const pathname = usePathname();
   const isValid = useRecoilValue(isCompleteValid);
   const setIsValid = useSetRecoilState(isCompleteValid);
-
   const setNotice = useSetRecoilState(noticeState);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useRecoilState(isCompleteModalOpenState);
   const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
-
-  //updatePetInfo(petId, petData);
-
-  const fetchDailyMeals = async () => {
+  
+  const getPetIdFromLocalStorage = () => {
+    if (typeof window === 'undefined') return null;
+    const petInfoString = localStorage.getItem('petInfo');
+    console.log('petInfoString:', petInfoString);
+    if (!petInfoString) {
+      console.error('No petInfo found in localStorage');
+      return null;
+    }
     try {
-      const dailyMealResponse = await fetchdailyMealId(petId, date);
-      if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
-        const dailyMealId = dailyMealResponse.data[0].dailyMealId;
-        console.log('dailyMealId:', dailyMealId);
-        const dailyMealListsResponse = await fetchdailyMealLists(petId, dailyMealId);
-
-        const filteredData = {
-          ...dailyMealListsResponse.data,
-          dailyRaws: dailyMealListsResponse.data.dailyRaws.filter(
-            (item: any) => item.name !== '존재하지 않는 음식입니다',
-          ),
-          dailyFeeds: dailyMealListsResponse.data.dailyFeeds.filter(
-            (item: any) => item.name !== '존재하지 않는 음식입니다',
-          ),
-          dailyPackagedSnacks: dailyMealListsResponse.data.dailyPackagedSnacks.filter(
-            (item: any) => item.name !== '존재하지 않는 음식입니다',
-          ),
-          dailyBookMarkedRaws: dailyMealListsResponse.data.dailyBookMarkedRaws.filter(
-            (item: any) => item.name !== '존재하지 않는 음식입니다',
-          ),
-          dailyBookMarkedFeeds: dailyMealListsResponse.data.dailyBookMarkedFeeds.filter(
-            (item: any) => item.name !== '존재하지 않는 음식입니다',
-          ),
-          dailyBookMarkedPackagedSnacks: dailyMealListsResponse.data.dailyBookMarkedPackagedSnacks.filter(
-            (item: any) => item.name !== '존재하지 않는 음식입니다',
-          ),
-        };
-
-        const isCompleteValid = CheckCompleteValid(filteredData);
-        console.log('isCompleteValid:', isCompleteValid);
-
-        setIsValid(isCompleteValid);
-        setDailyMeals(filteredData);
-      } else {
-        console.log('추가 식단x');
-      }
-    } catch (e) {
-      console.error(e); // 에러
+      const petInfo = JSON.parse(petInfoString);
+      return petInfo.petId;
+    } catch (error) {
+      console.error('Error parsing petInfo from localStorage', error);
+      return null;
     }
   };
 
   useEffect(() => {
+    const fetchDailyMeals = async () => {
+      const petId = getPetIdFromLocalStorage();
+      if (petId === null) return;
+      const date = getTodayDate();
+      try {
+        const dailyMealResponse = await fetchdailyMealId(petId, date);
+        if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
+          const dailyMealId = dailyMealResponse.data[0].dailyMealId;
+          console.log('dailyMealId:', dailyMealId);
+          const dailyMealListsResponse = await fetchdailyMealLists(petId, dailyMealId);
+
+          const filteredData = {
+            ...dailyMealListsResponse.data,
+            dailyRaws: dailyMealListsResponse.data.dailyRaws.filter(
+              (item: any) => item.name !== '존재하지 않는 음식입니다',
+            ),
+            dailyFeeds: dailyMealListsResponse.data.dailyFeeds.filter(
+              (item: any) => item.name !== '존재하지 않는 음식입니다',
+            ),
+            dailyPackagedSnacks: dailyMealListsResponse.data.dailyPackagedSnacks.filter(
+              (item: any) => item.name !== '존재하지 않는 음식입니다',
+            ),
+            dailyBookMarkedRaws: dailyMealListsResponse.data.dailyBookMarkedRaws.filter(
+              (item: any) => item.name !== '존재하지 않는 음식입니다',
+            ),
+            dailyBookMarkedFeeds: dailyMealListsResponse.data.dailyBookMarkedFeeds.filter(
+              (item: any) => item.name !== '존재하지 않는 음식입니다',
+            ),
+            dailyBookMarkedPackagedSnacks: dailyMealListsResponse.data.dailyBookMarkedPackagedSnacks.filter(
+              (item: any) => item.name !== '존재하지 않는 음식입니다',
+            ),
+          };
+
+          const isCompleteValid = CheckCompleteValid(filteredData);
+          console.log('isCompleteValid:', isCompleteValid);
+
+          setIsValid(isCompleteValid);
+          setDailyMeals(filteredData);
+        } else {
+          console.log('추가 식단x');
+        }
+      } catch (e) {
+        console.error(e); // 에러
+      }
+    };
+
     fetchDailyMeals();
   }, [pathname]);
 

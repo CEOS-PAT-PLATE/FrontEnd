@@ -41,19 +41,33 @@ const fetchdailyMealLists = async (petId: number, dailyMealId: number) => {
   return response.data;
 };
 
+const getTodayDateDisplay = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
+  const day = String(today.getDate()).padStart(2, '0');
+  return { year, month, day };
+};
+
 interface ResultProps {
-  params: { petId: number; dailyMealId: number };
+
+  params: {petId: number; dailyMealId: number  };
+
 }
 
-export default function Page({ params }: ResultProps) {
+
+
+export default function Page({params}: ResultProps) {
   const router = useRouter();
-  //const { petId, dailyMealId } = params;
-  const petId = 3;
-  const dailyMealId = 4;
+  const {petId, dailyMealId} = params;
+
+ /// const petId = 3;
+ // const dailyMealId = 4;
   // const dailyMeals = useRecoilValue(dailyMealsState);
   const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
 
   const date = getTodayDate();
+  const { year, month, day } = getTodayDateDisplay();
 
   // ** 1,2 별도로 비동기요청 보내기
   //1
@@ -144,7 +158,7 @@ export default function Page({ params }: ResultProps) {
       <ExitButtonImage src={ExitButtonSVG} alt="exit-button" onClick={() => router.push('/main/analyze')} />
       <Container>
         <Content>
-          <DateTitle>2024. 6. 21 분석 결과</DateTitle>
+          <DateTitle> {year}. {month}. {day}  분석 결과</DateTitle>
           <SVGContent>
             <SVGImage src={ResultBox} width={312} height={169} alt="loading" />
             <FirstLine>

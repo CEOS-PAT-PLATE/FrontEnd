@@ -46,13 +46,14 @@ const Container = styled.div<{ $isClicked: boolean }>`
   padding: 5px 0px 5px 16px;
   min-height: 58px;
   width: 312px;
-  height: 58px;
+  height: 60px;
+  max-height: 70px;
   justify-content: space-between;
   align-items: center;
   position: relative;
   border-radius: 8px;
   margin-bottom: 8px;
-  position: relative;
+
 
   ${({ $isClicked }) =>
     $isClicked &&
@@ -75,7 +76,7 @@ const FavoriteText = styled.div`
   height: 32px;
   color: var(--grey10, #4f5357);
   font-family: SUIT;
-  font-size: 18px;
+  font-size: 17px;
   font-style: normal;
   font-weight: 400;
   line-height: 180%;

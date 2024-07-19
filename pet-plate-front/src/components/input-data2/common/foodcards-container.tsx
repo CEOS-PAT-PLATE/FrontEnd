@@ -53,9 +53,9 @@ export default function FoodCardsContainer({ dailyMeals }: FoodCardsContainerPro
       {renderCards('자연식', dailyMeals.dailyRaws)}
       {renderCards('사료', dailyMeals.dailyFeeds)}
       {renderCards('포장 간식', dailyMeals.dailyPackagedSnacks)}
-      {renderCards('즐겨찾기 자연식', dailyMeals.dailyBookMarkedRaws)}
-      {renderCards('즐겨찾기 사료', dailyMeals.dailyBookMarkedFeeds)}
-      {renderCards('즐겨찾기 포장 간식', dailyMeals.dailyBookMarkedPackagedSnacks)}
+      {renderCards('자연식', dailyMeals.dailyBookMarkedRaws)}
+      {renderCards('사료', dailyMeals.dailyBookMarkedFeeds)}
+      {renderCards('포장 간식', dailyMeals.dailyBookMarkedPackagedSnacks)}
     </div>
   );
 }
@@ -72,7 +72,7 @@ const FavoriteContainer = ({ id, type, name, onClick, isClicked }: Foodlist) => 
   const foodIcon = foodIconList.find((icon) => icon.type === type);
 
   return (
-    <Container onClick={onClick} $isClicked={isClicked}>
+    <Container onClick={onClick}>
       <IconImage src={foodIcon?.img || ''} alt={type} />
       <FavoriteText>{name}</FavoriteText>
       <FavoriteIconWrapper></FavoriteIconWrapper>
@@ -87,7 +87,7 @@ const IconImage = styled(Image)`
   top: 16px;
 `;
 
-const Container = styled.div<{ $isClicked: boolean }>`
+const Container = styled.div`
   padding: 5px 0px 5px 16px;
   min-height: 58px;
   width: 312px;
@@ -98,20 +98,9 @@ const Container = styled.div<{ $isClicked: boolean }>`
   border-radius: 8px;
   margin-bottom: 8px;
   position: relative;
-
-  ${({ $isClicked }) =>
-    $isClicked &&
-    css`
-      border: 1px solid var(--primary, #40c97f);
-      background: var(--50, #ecfaf2);
-    `}
-
-  ${({ $isClicked }) =>
-    !$isClicked &&
-    css`
       border: 1px solid var(--grey2, #eceef0);
-      background: var(--white, #fff);
-    `}
+
+
 `;
 
 const FavoriteText = styled.div`
@@ -120,7 +109,7 @@ const FavoriteText = styled.div`
   height: 32px;
   color: var(--grey10, #4f5357);
   font-family: SUIT;
-  font-size: 18px;
+  font-size: 17px;
   font-style: normal;
   font-weight: 400;
   line-height: 180%;
