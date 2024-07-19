@@ -18,8 +18,8 @@ export const petAPI = {
   },
 
   // 반려견 정보 수정
-  postPetInfo: async (petId: number) => {
-    return await axiosInstance.post(`/pets/${petId}`);
+  putPetInfo: async (petId: number) => {
+    return await axiosInstance.put(`/pets/${petId}`);
   },
 };
 /**

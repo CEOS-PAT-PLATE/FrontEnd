@@ -6,6 +6,7 @@ import Image from "next/image"
 import LinkButton from "@components/main/linkBtn"
 import profileCard from "@public/svg/card_mypage.svg?url"
 import profileIcon from "@public/svg/profile_grey.svg?url"
+import NavbarFooter from "@components/main/navbarFooter"
 
 export default function page() {
   const buttonContent = (
@@ -32,6 +33,7 @@ export default function page() {
         <LinklInfo href={'/my-page/policy'}>개인정보 처리 약관</LinklInfo>
         <LinklInfo href={'/my-page/policy'}>서비스 이용 약관</LinklInfo>
       </LinkWrapper>
+      <NavbarFooter/>
     </PageWrapper>
   )
 }
