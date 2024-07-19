@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import dailyMealsAPI from '@api/dailyMealsAPI';
 import RightArrow from '@components/result/right-arrow';
 import { nutrientExcessInfo } from '@lib/descriptionData';
+import Wrapper from '@style/input-data2/Wrapper';
 
 interface ResultProps {
   params: { petId: number; dailyMealId: number };
@@ -54,19 +55,20 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
 
   return (
     <>
+     <Wrapper>
       {filteredNutrientExcessInfo.length === 0 ? (
         <EmptyMessage>과잉 영양소가 없어요!</EmptyMessage>
       ) : (
+        <>
         <div>
           <Content>
             {filteredNutrientExcessInfo.map((group, index) => (
               <NutrientInfoSection nutrient={group.nutrientName} index={index} key={group.nutrientName} />
             ))}
-          </Content>
-          <ContainerWrapper>
+                
+                <ContainerWrapper>
             <Text1>비슷한 고민을 가진</Text1>
             <Text2>반려인들은 이런 점을 신경써요!</Text2>
-            <Container>
               {getNutritionAdvice(excessNutrients.map((n) => n.name).join('과 ')).map((advice, index) => (
                 <Card key={index}>
                   <Info>
@@ -75,20 +77,27 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
                   </Info>
                 </Card>
               ))}
-            </Container>
-          </ContainerWrapper>
-        </div>
+              </ContainerWrapper>
+             
+            
+            
+          </Content>
+      </div>
+      
+      </>
+    
       )}
+      </Wrapper>
     </>
   );
 }
 
 const Content = styled.div`
-  flex: 1;
-  overflow-y: auto;
+  overflow-y: scroll;
   position: absolute;
   top: 150px;
   height: 650px;
+  width: 360px;
 `;
 
 const getNutritionAdvice = (excessNutrient: string) => [
@@ -113,10 +122,10 @@ const getNutritionAdvice = (excessNutrient: string) => [
 const ContainerWrapper = styled.div`
   position: absolute;
   padding-top: 10px;
-  top: 300px;
-  height: 476px;
+
   min-height: 476px;
   min-width: 360px;
+  width: 360px;
 
   display: flex;
   flex-direction: column;
@@ -124,15 +133,13 @@ const ContainerWrapper = styled.div`
 `;
 
 const Container = styled.div`
-  position: absolute;
   height: 440px;
   min-height: 420px;
   min-width: 360px;
   max-height: 440px;
-
-  padding: 16px;
-  overflow-y: auto;
-  top: 60px;
+z-index: 1000;
+  position: absolute;
+  display: flex;
 `;
 
 const Card = styled.div`
@@ -212,13 +219,16 @@ const Text2 = styled.div`
   font-weight: 700;
   line-height: 160%;
   letter-spacing: -0.75px;
-  position: absolute;
+  position: relative;
   z-index: 100;
   background: var(--50, #ecfaf2);
   margin-top: 30px;
   color: var(--700, #26784c);
   padding: 0px 16px;
   width: 360px;
+    margin-bottom: 20px;
+    height: 40px;
+
 `;
 
 const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number }) => {
@@ -392,3 +402,4 @@ const orderArray = [
   { index: 9, word: '아홉' },
   { index: 10, word: '열' },
 ];
+

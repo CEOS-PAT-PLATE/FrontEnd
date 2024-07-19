@@ -10,9 +10,26 @@ import { dailyMealsAPI } from '@api/dailyMealsAPI';
 import CancelButton from '@public/svg/cancel-button.svg?url';
 import Image from 'next/image';
 
+import LineChart from '@components/result/line-charts'; 
+
+
 interface ResultProps {
   params: { petId: number; dailyMealId: number };
 }
+
+
+const getDetailNutrientDataFromLocalStorage = (petId:number, dailyMealId:number) => {
+    const key = `selected-nutrient-${petId}-${dailyMealId}`;
+    const nutrientDataString = localStorage.getItem(key);
+    if (nutrientDataString) {
+      try {
+        return JSON.parse(nutrientDataString);
+      } catch (error) {
+        console.error('디테일 오류', error);
+      }
+    }
+    return null;
+  };
 
 const getNutrientDataFromLocalStorage = (petId:number, dailyMealId:number) => {
     const key = `${petId}-${dailyMealId}`;
@@ -21,7 +38,7 @@ const getNutrientDataFromLocalStorage = (petId:number, dailyMealId:number) => {
       try {
         return JSON.parse(nutrientDataString);
       } catch (error) {
-        console.error('Error parsing nutrient data from local storage', error);
+        console.error('', error);
       }
     }
     return null;
@@ -39,6 +56,8 @@ export default function Layout({
   const [excessCount, setExcessCount] = useState(0);
   const pathname = usePathname();
   const [nutrientData, setNutrientData] = useState(null);
+  const [nutrientDetailData, setNutrientDetailData] = useState<any>(null);
+
   const router = useRouter();
 
   const getPetIdFromLocalStorage = () => {
@@ -79,17 +98,34 @@ export default function Layout({
   useEffect(() => {
     const initialize = async () => {
       const nutrientData = getNutrientDataFromLocalStorage(petId, dailyMealId);
+      const nutrientDetailData = getDetailNutrientDataFromLocalStorage(petId, dailyMealId);
+
       if (!nutrientData) {
         await fetchData();
       } else {
         setNutrientData(nutrientData);
+        setNutrientDetailData(nutrientDetailData);
+
       }
     };
 
     initialize();
   }, [petId, dailyMealId, pathname]);
-
   const petIdFromStorage = getPetIdFromLocalStorage();
+
+console.log('dd',nutrientDetailData);
+
+  const mainNutrients = nutrientDetailData?.filter((nutrient: any) =>
+    ['탄수화물', '단백질', '지방'].includes(nutrient.name)
+  ) || [];
+  const mineralNutrients = nutrientDetailData?.filter((nutrient: any) =>
+    ['칼슘', '인'].includes(nutrient.name)
+  ) || [];
+  const vitaminNutrients =nutrientDetailData?.filter((nutrient: any) =>
+    ['비타민 A', '비타민 D', '비타민 E'].includes(nutrient.name)
+  ) || [];
+
+  console.log(mainNutrients, mineralNutrients, vitaminNutrients);
 
   return (
     <Wrapper>
@@ -106,6 +142,16 @@ export default function Layout({
         </SupplementInfo>
         <CancelButtonImage src={CancelButton} alt="닫기 버튼" onClick={() => router.push(`/result/${petId}/${dailyMealId}`)} />
       </InfoCardWrapper>
+      <ChartWrapper>
+      <SectionTitle>기본 영양소</SectionTitle>
+      <LineChart nutrientData={mainNutrients} group={1} />
+      <SectionBorder />
+      <SectionTitle>미네랄</SectionTitle>
+      <LineChart nutrientData={mineralNutrients} group={2}/> 
+      <SectionBorder />
+      <SectionTitle>비타민</SectionTitle>
+      <LineChart nutrientData={vitaminNutrients}  group={3}/>
+      </ChartWrapper>
       <Content>{children}</Content>
     </Wrapper>
   );
@@ -255,3 +301,31 @@ color: var(--primary, #40C97F);
 font-family: SUIT middle;
 
     `;
+
+    const SectionTitle = styled.h2`
+  font-family: SUIT;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 16px 0;
+`;
+
+const ChartWrapper = styled.div`
+    padding: 0 16px;
+
+    overflow-y: scroll;
+    height:440px;
+    top: 350px;
+    left:30px;
+    position: absolute;
+   
+
+    `;
+    const SectionBorder = styled.div`
+  width: 280px;
+  background: #dde0e4;
+  height: 1px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  left: -10px;
+  position: relative;
+`;

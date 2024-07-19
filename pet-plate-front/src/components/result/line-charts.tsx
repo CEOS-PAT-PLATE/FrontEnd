@@ -39,9 +39,9 @@ function NutrientBar({
         data: [normalizedIntake],
         backgroundColor: [color],
         borderRadius: 20,
-        barPercentage: 1,
+        barPercentage: 2,
         borderSkipped: false,
-        minBarLength: 10,
+        minBarLength: 2
       },
     ],
   };
@@ -87,16 +87,48 @@ function NutrientBar({
   );
 }
 
-export default function LineCharts({ nutrientData }: { nutrientData: any[] }) {
+export default function LineChart({ nutrientData, group }: { nutrientData: any[], group: number }) {
+  let defaultNutrients = [] as any[];
+
+  switch(group) {
+    case 1: // 기본 영양소
+      defaultNutrients = [
+        { name: '탄수화물', amount: 0, properAmount: 0 },
+        { name: '단백질', amount: 0, properAmount: 0 },
+        { name: '지방', amount: 0, properAmount: 0 },
+      ];
+      break;
+    case 2: // 미네랄
+      defaultNutrients = [
+        { name: '칼슘', amount: 0, properAmount: 0 },
+        { name: '인', amount: 0, properAmount: 0 },
+      ];
+      break;
+    case 3: // 비타민
+      defaultNutrients = [
+        { name: '비타민 A', amount: 0, properAmount: 0 },
+        { name: '비타민 D', amount: 0, properAmount: 0 },
+        { name: '비타민 E', amount: 0, properAmount: 0 },
+      ];
+      break;
+    default:
+      break;
+  }
+
+  const mergedNutrients = defaultNutrients.map(defaultNutrient => {
+    const foundNutrient = nutrientData.find(nutrient => nutrient.name === defaultNutrient.name);
+    return foundNutrient ? foundNutrient : defaultNutrient;
+  });
+
   return (
     <LineWrapper>
-      {nutrientData.map((nutrient, index) => (
+      {mergedNutrients.map((nutrient, index) => (
         <NutrientBar
           key={index}
           label={nutrient.name}
-          intake={Math.round(nutrient.amount)}
+          intake={Math.round(Math.abs(nutrient.amount))}
           recommended={Math.round(nutrient.properAmount)}
-          color="#40C97F"
+          color={index % 2 === 0 ? '#40C97F' : '#FF4D46'}
         />
       ))}
     </LineWrapper>
@@ -105,15 +137,14 @@ export default function LineCharts({ nutrientData }: { nutrientData: any[] }) {
 
 const LineWrapper = styled.div`
   top: 370px;
-  left: 230px;
-  position: absolute;
+  left: 240px;
   display: flex;
   flex-direction: column;
 `;
 
 const BarWrapper = styled.div`
   position: relative;
-  width: 80px;
+  width: 230px;
   height: 40px;
   margin-bottom: 12px;
   z-index: 20;
@@ -127,7 +158,7 @@ const BarBackground = styled.div`
   left: 0;
   width: 100%;
   height: 17%;
-  z-index: -1;
+  z-index: -10;
 `;
 
 const NutrientText = styled.div`
@@ -147,4 +178,3 @@ const NutrientNameText = styled.div`
   font-weight: 400;
   line-height: 160%;
 `;
-

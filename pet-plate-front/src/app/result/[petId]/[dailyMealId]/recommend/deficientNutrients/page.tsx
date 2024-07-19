@@ -169,7 +169,7 @@ const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number
 };
 
 const Content = styled.div`
-  flex: 1;
+
   overflow-y: auto;
   position: absolute;
   top: 150px;
@@ -208,7 +208,6 @@ const Card = styled.div`
   height: 100px;
   padding: 16px;
   margin-bottom: 16px;
-  margin-left: 8px;
 `;
 
 const ImageWrapper = styled.div`
