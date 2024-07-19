@@ -636,6 +636,11 @@ const storeNutrientDataInLocalStorage = (petId: number, dailyMealId: number, nut
   localStorage.setItem(key, JSON.stringify(nutrientData));
 };
 
+const storeAllNutrientDataInLocalStorage = (petId: number, dailyMealId: number, allNutrientData: any) => {
+  const key = `selected-nutrient-${petId}-${dailyMealId}`;
+  localStorage.setItem(key, JSON.stringify(allNutrientData));
+};
+
 const getPetInfoFromLocalStorage = () => {
   if (typeof window === 'undefined') return null;
   const petInfoString = localStorage.getItem('petInfo');
@@ -698,10 +703,12 @@ export default function Page({ params }: ResultProps) {
   const [petInfo, setPetInfo] = useState<PetInfo | null>(null);
   const [deficientNutrients, setDeficientNutrients] = useState<string[]>([]);
   const [nutrientsData, setNutrientsData] = useRecoilState(nutrientDataState);
-  const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
+  const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState)
+  const [mainNutrients, setMainNutrients] = useState<string[]>([]);
 
-  const date = getSelectedDate()||'0'
-  const { year, month, day } = getTodayDateDisplay();
+  const date = getSelectedDate() || '0';
+  console.log(date)
+  const [year, month, day] = date.split('-');
 
   const fetchNutrientData = async (date: string) => {
     try {
@@ -731,6 +738,13 @@ export default function Page({ params }: ResultProps) {
 
       setNutrientsData(nutrientData);
       storeNutrientDataInLocalStorage(petId, dailyMealId, nutrientData);
+
+      const todayNutrientsData = todayNutrients.data;
+      console.log('오늘',todayNutrients.data)
+      storeAllNutrientDataInLocalStorage(petId, dailyMealId, todayNutrientsData);
+       setMainNutrients(todayNutrients.data)
+       setMainNutrients([todayNutrients.data[0],todayNutrients.data[1],,todayNutrients.data[2]])
+      
 
     } catch (error) {
       console.error('오류', error);
@@ -788,7 +802,9 @@ export default function Page({ params }: ResultProps) {
     setPetInfo(petInfo);
   }, []);
 
+ 
   console.log(nutrientsData);
+
 
   return (
     <Wrapper>
@@ -831,11 +847,11 @@ export default function Page({ params }: ResultProps) {
               <GreenText>{petInfo?.name}</GreenText>의 하루 권장 섭취량은 {Math.round(nutrientsData.todayProperKcal)}
               kcal예요
             </GraphText2>
-            <DoughnutChart />
+            <DoughnutChart todayKcal={nutrientsData.todayKcal} todayProperKcal={nutrientsData.todayProperKcal} />
             <Text1>
               {Math.round(nutrientsData.todayKcal)}/{Math.round(nutrientsData.todayProperKcal)}
             </Text1>
-            <LineChart />
+            <LineChart nutrientData={mainNutrients} />
           </GraphContainer>
           <StyledLink href={`/result/${petId}/${dailyMealId}/detail`}>
             <DetailButton>영양소 상세 보기</DetailButton>
@@ -930,7 +946,7 @@ const DateTitle = styled.div`
 
 const FirstLine = styled.p`
   font-family: SUIT;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 180%;
   letter-spacing: -0.75px;
@@ -978,8 +994,7 @@ const GraphContainer = styled.div`
   height: 270px;
   min-height: 290px;
   margin: 16px 0;
-  background: #e9e9e9;
-`;
+background: var(--grey1, #FAFAFC);`;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -1108,6 +1123,3 @@ const Text1 = styled.div`
   margin-top: 240px;
   left: -35px;
 `;
-
-
-

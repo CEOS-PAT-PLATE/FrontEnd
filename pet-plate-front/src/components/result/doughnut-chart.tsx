@@ -20,16 +20,15 @@ ChartJS.register(
   Chart.BarElement,
 );
 
-export default function DoughnutChart() {
+export default function DoughnutChart({ todayKcal, todayProperKcal }: { todayKcal: number; todayProperKcal: number }) {
 
 
   // 적정 칼로리가 총
   // 섭취한 칼로리
   // 남은 칼로리 적정 칼로리-섭취한 칼로리
 
-  const [properTotalKcal, setProperTotalKcal] = useState(2600);
-  const [consumedTotalKcal, setConsumedTotalKcal] = useState(200);
-  const [remainTotalKcal, setRemainTotalKcal] = useState(2400);
+
+  const remainTotalKcal= getRemainKcal(todayProperKcal, todayKcal);
 
   function getRemainKcal(proper:number, consumed:number) {
     if (proper - consumed > 0) {
@@ -45,7 +44,7 @@ export default function DoughnutChart() {
     datasets: [
       {
         label: '적정 섭취 칼로리',
-        data: [consumedTotalKcal, remainTotalKcal],
+        data: [todayKcal, remainTotalKcal],
         backgroundColor: ['#40C97F', '#ECEEF0'],
         hoverOffset: 4,
         borderWidth: 0,

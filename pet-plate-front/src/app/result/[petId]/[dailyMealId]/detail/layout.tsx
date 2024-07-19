@@ -96,7 +96,7 @@ export default function Layout({
       <Title>영양소 상세</Title>
       <InfoCardWrapper>
         <NaturalInfoCardImage>
-          오늘 먹은 영양소는 총 {nutrientData?.todayKcal}kcal로, 섭취량이 조금 부족한 수준이에요.
+          오늘 먹은 영양소는 총 {Math.round(nutrientData?.todayKcal)}kcal로, 섭취량이 조금 부족한 수준이에요.
         </NaturalInfoCardImage>
         <SupplementInfo>
           <Name>과잉 영양소 : <Color1>{nutrientData?.excessNutrients?.map(nutrient=> nutrient).join(', ')}</Color1></Name>

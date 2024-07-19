@@ -18,7 +18,6 @@ export default function Button({ color, onClick, children }: ButtonProps) {
 }
 
 const StyledButton = styled.button<{ $color: boolean }>`
-
   cursor: pointer;
 
   display: flex;
