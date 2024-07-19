@@ -1,15 +1,32 @@
 'use client';
+import { useRouter } from 'next/navigation'; 
 import styled from 'styled-components';
 import Image from 'next/image';
 
 import mainGraphic from '@public/svg/mainGraphic.svg?url';
 import nextIcon from '@public/svg/arrow-left-line.svg?url';
-import MainHeader from '@components/main/mainHeader';
 import ScrollCarousel from '@components/main/scrollCarousel';
 import GapButton from '@components/main/gapbtn';
 
 export default function page() {
-  const handleOnclick = () => {};
+  const router = useRouter();  
+
+  const handleOnclick = () => {
+    const enrollPet = window.localStorage.getItem('enrollPet'); 
+
+    if (enrollPet === null || enrollPet === undefined) {
+      alert('로그인 후 이용해 주세요.');
+    } else {
+      const isEnrolled = JSON.parse(enrollPet);
+
+      if (isEnrolled) {
+        router.push('/201'); // enrollPet이 true일 경우 라우팅
+      } else {
+        router.push('/input-data1'); // enrollPet이 false일 경우 라우팅
+      }
+    }
+  };
+  
   const buttonContent = (
     <>
       <span style={{ color: '#fff' }}>반려견 영양분석 하러가기</span>
