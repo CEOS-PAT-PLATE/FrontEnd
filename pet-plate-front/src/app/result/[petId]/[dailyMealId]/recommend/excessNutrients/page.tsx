@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
-import  dailyMealsAPI from '@api/dailyMealsAPI';
+import dailyMealsAPI from '@api/dailyMealsAPI';
 import RightArrow from '@components/result/right-arrow';
 import { nutrientExcessInfo } from '@lib/descriptionData';
 
@@ -49,9 +49,8 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
   };
 
   const filteredNutrientExcessInfo = nutrientExcessInfo.filter((info) =>
-    excessNutrients.some((nutrient) => nutrient.name === info.nutrientName)
+    excessNutrients.some((nutrient) => nutrient.name === info.nutrientName),
   );
-
 
   return (
     <>
@@ -68,7 +67,7 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
             <Text1>비슷한 고민을 가진</Text1>
             <Text2>반려인들은 이런 점을 신경써요!</Text2>
             <Container>
-              {getNutritionAdvice(excessNutrients.map(n => n.name).join('과 ')).map((advice, index) => (
+              {getNutritionAdvice(excessNutrients.map((n) => n.name).join('과 ')).map((advice, index) => (
                 <Card key={index}>
                   <Info>
                     <Vendor>{advice.title}</Vendor>
@@ -187,9 +186,8 @@ const EmptyMessage = styled.div`
   font-weight: 400;
   position: absolute;
   top: 430px;
-left: 125px;
+  left: 125px;
   color: var(--grey8, #7c8389);
-
 `;
 
 const Text1 = styled.div`

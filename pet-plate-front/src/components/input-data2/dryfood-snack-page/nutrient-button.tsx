@@ -6,21 +6,51 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { isFormValidState, RequiredInputState, NutrientNameState } from '@recoil/nutrientAtoms';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 import { useSetRecoilState } from 'recoil';
 import { noticeState } from '@recoil/atoms';
 
 export default function NutrientButton() {
-  const petId = 3;
+
+  
+  const getPetIdFromLocalStorage = () => {
+    if (typeof window === 'undefined') return null;
+    const petInfoString = localStorage.getItem('petInfo');
+    console.log('petInfoString:', petInfoString);
+    if (!petInfoString) {
+      console.error('No petInfo found in localStorage');
+      return null;
+    }
+    try {
+      const petInfo = JSON.parse(petInfoString);
+      return petInfo.petId;
+    } catch (error) {
+      console.error('Error parsing petInfo from localStorage', error);
+      return null;
+    }
+  };
+
+
+
   const { addFeed, addPackagedSnack } = useAddDirectlyToDailyMeals();
   const router = useRouter();
   const isValid = useRecoilValue(isFormValidState);
+  const [petId, setPetId] = useState<number>(0);
+
 
   const [requiredInputState, setRequiredInputState] = useRecoilState(RequiredInputState);
   const [nutrientName, setNutrientName] = useRecoilState(NutrientNameState);
   const pathName = usePathname();
 
   const setNotice = useSetRecoilState(noticeState);
+
+  
+  useEffect(() => {
+    const petIdFromStorage = getPetIdFromLocalStorage();
+    setPetId(petIdFromStorage);
+  }, []);
+
 
   const apiCall = pathName === '/input-data2/dry-food' ? addFeed : addPackagedSnack;
 

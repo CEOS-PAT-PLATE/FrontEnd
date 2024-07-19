@@ -9,12 +9,41 @@ import ResultBox from '@public/svg/result-info-box.svg?url';
 import FoodCardsContainer from '@components/input-data2/common/foodcards-container';
 import { useRecoilState } from 'recoil';
 import { dailyMealsState } from '@recoil/atoms';
-import { useEffect } from 'react';
 
 import { dailyMealsAPI } from '@api/dailyMealsAPI';
 
 import { saveDailyMealsNutrients, fetchPetNutrientData } from '@lib/apiService';
 
+import DoughnutChart from '@components/result/doughnut-chart';
+import LineChart from '@components/result/line-chart';
+
+import { useEffect, useState } from 'react';
+
+interface PetInfo {
+  petId: number;
+  name: string;
+  age: number;
+  weight: number;
+  activity: string;
+  neutering: string;
+  profileImgPath: string | null;
+}
+
+const getPetInfoFromLocalStorage = () => {
+  if (typeof window === 'undefined') return null;
+  const petInfoString = localStorage.getItem('petInfo');
+  if (!petInfoString) {
+    console.error('No petInfo found in localStorage');
+    return null;
+  }
+  try {
+    const petInfo = JSON.parse(petInfoString);
+    return petInfo;
+  } catch (error) {
+    console.error('Error parsing petInfo from localStorage', error);
+    return null;
+  }
+};
 
 const getTodayDate = () => {
   const today = new Date();
@@ -38,19 +67,35 @@ const fetchdailyMealLists = async (petId: number, dailyMealId: number) => {
   return response.data;
 };
 
+const getTodayDateDisplay = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
+  const day = String(today.getDate()).padStart(2, '0');
+  return { year, month, day };
+};
+
 interface ResultProps {
-  params: { petId: number; dailyMealId: number };
+
+  params: {petId: number; dailyMealId: number  };
+
 }
 
-export default function Page({ params }: ResultProps) {
+
+
+export default function Page({params}: ResultProps) {
   const router = useRouter();
-  //const { petId, dailyMealId } = params;
-  const petId = 3;
-  const dailyMealId = 4;
+  const {petId, dailyMealId} = params;
+  const [petInfo, setPetInfo] = useState<PetInfo | null>(null);
+
+
+ /// const petId = 3;
+ // const dailyMealId = 4;
   // const dailyMeals = useRecoilValue(dailyMealsState);
   const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
 
   const date = getTodayDate();
+  const { year, month, day } = getTodayDateDisplay();
 
   // ** 1,2 별도로 비동기요청 보내기
   //1
@@ -75,18 +120,13 @@ export default function Page({ params }: ResultProps) {
       console.log('오늘 섭취 칼로리/적정 섭취 칼로리 정보', todaykcalRatio.data);
       console.log('하루동안 섭취해야할 적정 칼로리', todayProperKcal.data);
 
-       // 과잉 영양소 개수
-       const ExcessiveNutrientsCount = excessNutrients.data.data.length;
-       const InsufficientNutrientsCount = deficientNutrients.data.data.length / 2; // 배열 길이를 2로 나눔
-    
-
-
- 
+      // 과잉 영양소 개수
+      const ExcessiveNutrientsCount = excessNutrients.data.data.length;
+      const InsufficientNutrientsCount = deficientNutrients.data.data.length / 2; // 배열 길이를 2로 나눔
     } catch (error) {
       console.error('오류', error);
     }
   };
-
 
   // 2
 
@@ -140,19 +180,24 @@ export default function Page({ params }: ResultProps) {
     initialize();
   }, []);
 
+  useEffect(() => {
+    const petInfo = getPetInfoFromLocalStorage();
+    setPetInfo(petInfo);
+  }, []);
+
   return (
     <Wrapper>
       <Title>분석 결과</Title>
       <ExitButtonImage src={ExitButtonSVG} alt="exit-button" onClick={() => router.push('/main/analyze')} />
       <Container>
         <Content>
-          <DateTitle>2024. 6. 21 분석 결과</DateTitle>
+          <DateTitle> {year}. {month}. {day} 분석 결과</DateTitle>
           <SVGContent>
             <SVGImage src={ResultBox} width={312} height={169} alt="loading" />
             <FirstLine>
               <RedText>지방, 비타민 A가</RedText> 부족해요!
             </FirstLine>
-            <SecondLine>몸무게 1.6kg | 활동량 보통</SecondLine>
+            <SecondLine>몸무게 {petInfo?.weight}kg | 활동량 {petInfo?.activity}</SecondLine>
           </SVGContent>
           <StyledLink href={`result/${petId}/${dailyMealId}/recommend/deficientNutrients`}>
             <RecommendationButton>추천 영양성분 보기</RecommendationButton>
@@ -162,15 +207,17 @@ export default function Page({ params }: ResultProps) {
               <GreenText>20kcal</GreenText> 더 먹어도 좋아요!
             </GraphText1>
             <GraphText2>
-              <GreenText>김백순</GreenText>의 하루 권장 섭취량은 260kcal에요
+              <GreenText>{petInfo?.name}</GreenText>의 하루 권장 섭취량은 260kcal에요
             </GraphText2>
+            <DoughnutChart/>
+            <LineChart/>
             {/*그래프 */}
           </GraphContainer>
           <StyledLink href={`result/${petId}/${dailyMealId}/detail`}>
             <DetailButton>영양소 상세 보기</DetailButton>
           </StyledLink>
           <MealListTitle>
-            <GreenText>김백순</GreenText>이 먹은 하루 식단
+            <GreenText>{petInfo?.name}</GreenText>의 하루 식단
           </MealListTitle>
           <ContentContainer>
             {dailyMeals ? (

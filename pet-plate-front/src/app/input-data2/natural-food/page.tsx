@@ -1,4 +1,3 @@
-
 import Search from '@components/input-data2/naturalfood-page/search';
 import Table from '@components/input-data2/naturalfood-page/table';
 import InfoLayout from '@components/input-data2/common/info-layout';
@@ -6,8 +5,8 @@ import NaturalFoodButton from '@components/input-data2/naturalfood-page/naturalf
 import { rawAPI } from '@api/rawAPI';
 import { RecentRawFood } from '@lib/types';
 import NoticeText from '@style/input-data2/NoticeText';
-import  InfoCardAndButton from '@components/input-data2/naturalfood-page/naturalfood-notice';
-
+import InfoCardAndButton from '@components/input-data2/naturalfood-page/naturalfood-notice';
+import petAPI from '@api/petAPI';
 import SuggestionButton from '@components/input-data2/naturalfood-page/suggestion-button'; // 경로를 실제 파일 위치에 맞게 수정하세요
 
 const fetchNaturalFoodLists = async (keyword: string) => {
@@ -27,18 +26,40 @@ const filterUniqueByNameAndServing = (foodList: RecentRawFood[]): RecentRawFood[
   );
 };
 
+// 맨 먼저 임시로 Petid 가져오려고 실행
+const fetchPets = async () => {
+  try {
+    const response = await petAPI.getAllPetsInfo();
+    return response.data.data;
+  } catch (error) {
+    console.error('펫 못가져옴', error);
+    return [];
+  }
+};
+
 export default async function Page({ searchParams }: { searchParams?: { keyword?: string } }) {
-  const petId = 3;
+  //const petId = 3;
 
   // 최근 2일동안 섭취한 자연식
   // 쿼리 클라이언트
 
   const keyword = searchParams?.keyword || '';
 
+  const pets = await fetchPets();
+
+  if (pets.length === 0) {
+    return <div>Error: No pets found</div>;
+  }
+
+  const petId = pets[0].petId;
+
+  console.log(petId);
+  console.log(pets[0]);
+
   // data 속성을 추출하고, 그 값을 naturalFoodLists라는 변수에 할당
   const { data: naturalFoodLists } = await fetchNaturalFoodLists(keyword);
 
-  console.log(naturalFoodLists);
+  //console.log(naturalFoodLists);
 
   const { data: recentNaturalFoodLists } = await fetchRecentNaturalFoodLists(petId);
 
@@ -56,7 +77,7 @@ export default async function Page({ searchParams }: { searchParams?: { keyword?
       <NoticeText>자연식이 뭔지 모르겠어요!</NoticeText>
       <SuggestionButton />
       <NaturalFoodButton />
-      < InfoCardAndButton />
+      <InfoCardAndButton />
     </>
   );
 }

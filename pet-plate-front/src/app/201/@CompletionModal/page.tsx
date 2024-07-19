@@ -2,21 +2,34 @@
 
 // 완료 모달
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Button from '@components/modal/button';
 import { useRouter } from 'next/navigation';
+import { dailyMealsAPI } from '@api/dailyMealsAPI';
+import { usePathname } from 'next/navigation';
 
 import { useRecoilState } from 'recoil';
 import { isCompleteModalOpenState } from '@recoil/atoms';
 
+const getTodayDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const fetchdailyMealId = async (petId: number, date?: string) => {
+  const response = await dailyMealsAPI.getPetDailyMeals(petId, date);
+  console.log('fetchdailyMealId response:', response);
+  return response.data;
+};
+
 export default function Page() {
-  const isOpen = true;
-  if (!isOpen) return null;
-
-  const color1 = true; //grey
-  const color2 = false; //primary
-
+  const pathname = usePathname();
+  const [petId, setPetId] = useState<number | null>(null);
+  const [dailyMealId, setDailyMealId] = useState<number | null>(null);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useRecoilState(isCompleteModalOpenState);
 
   const router = useRouter();
@@ -27,9 +40,53 @@ export default function Page() {
   };
 
   const handleModalConfirm = () => {
-    router.push('/result'); // 201로
-    // 분석 요청 미구현
+    if (petId !== null && dailyMealId !== null) {
+      router.push(`/result/${petId}/${dailyMealId}`);
+    }
   };
+
+  const getPetIdFromLocalStorage = () => {
+    if (typeof window === 'undefined') return null;
+    const petInfoString = localStorage.getItem('petInfo');
+    console.log('petInfoString:', petInfoString);
+    if (!petInfoString) {
+      console.error('No petInfo found in localStorage');
+      return null;
+    }
+    try {
+      const petInfo = JSON.parse(petInfoString);
+      return petInfo.petId;
+    } catch (error) {
+      console.error('Error parsing petInfo from localStorage', error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const fetchDailyMeals = async () => {
+      const petIdFromStorage = getPetIdFromLocalStorage();
+      if (petIdFromStorage === null) return;
+      setPetId(petIdFromStorage);
+      const date = getTodayDate();
+      try {
+        const dailyMealResponse = await fetchdailyMealId(petIdFromStorage, date);
+        if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
+          const dailyMealId = dailyMealResponse.data[0].dailyMealId;
+          console.log('dailyMealId:', dailyMealId);
+          setDailyMealId(dailyMealId);
+        }
+      } catch (e) {
+        console.error(e); // 에러
+      }
+    };
+
+    fetchDailyMeals();
+  }, [pathname]);
+
+  if (!isCompleteModalOpen) return null;
+
+  const color1 = true; //grey
+  const color2 = false; //primary
 
   return (
     <Overlay>
@@ -72,7 +129,7 @@ export const Modal = styled.div`
   align-items: center;
   height: 225px;
   width: 290px;
-justify-content: center;
+  justify-content: center;
   border-radius: 12px;
   background: #fff;
   box-shadow: 2px 2px 6px 0px rgba(153, 159, 165, 0.2);
@@ -90,7 +147,6 @@ export const Header = styled.h2`
   font-weight: 600;
   line-height: 160%; /* 28.8px */
   letter-spacing: -0.2px;
-
 `;
 
 export const Content = styled.p`
@@ -100,7 +156,6 @@ export const Content = styled.p`
   display: flex;
   flex-direction: column;
   height: 44px;
-
 
   /* body2_regular_14pt */
   font-family: SUIT;

@@ -2,46 +2,81 @@
 
 // 종료 모달
 
-import React from 'react';
-import styled, { css } from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import Button from '@components/modal/button';
-
 import { useRecoilState } from 'recoil';
-
 import { isExitModalOpenState } from '@recoil/atoms';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-
 import { handleDeleteAllMeals } from '@lib/apiService';
 
-export default function Page() {
-  const isOpen = true;
-  if (!isOpen) return null;
+const getTodayDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 
-  const color1 = true; //grey
-  const color2 = false; //primary
+const getPetIdFromLocalStorage = () => {
+  if (typeof window === 'undefined') return null;
+  const petInfoString = localStorage.getItem('petInfo');
+  if (!petInfoString) {
+    console.error('No petInfo found in localStorage');
+    return null;
+  }
+  try {
+    const petInfo = JSON.parse(petInfoString);
+    return petInfo.petId;
+  } catch (error) {
+    console.error('Error parsing petInfo from localStorage', error);
+    return null;
+  }
+};
+
+const getDailyMealIdFromLocalStorage = () => {
+  const dailyMealIdString = localStorage.getItem('dailyMealId');
+  if (!dailyMealIdString) {
+    console.error('No dailyMealId found in localStorage');
+    return null;
+  }
+  return parseInt(dailyMealIdString, 10);
+};
+
+export default function Page() {
+  const [isExitModalOpen, setIsExitModalOpen] = useRecoilState(isExitModalOpenState);
+  const [petId, setPetId] = useState<number | null>(null);
+  const [dailyMealId, setDailyMealId] = useState<number | null>(null);
 
   const router = useRouter();
 
-  const [isExitModalOpen, setIsExitModalOpen] = useRecoilState(isExitModalOpenState);
+  useEffect(() => {
+    const petIdFromStorage = getPetIdFromLocalStorage();
+    const dailyMealIdFromStorage = getDailyMealIdFromLocalStorage();
+    setPetId(petIdFromStorage);
+    setDailyMealId(dailyMealIdFromStorage);
+  }, [isExitModalOpen]);
 
-  const [isLoading, setIsLoading] = useState(false);
+  if (!isExitModalOpen) return null;
 
   const handleModalCancel = () => {
     setIsExitModalOpen(false);
-    // router.push('/201'); // 201로
-    // 계속 남아있음
   };
-
-  const petId = 3;
-  const dailyMealId = 5;
 
   const handleModalConfirm = () => {
-    router.push('/main/analyze'); // 201로
-    handleDeleteAllMeals(petId, dailyMealId);
-    setIsExitModalOpen(false);
-    // 아예 입력 취소하고 나가게끔!
+    if (petId !== null && dailyMealId !== null) {
+      console.log('petId:', petId);
+      console.log('dailyMealId:', dailyMealId);
+      router.push('/main/analyze');
+      handleDeleteAllMeals(petId, dailyMealId);
+      setIsExitModalOpen(false);
+    } else {
+      console.error('Cannot proceed without valid petId and dailyMealId');
+    }
   };
+
+  const color1 = true; //grey
+  const color2 = false; //primary
 
   return (
     <Overlay>
@@ -63,7 +98,6 @@ export default function Page() {
 
 export const Overlay = styled.div`
   position: absolute;
-
   display: flex;
   justify-content: center;
   top: 0;
@@ -81,11 +115,9 @@ export const Modal = styled.div`
   display: inline-flex;
   padding: 36px 24px 24px 24px;
   flex-direction: column;
-
   height: 203px;
   width: 290px;
   align-items: center;
-
   gap: 10px;
   border-radius: 12px;
   background: #fff;
@@ -95,7 +127,6 @@ export const Modal = styled.div`
 
 export const Header = styled.h2`
   color: var(--grey9, #64696e);
-
   /* title1_semibold_18pt */
   font-family: SUIT;
   font-size: 18px;
@@ -109,7 +140,6 @@ export const Content = styled.p`
   width: 213px;
   color: var(--grey9, #64696e);
   text-align: center;
-
   /* body2_regular_14pt */
   font-family: SUIT;
   font-size: 14px;
