@@ -50,43 +50,37 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
   };
 
   const filteredNutrientExcessInfo = nutrientExcessInfo.filter((info) =>
-    excessNutrients.some((nutrient) => nutrient.name === info.nutrientName),
+    excessNutrients.some((nutrient) => nutrient.name === info.nutrientName)
   );
 
   return (
     <>
-     <Wrapper>
-      {filteredNutrientExcessInfo.length === 0 ? (
-        <EmptyMessage>과잉 영양소가 없어요!</EmptyMessage>
-      ) : (
-        <>
-        <div>
-          <Content>
-            {filteredNutrientExcessInfo.map((group, index) => (
-              <NutrientInfoSection nutrient={group.nutrientName} index={index} key={group.nutrientName} />
-            ))}
-                
+      <Wrapper>
+        {filteredNutrientExcessInfo.length === 0 ? (
+          <EmptyMessage>과잉 영양소가 없어요!</EmptyMessage>
+        ) : (
+          <>
+            <div>
+              <Content>
+                {filteredNutrientExcessInfo.map((group, index) => (
+                  <NutrientInfoSection nutrient={group.nutrientName} index={index} key={group.nutrientName} />
+                ))}
                 <ContainerWrapper>
-            <Text1>비슷한 고민을 가진</Text1>
-            <Text2>반려인들은 이런 점을 신경써요!</Text2>
-              {getNutritionAdvice(excessNutrients.map((n) => n.name).join('과 ')).map((advice, index) => (
-                <Card key={index}>
-                  <Info>
-                    <Vendor>{advice.title}</Vendor>
-                    <Name>{advice.content}</Name>
-                  </Info>
-                </Card>
-              ))}
-              </ContainerWrapper>
-             
-            
-            
-          </Content>
-      </div>
-      
-      </>
-    
-      )}
+                  <Text1>비슷한 고민을 가진</Text1>
+                  <Text2>반려인들은 이런 점을 신경써요!</Text2>
+                  {getNutritionAdvice(excessNutrients.map((n) => n.name).join('과 ')).map((advice, index) => (
+                    <Card key={index}>
+                      <Info>
+                        <Vendor>{advice.title}</Vendor>
+                        <Name>{advice.content}</Name>
+                      </Info>
+                    </Card>
+                  ))}
+                </ContainerWrapper>
+              </Content>
+            </div>
+          </>
+        )}
       </Wrapper>
     </>
   );
@@ -122,11 +116,9 @@ const getNutritionAdvice = (excessNutrient: string) => [
 const ContainerWrapper = styled.div`
   position: absolute;
   padding-top: 10px;
-
   min-height: 476px;
   min-width: 360px;
   width: 360px;
-
   display: flex;
   flex-direction: column;
   background: var(--50, #ecfaf2);
@@ -137,7 +129,7 @@ const Container = styled.div`
   min-height: 420px;
   min-width: 360px;
   max-height: 440px;
-z-index: 1000;
+  z-index: 1000;
   position: absolute;
   display: flex;
 `;
@@ -153,7 +145,6 @@ const Card = styled.div`
   display: flex;
   align-items: center;
   width: 312px;
-
   padding: 16px;
   margin-bottom: 16px;
   margin-left: 8px;
@@ -167,24 +158,20 @@ const Info = styled.div`
 const Vendor = styled.span`
   width: 171px;
   color: var(--grey11, #36393c);
-
-  /* title2_bold_16pt */
   font-family: SUIT;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
-  line-height: 160%; /* 25.6px */
+  line-height: 160%;
 `;
 
 const Name = styled.span`
   color: var(--grey8, #7c8389);
-
-  /* body3_regular_12pt */
   font-family: SUIT;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: 160%; /* 19.2px */
+  line-height: 160%;
 `;
 
 const EmptyMessage = styled.div`
@@ -207,7 +194,6 @@ const Text1 = styled.div`
   position: absolute;
   z-index: 100;
   background: var(--50, #ecfaf2);
-
   color: var(--700, #26784c);
   padding: 0px 16px;
 `;
@@ -226,9 +212,8 @@ const Text2 = styled.div`
   color: var(--700, #26784c);
   padding: 0px 16px;
   width: 360px;
-    margin-bottom: 20px;
-    height: 40px;
-
+  margin-bottom: 20px;
+  height: 40px;
 `;
 
 const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number }) => {
@@ -267,43 +252,38 @@ const OrderText = styled.div`
   font-family: SUIT;
   font-size: 12px;
   font-weight: 600;
-  line-height: 160%; /* 19.2px */
+  line-height: 160%;
   margin-bottom: 4px;
 `;
 
 const NutrientTitle = styled.div`
   color: var(--primary, #40c97f);
-  /* header_bold_20pt */
   font-family: SUIT;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
-  line-height: 160%; /* 32px */
+  line-height: 160%;
   letter-spacing: -0.75px;
 `;
 
 const NutrientContent = styled.div`
   color: var(--grey11, #36393c);
   width: 312px;
-  /* body2_regular_14pt */
   font-family: SUIT;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 160%; /* 22.4px */
+  line-height: 160%;
   margin-bottom: 16px;
 `;
 
 const NutrientSymptomsTitle = styled.div`
   color: var(--grey11, #36393c);
-
-  /* title2_bold_16pt */
   font-family: SUIT;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   margin-bottom: 6px;
-
   line-height: 160%;
 `;
 
@@ -313,13 +293,11 @@ const SymptomsList = styled.ul`
   margin: 0;
   width: 165px;
   color: var(--grey11, #36393c);
-
-  /* body2_semibold_14pt */
   font-family: SUIT;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: 160%; /* 22.4px */
+  line-height: 160%;
 `;
 
 const SymptomWrapper = styled.div`
@@ -345,28 +323,22 @@ const SymptomIcon = styled.img`
 const SymptomName = styled.div`
   width: 165px;
   margin-right: 8px;
-
   color: var(--grey11, #36393c);
-
-  /* body2_semibold_14pt */
   font-family: SUIT;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: 160%; /* 22.4px */
+  line-height: 160%;
   margin-bottom: 0px;
 `;
 
 const SymptomDescription = styled.div`
   color: var(--grey11, #36393c);
-
-  /* body3_regular_12pt */
   font-family: SUIT;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: 160%; /* 19.2px */
-
+  line-height: 160%;
   width: 256px;
 `;
 
@@ -385,7 +357,7 @@ const NutrientDefinition = styled.div`
   font-family: SUIT;
   font-size: 14px;
   font-weight: 400;
-  line-height: 160%; /* 22.4px */
+  line-height: 160%;
   align-self: stretch;
   width: 312px;
 `;
@@ -402,4 +374,3 @@ const orderArray = [
   { index: 9, word: '아홉' },
   { index: 10, word: '열' },
 ];
-
