@@ -20,6 +20,12 @@ const getTodayDate = () => {
   return `${year}-${month}-${day}`;
 };
 
+const storeNutrientDataInLocalStorage = (petId:number, dailyMealId:number, nutrientData:any) => {
+  const key = `${petId}-${dailyMealId}`;
+  localStorage.setItem(key, JSON.stringify(nutrientData));
+  localStorage.setItem('selectedDate', getTodayDate());
+};
+
 const fetchdailyMealId = async (petId: number, date?: string) => {
   const response = await dailyMealsAPI.getPetDailyMeals(petId, date);
   console.log('fetchdailyMealId response:', response);
@@ -41,6 +47,9 @@ export default function Page() {
 
   const handleModalConfirm = () => {
     if (petId !== null && dailyMealId !== null) {
+      // 예시: nutrientData를 설정하는 부분 (실제로는 해당 데이터를 가지고 있어야 함)
+      const nutrientData = {}; // 실제 데이터로 변경 필요
+      storeNutrientDataInLocalStorage(petId, dailyMealId, nutrientData);
       router.push(`/result/${petId}/${dailyMealId}`);
     }
   };
@@ -105,7 +114,6 @@ export default function Page() {
     </Overlay>
   );
 }
-
 export const Overlay = styled.div`
   position: absolute;
   z-index: 1000;
