@@ -144,7 +144,7 @@ export default function Page() {
           {dailyMeals ? (
             <FoodCardsContainer dailyMeals={dailyMeals} />
           ) : (
-            <EmptyMessage>식단을 불러오는 중이에요!</EmptyMessage>
+            <EmptyMessage>아직 추가된 식단이 없어요!</EmptyMessage>
           )}
         </ContentContainer>
       </Wrapper>
