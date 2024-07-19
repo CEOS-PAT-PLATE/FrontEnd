@@ -15,6 +15,9 @@ import { dailyMealsAPI } from '@api/dailyMealsAPI';
 
 import { saveDailyMealsNutrients, fetchPetNutrientData } from '@lib/apiService';
 
+import DoughnutChart from '@components/result/doughnut-chart';
+import LineChart from '@components/result/line-chart';
+
 
 const getTodayDate = () => {
   const today = new Date();
@@ -75,18 +78,13 @@ export default function Page({ params }: ResultProps) {
       console.log('오늘 섭취 칼로리/적정 섭취 칼로리 정보', todaykcalRatio.data);
       console.log('하루동안 섭취해야할 적정 칼로리', todayProperKcal.data);
 
-       // 과잉 영양소 개수
-       const ExcessiveNutrientsCount = excessNutrients.data.data.length;
-       const InsufficientNutrientsCount = deficientNutrients.data.data.length / 2; // 배열 길이를 2로 나눔
-    
-
-
- 
+      // 과잉 영양소 개수
+      const ExcessiveNutrientsCount = excessNutrients.data.data.length;
+      const InsufficientNutrientsCount = deficientNutrients.data.data.length / 2; // 배열 길이를 2로 나눔
     } catch (error) {
       console.error('오류', error);
     }
   };
-
 
   // 2
 
@@ -164,6 +162,8 @@ export default function Page({ params }: ResultProps) {
             <GraphText2>
               <GreenText>김백순</GreenText>의 하루 권장 섭취량은 260kcal에요
             </GraphText2>
+            <DoughnutChart/>
+            <LineChart/>
             {/*그래프 */}
           </GraphContainer>
           <StyledLink href={`result/${petId}/${dailyMealId}/detail`}>
