@@ -63,7 +63,7 @@ export default function Page() {
   const setNotice = useSetRecoilState(noticeState);
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useRecoilState(isCompleteModalOpenState);
   const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
-  
+
   const getPetIdFromLocalStorage = () => {
     if (typeof window === 'undefined') return null;
     const petInfoString = localStorage.getItem('petInfo');
@@ -91,6 +91,8 @@ export default function Page() {
         if (dailyMealResponse && dailyMealResponse.data && dailyMealResponse.data.length > 0) {
           const dailyMealId = dailyMealResponse.data[0].dailyMealId;
           console.log('dailyMealId:', dailyMealId);
+          localStorage.setItem('dailyMealId', JSON.stringify(dailyMealId));
+
           const dailyMealListsResponse = await fetchdailyMealLists(petId, dailyMealId);
 
           const filteredData = {
@@ -114,6 +116,8 @@ export default function Page() {
               (item: any) => item.name !== '존재하지 않는 음식입니다',
             ),
           };
+
+          localStorage.setItem('dailyMealId', JSON.stringify(dailyMealId));
 
           const isCompleteValid = CheckCompleteValid(filteredData);
           console.log('isCompleteValid:', isCompleteValid);
