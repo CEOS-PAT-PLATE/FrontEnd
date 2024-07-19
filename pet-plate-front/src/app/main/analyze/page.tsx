@@ -101,7 +101,7 @@ export default function Page() {
         <InfoCard src={infoCard} alt="info" />
         <FixedBtnWrapper>
           <LinkButton
-            href="/input-data1"
+            href="/201"
             backgroundcolor={(props) => props.theme.colors.green}
             hoverbackgroundcolor={(props) => props.theme.colors.green}
             hoverbuttoncontentcolor="#fff"
