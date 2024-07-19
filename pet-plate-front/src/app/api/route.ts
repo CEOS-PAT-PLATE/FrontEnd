@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const { accessToken, refreshToken, enrollPet } = await request.json();
+  const { accessToken, refreshToken, enrollPet,petInfo  } = await request.json();
 
   const response = NextResponse.json({ message: 'Tokens stored successfully' });
 
@@ -28,6 +28,19 @@ export async function POST(request: NextRequest) {
     path: '/',
     maxAge: 60 * 60 * 24 * 30,
   });
+
+
+
+  response.cookies.set('petInfo', JSON.stringify(petInfo), {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    path: '/',
+    maxAge: 60 * 60 * 24 * 30, 
+  });
+
+
+
 
   return response;
 }
