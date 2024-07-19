@@ -5,6 +5,7 @@ import styled from "styled-components"
 import Image from 'next/image'
 import BackButton from '@public/svg/back-button.svg?url'
 import ExitButton from '@public/svg/exit-button.svg?url'
+import Link from 'next/link';
 
 interface InputDataFirstHeaderProps {
   onClickBackButton: () => void;
@@ -15,7 +16,9 @@ const InputDataFirstHeader: React.FC<InputDataFirstHeaderProps> = ({ onClickBack
     <HeaderWrapper>
       <BackButtonImage src={BackButton} alt="back-button" onClick={onClickBackButton}/>
       <Header>반려견 정보 입력</Header>
-      <ExitButtonImage src={ExitButton} alt="exit-button" />
+      <ExitButtonWrapper href={'/main/analyze-info'}>
+        <ExitButtonImage src={ExitButton} alt="exit-button" />
+      </ExitButtonWrapper>
     </HeaderWrapper>
   )
 }
@@ -43,3 +46,7 @@ const Header = styled.h2`
   font-size: 1rem;
   font-weight: bold;
 `;
+
+const ExitButtonWrapper = styled(Link)`
+  
+`

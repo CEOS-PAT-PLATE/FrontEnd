@@ -14,7 +14,7 @@ export default function page() {
   const handleOnclick = () => {
     const enrollPet = window.localStorage.getItem('enrollPet'); 
 
-    if (enrollPet === null || enrollPet === undefined) {
+    if (enrollPet === null || enrollPet === undefined) { //로그인되지 않은 사용자인 경우 다시 생각하기
       alert('로그인 후 이용해 주세요.');
     } else {
       const isEnrolled = JSON.parse(enrollPet);

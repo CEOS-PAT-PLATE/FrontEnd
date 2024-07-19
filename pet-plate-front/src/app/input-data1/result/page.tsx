@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import InputDataFirstHeader from '@components/input-data1/inputDataFirstHeader';
 import Progressbar from '@components/input-data1/progressbar';
-import NextButton from '@components/input-data1/nextButton';
+import LinkButton from "@components/main/linkBtn";
 import ResultList from '@components/input-data1/resultList';
 import { petAPI } from '@api/petAPI';
 
@@ -19,6 +19,11 @@ interface Pet {
 }
 
 export default function Page() {
+  const buttonContent = (
+    <><span style={{ color: "#fff" }}>다음으로</span></>
+  );
+
+
   const [pets, setPets] = useState<Pet[]>([]);
 
   useEffect(() => {
@@ -64,7 +69,7 @@ export default function Page() {
 
   return (
     <>
-      <InputDataFirstHeader onClickBackButton={navigate} />
+      <ResultHeader>반려견 정보 확인</ResultHeader>
       <Progressbar />
       <PageContainer>
         <React.Fragment key={pets[0]?.petId}>
@@ -74,14 +79,35 @@ export default function Page() {
           <ResultList title="활동량" value={pets[0]?.activity} />
           <ResultList title="중성화 여부" value={pets[0]?.neutering} />
         </React.Fragment>
+        <Text>반려견 정보 수정 탭에서 언제든지 바꿀 수 있어요</Text>
 
         <FixedButtonContainer>
-          <NextButton onClick={handleAlert} />
+          <LinkButton
+            href="/input-data1/alert-final"
+            backgroundcolor={(props) => props.theme.colors.green}
+            hoverbackgroundcolor={(props) => props.theme.colors.green}
+            hoverbuttoncontentcolor="#fff"
+            buttonContent={buttonContent}
+          />
         </FixedButtonContainer>
       </PageContainer>
     </>
   );
 }
+
+const ResultHeader = styled.div`
+  width: 100%;
+  height: 3.25rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5.188rem;
+
+  font-size: 1rem;
+  font-weight: bold;
+  color: #191919;
+`
 
 const PageContainer = styled.div`
   display: flex;
@@ -99,3 +125,9 @@ const FixedButtonContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
+const Text = styled.div`
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 160%;
+  color: ${(props)=>props.theme.colors['grey6']}
+`
