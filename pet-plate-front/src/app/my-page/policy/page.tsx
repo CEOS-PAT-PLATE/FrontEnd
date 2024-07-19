@@ -1,5 +1,3 @@
 export default function page() {
-  return (
-    <div>policy</div>
-  )
+  return <div>policy</div>;
 }

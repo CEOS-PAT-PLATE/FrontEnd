@@ -5,9 +5,8 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import nutrientAPI from '@api/nutrientAPI';
 import RightArrow from '@components/result/right-arrow';
-import {nutritionDeficientInfo}  from '@lib/descriptionData';
+import { nutritionDeficientInfo } from '@lib/descriptionData';
 import SupplementModal from '@components/modal/SupplementModal';
-
 
 import Image from 'next/image';
 
@@ -80,54 +79,52 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
     );
   };
 
-
   // 부족한 영양소만 필터링
-  const deficientNutrientGroups = nutrientGroups.filter(group =>
-    nutritionDeficientInfo.some(info => info.nutrientName === group.nutrientName)
+  const deficientNutrientGroups = nutrientGroups.filter((group) =>
+    nutritionDeficientInfo.some((info) => info.nutrientName === group.nutrientName),
   );
-
 
   return (
     <>
-     <SupplementModal />
-     {nutritionDeficientInfo.length === 0 ? (
+      <SupplementModal />
+      {nutritionDeficientInfo.length === 0 ? (
         <EmptyMessage>부족 영양소가 없어요!</EmptyMessage>
       ) : (
-      <Content>
-        {deficientNutrientGroups.map((group, index) => (
-          <div key={group.nutrientName}>
-            <NutrientInfoSection nutrient={group.nutrientName} index={index} />
-            <ContainerWrapper>
-              <Text1>비슷한 고민을 가진 반려인들은</Text1>
-              <Text2>이 영양제를 많이 써요.</Text2>
-              <Container>
-                {group.drugResponseDtoList.length > 0 ? (
-                  group.drugResponseDtoList.map((supplement) => (
-                    <Card key={supplement.id}>
-                      <ImageWrapper>
-                        <img
-                          src={supplement.drugImgPath}
-                          alt={supplement.name}
-                          width={80}
-                          height={80}
-                          onError={() => handleImageError(supplement.id)}
-                        />
-                      </ImageWrapper>
-                      <Info>
-                        <Vendor>{supplement.vendor}</Vendor>
-                        <Name>{supplement.name}</Name>
-                      </Info>
-                      <RightArrow detail={{ supplement, nutrient: group.nutrientName }} />
+        <Content>
+          {deficientNutrientGroups.map((group, index) => (
+            <div key={group.nutrientName}>
+              <NutrientInfoSection nutrient={group.nutrientName} index={index} />
+              <ContainerWrapper>
+                <Text1>비슷한 고민을 가진 반려인들은</Text1>
+                <Text2>이 영양제를 많이 써요.</Text2>
+                <Container>
+                  {group.drugResponseDtoList.length > 0 ? (
+                    group.drugResponseDtoList.map((supplement) => (
+                      <Card key={supplement.id}>
+                        <ImageWrapper>
+                          <img
+                            src={supplement.drugImgPath}
+                            alt={supplement.name}
+                            width={80}
+                            height={80}
+                            onError={() => handleImageError(supplement.id)}
+                          />
+                        </ImageWrapper>
+                        <Info>
+                          <Vendor>{supplement.vendor}</Vendor>
+                          <Name>{supplement.name}</Name>
+                        </Info>
+                        <RightArrow detail={{ supplement, nutrient: group.nutrientName }} />
                       </Card>
-                  ))
-                ) : (
-                  <EmptyMessage>추천 영양제를 불러오는 중입니다...</EmptyMessage>
-                )}
-              </Container>
-            </ContainerWrapper>
-          </div>
-        ))}
-      </Content>
+                    ))
+                  ) : (
+                    <EmptyMessage>추천 영양제를 불러오는 중입니다...</EmptyMessage>
+                  )}
+                </Container>
+              </ContainerWrapper>
+            </div>
+          ))}
+        </Content>
       )}
     </>
   );
@@ -147,7 +144,7 @@ const orderArray = [
 ];
 
 const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number }) => {
-  const nutrientData = nutritionDeficientInfo .find((info) => info.nutrientName === nutrient);
+  const nutrientData = nutritionDeficientInfo.find((info) => info.nutrientName === nutrient);
   return (
     <Section>
       <OrderText>{`${orderArray[index].word}번째 부족 영양소`}</OrderText>
@@ -176,7 +173,7 @@ const Content = styled.div`
   overflow-y: auto;
   position: absolute;
   top: 150px;
-  height:650px;
+  height: 650px;
 `;
 
 const ContainerWrapper = styled.div`
@@ -260,9 +257,8 @@ const EmptyMessage = styled.div`
   font-weight: 400;
   position: absolute;
   top: 430px;
-left: 125px;
+  left: 125px;
   color: var(--grey8, #7c8389);
-
 `;
 
 const Text1 = styled.div`
@@ -379,7 +375,6 @@ const SymptomIcon = styled(Image)`
   height: 36px;
   background-size: contain;
   margin-right: 15px;
- 
 `;
 
 const SymptomName = styled.div`
@@ -418,7 +413,6 @@ const NutrientDefinitionTitle = styled.div`
   line-height: 160%;
   margin-bottom: 6px;
   margin-top: 25px;
-
 `;
 
 const NutrientDefinition = styled.div`

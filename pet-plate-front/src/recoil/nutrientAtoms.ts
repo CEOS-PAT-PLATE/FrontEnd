@@ -84,12 +84,17 @@ export const selectedSupplementState = atom<{ supplement: Supplement | null, nut
 export const nutrientDataState = atom({
   key: 'nutrientDataState',
   default: {
-    excessNutrients: 0,
+    excessNutrients: [],
     properNutrients: [],
-    deficientNutrients: 0,
+    deficientNutrients: [],
     todayNutrients: [],
     todayKcal: 0,
     todaykcalRatio: 0,
     todayProperKcal: 0,
   },
+});
+
+export const dailyMealsState = atom({
+  key: 'dailyMealState',
+  default: 0,
 });
