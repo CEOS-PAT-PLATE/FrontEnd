@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import Navbar from '@components/result/navbar';
 import styled from 'styled-components';
 import Wrapper from '@style/input-data2/Wrapper';
 import { useRouter } from 'next/navigation';
@@ -12,38 +11,55 @@ import Image from 'next/image';
 
 import LineChart from '@components/result/line-charts'; 
 
-
 interface ResultProps {
   params: { petId: number; dailyMealId: number };
 }
 
+interface Nutrient {
+  name: string;
+  unit: string;
+  description: string;
+  amount: number;
+  properAmount: number;
+  maximumAmount: number;
+  maximumAmountRatioPerProperAmount: number;
+  amountRatioPerProperAmount: number;
+  amountRatioPerMaximumAmount: number;
+}
 
-const getDetailNutrientDataFromLocalStorage = (petId:number, dailyMealId:number) => {
-    const key = `selected-nutrient-${petId}-${dailyMealId}`;
-    const nutrientDataString = localStorage.getItem(key);
-    if (nutrientDataString) {
-      try {
-        return JSON.parse(nutrientDataString);
-      } catch (error) {
-        console.error('디테일 오류', error);
-      }
-    }
-    return null;
-  };
+interface NutrientData {
+  todayKcal: number;
+  excessNutrients: string[];
+  deficientNutrients: string[];
+  properNutrients: string[];
+  todayNutrients: Nutrient[];
+}
 
-const getNutrientDataFromLocalStorage = (petId:number, dailyMealId:number) => {
-    const key = `${petId}-${dailyMealId}`;
-    const nutrientDataString = localStorage.getItem(key);
-    if (nutrientDataString) {
-      try {
-        return JSON.parse(nutrientDataString);
-      } catch (error) {
-        console.error('', error);
-      }
+const getDetailNutrientDataFromLocalStorage = (petId: number, dailyMealId: number): Nutrient[] | null => {
+  const key = `selected-nutrient-${petId}-${dailyMealId}`;
+  const nutrientDataString = localStorage.getItem(key);
+  if (nutrientDataString) {
+    try {
+      return JSON.parse(nutrientDataString);
+    } catch (error) {
+      console.error('디테일 오류', error);
     }
-    return null;
-  };
-  
+  }
+  return null;
+};
+
+const getNutrientDataFromLocalStorage = (petId: number, dailyMealId: number): NutrientData | null => {
+  const key = `${petId}-${dailyMealId}`;
+  const nutrientDataString = localStorage.getItem(key);
+  if (nutrientDataString) {
+    try {
+      return JSON.parse(nutrientDataString);
+    } catch (error) {
+      console.error('', error);
+    }
+  }
+  return null;
+};
 
 export default function Layout({
   children,
@@ -55,12 +71,12 @@ export default function Layout({
   const [deficientCount, setDeficientCount] = useState(0);
   const [excessCount, setExcessCount] = useState(0);
   const pathname = usePathname();
-  const [nutrientData, setNutrientData] = useState(null);
-  const [nutrientDetailData, setNutrientDetailData] = useState<any>(null);
+  const [nutrientData, setNutrientData] = useState<NutrientData | null>(null);
+  const [nutrientDetailData, setNutrientDetailData] = useState<Nutrient[] | null>(null);
 
   const router = useRouter();
 
-  const getPetIdFromLocalStorage = () => {
+  const getPetIdFromLocalStorage = (): number | null => {
     if (typeof window === 'undefined') return null;
     const petInfoString = localStorage.getItem('petInfo');
     if (!petInfoString) {
@@ -85,7 +101,7 @@ export default function Layout({
       ]);
 
       const deficientCount = deficientNutrients.data.data.length / 2;
-      const excessCount = excessNutrients.data.data.length/2;
+      const excessCount = excessNutrients.data.data.length / 2;
 
       setDeficientCount(deficientCount);
       setExcessCount(excessCount);
@@ -105,15 +121,13 @@ export default function Layout({
       } else {
         setNutrientData(nutrientData);
         setNutrientDetailData(nutrientDetailData);
-
       }
     };
 
     initialize();
   }, [petId, dailyMealId, pathname]);
-  const petIdFromStorage = getPetIdFromLocalStorage();
 
-console.log('dd',nutrientDetailData);
+  const petIdFromStorage = getPetIdFromLocalStorage();
 
   const mainNutrients = nutrientDetailData?.filter((nutrient: any) =>
     ['탄수화물', '단백질', '지방'].includes(nutrient.name)
@@ -121,36 +135,34 @@ console.log('dd',nutrientDetailData);
   const mineralNutrients = nutrientDetailData?.filter((nutrient: any) =>
     ['칼슘', '인'].includes(nutrient.name)
   ) || [];
-  const vitaminNutrients =nutrientDetailData?.filter((nutrient: any) =>
+  const vitaminNutrients = nutrientDetailData?.filter((nutrient: any) =>
     ['비타민 A', '비타민 D', '비타민 E'].includes(nutrient.name)
   ) || [];
-
-  console.log(mainNutrients, mineralNutrients, vitaminNutrients);
 
   return (
     <Wrapper>
       <Title>영양소 상세</Title>
       <InfoCardWrapper>
         <NaturalInfoCardImage>
-          오늘 먹은 영양소는 총 {Math.round(nutrientData?.todayKcal)}kcal로, 섭취량이 조금 부족한 수준이에요.
+          오늘 먹은 영양소는 총 {Math.round(nutrientData?.todayKcal || 0)}kcal로, 섭취량이 조금 부족한 수준이에요.
         </NaturalInfoCardImage>
         <SupplementInfo>
-          <Name>과잉 영양소 : <Color1>{nutrientData?.excessNutrients?.map(nutrient=> nutrient).join(', ')}</Color1></Name>
-          <Name>부족 영양소 : <Color1> {nutrientData?.deficientNutrients?.map(nutrient=> nutrient).join(', ')}</Color1></Name>
+          <Name>과잉 영양소 : <Color1>{nutrientData?.excessNutrients?.map(nutrient => nutrient).join(', ')}</Color1></Name>
+          <Name>부족 영양소 : <Color1> {nutrientData?.deficientNutrients?.map(nutrient => nutrient).join(', ')}</Color1></Name>
           <Name>적정 영양소 : <Color2>{nutrientData?.properNutrients?.map(nutrient => nutrient).join(', ')}</Color2></Name>
           <Vendor>* 보다 자세한 설명은 ‘추천 영양성분’에서 확인해주세요.</Vendor>
         </SupplementInfo>
         <CancelButtonImage src={CancelButton} alt="닫기 버튼" onClick={() => router.push(`/result/${petId}/${dailyMealId}`)} />
       </InfoCardWrapper>
       <ChartWrapper>
-      <SectionTitle>기본 영양소</SectionTitle>
-      <LineChart nutrientData={mainNutrients} group={1} />
-      <SectionBorder />
-      <SectionTitle>미네랄</SectionTitle>
-      <LineChart nutrientData={mineralNutrients} group={2}/> 
-      <SectionBorder />
-      <SectionTitle>비타민</SectionTitle>
-      <LineChart nutrientData={vitaminNutrients}  group={3}/>
+        <SectionTitle>기본 영양소</SectionTitle>
+        <LineChart nutrientData={mainNutrients} group={1} />
+        <SectionBorder />
+        <SectionTitle>미네랄</SectionTitle>
+        <LineChart nutrientData={mineralNutrients} group={2} />
+        <SectionBorder />
+        <SectionTitle>비타민</SectionTitle>
+        <LineChart nutrientData={vitaminNutrients} group={3} />
       </ChartWrapper>
       <Content>{children}</Content>
     </Wrapper>
