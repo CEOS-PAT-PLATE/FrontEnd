@@ -87,6 +87,9 @@ export default function Page({params}: ResultProps) {
   const router = useRouter();
   const {petId, dailyMealId} = params;
   const [petInfo, setPetInfo] = useState<PetInfo | null>(null);
+  const [nutrientData, setNutrientData] = useState<any>(null);
+  const [deficientNutrients, setDeficientNutrients] = useState<string[]>([]);
+
 
 
  /// const petId = 3;
@@ -111,6 +114,8 @@ export default function Page({params}: ResultProps) {
 
       const { todayNutrients, todayKcal, todaykcalRatio, todayProperKcal } = await fetchPetNutrientData(petId, date);
 
+
+
       console.log('초과 영양소:', excessNutrients.data);
       console.log('적정 영양소:', properNutrients.data);
       console.log('부족 영양소:', deficientNutrients.data);
@@ -120,9 +125,24 @@ export default function Page({params}: ResultProps) {
       console.log('오늘 섭취 칼로리/적정 섭취 칼로리 정보', todaykcalRatio.data);
       console.log('하루동안 섭취해야할 적정 칼로리', todayProperKcal.data);
 
-      // 과잉 영양소 개수
+      
+const deficientNutrientsData = deficientNutrients.data.data;
+
+setDeficientNutrients(deficientNutrientsData.filter((_: any, index: number) => index % 2 === 0).map((nutrient: any) => nutrient.name));
+// 과잉 영양소 개수
       const ExcessiveNutrientsCount = excessNutrients.data.data.length;
       const InsufficientNutrientsCount = deficientNutrients.data.data.length / 2; // 배열 길이를 2로 나눔
+
+
+      setNutrientData({
+        excessNutrients: ExcessiveNutrientsCount,
+        properNutrients: properNutrients.data,
+        deficientNutrients:InsufficientNutrientsCount,
+        todayNutrients: todayNutrients.data,
+        todayKcal: todayKcal?.data.kcal,
+        todaykcalRatio: todaykcalRatio.data.kcalRatio,
+        todayProperKcal:todayProperKcal?.data.kcal
+      });
     } catch (error) {
       console.error('오류', error);
     }
@@ -194,26 +214,30 @@ export default function Page({params}: ResultProps) {
           <DateTitle> {year}. {month}. {day} 분석 결과</DateTitle>
           <SVGContent>
             <SVGImage src={ResultBox} width={312} height={169} alt="loading" />
-            <FirstLine>
-              <RedText>지방, 비타민 A가</RedText> 부족해요!
-            </FirstLine>
+            {deficientNutrients.length > 0 ? (
+              <FirstLine>
+               부족 영양소<RedText> {deficientNutrients.join(', ')}</RedText> 
+              </FirstLine>
+            ) : (
+              <FirstLine>오늘은 부족한 영양소가 없어요!</FirstLine>
+            )}
             <SecondLine>몸무게 {petInfo?.weight}kg | 활동량 {petInfo?.activity}</SecondLine>
           </SVGContent>
-          <StyledLink href={`result/${petId}/${dailyMealId}/recommend/deficientNutrients`}>
+          <StyledLink href={`/result/${petId}/${dailyMealId}/recommend/deficientNutrients`}>
             <RecommendationButton>추천 영양성분 보기</RecommendationButton>
           </StyledLink>
           <GraphContainer>
             <GraphText1>
-              <GreenText>20kcal</GreenText> 더 먹어도 좋아요!
+              <GreenText>{Math.round(nutrientData?.todayProperKcal-nutrientData?.todayKcal)}kcal</GreenText> 더 먹어도 좋아요!
             </GraphText1>
             <GraphText2>
-              <GreenText>{petInfo?.name}</GreenText>의 하루 권장 섭취량은 260kcal에요
+              <GreenText>{petInfo?.name}</GreenText>의 하루 권장 섭취량은 {Math.round(nutrientData?.todayProperKcal)}kcal예요
             </GraphText2>
             <DoughnutChart/>
             <LineChart/>
             {/*그래프 */}
           </GraphContainer>
-          <StyledLink href={`result/${petId}/${dailyMealId}/detail`}>
+          <StyledLink href={`/result/${petId}/${dailyMealId}/detail`}>
             <DetailButton>영양소 상세 보기</DetailButton>
           </StyledLink>
           <MealListTitle>
