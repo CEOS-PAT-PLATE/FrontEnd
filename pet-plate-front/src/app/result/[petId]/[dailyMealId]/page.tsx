@@ -5,19 +5,14 @@ import Link from 'next/link';
 import ExitButtonSVG from '@public/svg/exit-button.svg?url';
 import Image from 'next/image';
 import ResultBox from '@public/svg/result-info-box.svg?url';
-
 import FoodCardsContainer from '@components/input-data2/common/foodcards-container';
 import { useRecoilState } from 'recoil';
-import { dailyMealsState } from '@recoil/atoms';
-
+import { dailyMealsState, nutrientDataState } from '@recoil/nutrientAtoms';
 import { dailyMealsAPI } from '@api/dailyMealsAPI';
-
 import { saveDailyMealsNutrients, fetchPetNutrientData } from '@lib/apiService';
-
 import DoughnutChart from '@components/result/doughnut-chart';
 import LineChart from '@components/result/line-chart';
-import {nutrientDataState } from '@recoil/nutrientAtoms';
-
+import Wrapper from '@style/input-data2/Wrapper';
 import { useEffect, useState } from 'react';
 
 interface PetInfo {
@@ -29,6 +24,13 @@ interface PetInfo {
   neutering: string;
   profileImgPath: string | null;
 }
+
+const storeNutrientDataInLocalStorage = (petId:number, dailyMealId:number, nutrientData:any) => {
+  const key = `${petId}-${dailyMealId}`;
+  localStorage.setItem(key, JSON.stringify(nutrientData));
+};
+
+
 
 const getPetInfoFromLocalStorage = () => {
   if (typeof window === 'undefined') return null;
@@ -46,7 +48,6 @@ const getPetInfoFromLocalStorage = () => {
   }
 };
 
-
 const getTodayDate = () => {
   const today = new Date();
   const year = today.getFullYear();
@@ -55,17 +56,13 @@ const getTodayDate = () => {
   return `${year}-${month}-${day}`;
 };
 
-import Wrapper from '@style/input-data2/Wrapper';
-
 const fetchdailyMealId = async (petId: number, date?: string) => {
   const response = await dailyMealsAPI.getPetDailyMeals(petId, date);
-  console.log('fetchdailyMealId response:', response);
   return response.data;
 };
 
 const fetchdailyMealLists = async (petId: number, dailyMealId: number) => {
   const response = await dailyMealsAPI.getSpecificMeal(petId, dailyMealId);
-  console.log('응답:', response);
   return response.data;
 };
 
@@ -78,33 +75,19 @@ const getTodayDateDisplay = () => {
 };
 
 interface ResultProps {
-
-  params: {petId: number; dailyMealId: number  };
-
+  params: { petId: number; dailyMealId: number };
 }
 
-
-
-export default function Page({params}: ResultProps) {
+export default function Page({ params }: ResultProps) {
   const router = useRouter();
-  const {petId, dailyMealId} = params;
+  const { petId, dailyMealId } = params;
   const [petInfo, setPetInfo] = useState<PetInfo | null>(null);
-  const [nutrientData, setNutrientData] = useState<any>(null);
   const [deficientNutrients, setDeficientNutrients] = useState<string[]>([]);
-
-  const [nutriensData, setNutrientsData] = useRecoilState(nutrientDataState);
-
-
- /// const petId = 3;
- // const dailyMealId = 4;
-  // const dailyMeals = useRecoilValue(dailyMealsState);
+  const [nutrientsData, setNutrientsData] = useRecoilState(nutrientDataState);
   const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
 
   const date = getTodayDate();
   const { year, month, day } = getTodayDateDisplay();
-
-  // ** 1,2 별도로 비동기요청 보내기
-  //1
 
   // 영양소 불러오는 함수
   const fetchNutrientData = async () => {
@@ -117,59 +100,35 @@ export default function Page({params}: ResultProps) {
 
       const { todayNutrients, todayKcal, todaykcalRatio, todayProperKcal } = await fetchPetNutrientData(petId, date);
 
+      const deficientNutrientsData = deficientNutrients.data.data;
 
+      setDeficientNutrients(
+        deficientNutrientsData.filter((_: any, index: number) => index % 2 === 0).map((nutrient: any) => nutrient.name),
+      );
 
-      console.log('초과 영양소:', excessNutrients.data);
-      console.log('적정 영양소:', properNutrients.data);
-      console.log('부족 영양소:', deficientNutrients.data);
+      const nutrientData = {
+        excessNutrients: excessNutrients.data.data.filter((_: any, index: number) => index % 2 === 0).map((nutrient: any) => nutrient.name),
+        properNutrients: properNutrients.data.data.filter((_: any, index: number) => index % 2 === 0).map((nutrient: any) => nutrient.name),
+        deficientNutrients: deficientNutrientsData.filter((_: any, index: number) => index % 2 === 0).map((nutrient: any) => nutrient.name),
 
-      console.log('오늘 섭취 영양소 정보', todayNutrients.data);
-      console.log('오늘 섭취 총 칼로리 정보', todayKcal.data);
-      console.log('오늘 섭취 칼로리/적정 섭취 칼로리 정보', todaykcalRatio.data);
-      console.log('하루동안 섭취해야할 적정 칼로리', todayProperKcal.data);
-
-      
-const deficientNutrientsData = deficientNutrients.data.data;
-
-setDeficientNutrients(deficientNutrientsData.filter((_: any, index: number) => index % 2 === 0).map((nutrient: any) => nutrient.name));
-// 과잉 영양소 개수
-      const ExcessiveNutrientsCount = excessNutrients.data.data.length;
-      const InsufficientNutrientsCount = deficientNutrients.data.data.length / 2; // 배열 길이를 2로 나눔
-
-
-      setNutrientData({
-        excessNutrients: ExcessiveNutrientsCount,
-        properNutrients: properNutrients.data,
-        deficientNutrients:InsufficientNutrientsCount,
-        todayNutrients: todayNutrients.data,
-        todayKcal: todayKcal?.data.kcal,
-        todaykcalRatio: todaykcalRatio.data.kcalRatio,
-        todayProperKcal:todayProperKcal?.data.kcal
-      });
-
-      setNutrientsData({
-        excessNutrients: ExcessiveNutrientsCount,
-        properNutrients: properNutrients.data,
-        deficientNutrients: InsufficientNutrientsCount,
-        todayNutrients: todayNutrients.data,
+        todayNutrients: todayNutrients.data.data,
         todayKcal: todayKcal?.data.kcal,
         todaykcalRatio: todaykcalRatio.data.kcalRatio,
         todayProperKcal: todayProperKcal?.data.kcal,
-      });
+      };
+  
+      setNutrientsData(nutrientData);
+  
+      storeNutrientDataInLocalStorage(petId, dailyMealId, nutrientData);
+  
     } catch (error) {
       console.error('오류', error);
     }
   };
 
-  // 2
-
   const fetchDailyMeals = async () => {
     try {
-    //  const dailyMealResponse = await fetchdailyMealId(petId, date);
-     // if (dailyMealResponse.data && dailyMealResponse.data.length > 0) {
       if (dailyMealId) {
-      //  const dailyMealId = dailyMealResponse.data[0].dailyMealId;
-        console.log('dailyMealId:', dailyMealId);
         const dailyMealListsResponse = await fetchdailyMealLists(petId, dailyMealId);
 
         const filteredData = {
@@ -219,41 +178,48 @@ setDeficientNutrients(deficientNutrientsData.filter((_: any, index: number) => i
     setPetInfo(petInfo);
   }, []);
 
+  console.log(nutrientsData);
+
   return (
     <Wrapper>
       <Title>분석 결과</Title>
       <ExitButtonImage src={ExitButtonSVG} alt="exit-button" onClick={() => router.push('/main/analyze')} />
       <Container>
         <Content>
-          <DateTitle> {year}. {month}. {day} 분석 결과</DateTitle>
+          <DateTitle>
+            {' '}
+            {year}. {month}. {day} 분석 결과
+          </DateTitle>
           <SVGContent>
             <SVGImage src={ResultBox} width={312} height={169} alt="loading" />
             {deficientNutrients.length > 0 ? (
               <FirstLine>
-               부족 영양소<RedText> {deficientNutrients.join(', ')}</RedText> 
+                부족 영양소<RedText> {deficientNutrients.join(', ')}</RedText>
               </FirstLine>
             ) : (
               <FirstLine>오늘은 부족한 영양소가 없어요!</FirstLine>
             )}
-            <SecondLine>몸무게 {petInfo?.weight}kg | 활동량 {petInfo?.activity}</SecondLine>
+            <SecondLine>
+              몸무게 {petInfo?.weight}kg | 활동량 {petInfo?.activity}
+            </SecondLine>
           </SVGContent>
           <StyledLink href={`/result/${petId}/${dailyMealId}/recommend/deficientNutrients`}>
             <RecommendationButton>추천 영양성분 보기</RecommendationButton>
           </StyledLink>
           <GraphContainer>
             <GraphText1>
-              <GreenText>{Math.round(nutrientData?.todayProperKcal-nutrientData?.todayKcal)}kcal</GreenText> 더 먹어도 좋아요!
+              <GreenText>{Math.round(nutrientsData.todayProperKcal - nutrientsData.todayKcal)}kcal</GreenText> 더 먹어도
+              좋아요!
             </GraphText1>
             <GraphText2>
-              <GreenText>{petInfo?.name}</GreenText>의 하루 권장 섭취량은 {Math.round(nutrientData?.todayProperKcal)}kcal예요
+              <GreenText>{petInfo?.name}</GreenText>의 하루 권장 섭취량은 {Math.round(nutrientsData.todayProperKcal)}
+              kcal예요
             </GraphText2>
-            <DoughnutChart/>
+            <DoughnutChart />
             <Text1>
-        {Math.round(nutrientData?.todayKcal)}/{Math.round(nutrientData?.todayProperKcal)}
-      </Text1>
-
-            <LineChart/>
-            {/*그래프 */}
+              {Math.round(nutrientsData.todayKcal)}/{Math.round(nutrientsData.todayProperKcal)}
+            </Text1>
+            <LineChart />
           </GraphContainer>
           <StyledLink href={`/result/${petId}/${dailyMealId}/detail`}>
             <DetailButton>영양소 상세 보기</DetailButton>
@@ -278,11 +244,8 @@ setDeficientNutrients(deficientNutrientsData.filter((_: any, index: number) => i
 
 const GraphText1 = styled.div`
   color: var(--grey11, #36393c);
-
-  /* header_bold_20pt */
   font-family: SUIT;
   font-size: 20px;
-  font-style: normal;
   font-weight: 700;
   line-height: 160%;
   letter-spacing: -0.75px;
@@ -290,20 +253,14 @@ const GraphText1 = styled.div`
 
 const GraphText2 = styled.div`
   color: var(--grey11, #36393c);
-
-  /* body2_regular_14pt */
   font-family: SUIT;
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
   line-height: 160%;
 `;
 
 const RedText = styled.span`
   color: var(--symentic-red-400, #ff706b);
-
-  /* title1_semibold_18pt */
-
   font-weight: 600;
 `;
 
@@ -348,13 +305,10 @@ const Content = styled.div`
 
 const DateTitle = styled.div`
   color: var(--grey11, #36393c);
-
-  /* title2_bold_16pt */
   font-family: SUIT;
   font-size: 16px;
-  font-style: normal;
   font-weight: 700;
-  line-height: 160%; /* 25.6px */
+  line-height: 160%;
   margin-bottom: 8px;
 `;
 
@@ -433,40 +387,29 @@ const DetailButton = styled.button`
   line-height: 160%;
   outline: none;
   border: none;
-
   color: var(--600, #33a165);
   text-align: center;
-
-  /* title2_bold_16pt */
-  font-family: SUIT;
   font-size: 16px;
-  font-style: normal;
   font-weight: 700;
-  line-height: 160%; /* 25.6px */
-
+  line-height: 160%;
   border-radius: 8px;
   border: 1px solid var(--600, #33a165);
 `;
 
 const MealListTitle = styled.h2`
   margin-top: 48px;
-
   height: 250px;
-
   color: var(--grey11, #36393c);
-
-  /* title1_semibold_18pt */
   font-family: SUIT;
   font-size: 18px;
-  font-style: normal;
   font-weight: 600;
   line-height: 160%;
   letter-spacing: -0.2px;
 `;
 
 const ExitButtonStyleWrapper = styled.div`
-  position: absolute; /* 절대적인 위치를 고정 */
-  z-index: 3000; /* 다른 요소보다 위에 배치 */
+  position: absolute;
+  z-index: 3000;
   right: 20px;
   cursor: pointer;
   top: 44px;
@@ -513,18 +456,13 @@ const ContentContainer = styled.div`
 
 const EmptyMessage = styled.div`
   position: absolute;
-
   left: 28%;
   top: 160px;
-
   z-index: 10;
-
   color: var(--grey8, #7c8389);
   text-align: center;
-
   font-family: SUIT;
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
   line-height: 160%;
 `;
@@ -535,31 +473,22 @@ const EmptyBottom = styled.div`
   bottom: 0px;
   height: 500px;
   max-height: 13px;
-
   width: 360px;
-  background-color: ${(props) => props.theme.colors['grey1']}; // body 배경색 설정
+  background-color: ${(props) => props.theme.colors['grey1']};
 `;
-
-
-// 도넛
 
 const Text1 = styled.div`
   color: var(--grey11, #36393c);
   text-align: center;
   position: absolute;
   top: 200px;
-  /* display_bold_25pt */
   font-family: SUIT Middle;
   font-size: 25px;
-  font-style: normal;
   font-weight: 700;
-  line-height: 14.083px; /* 56.332% */
+  line-height: 14.083px;
   letter-spacing: -1px;
   z-index: 100;
   width: 300px;
   margin-top: 240px;
-  left:-35px;
+  left: -35px;
 `;
-
-
-
