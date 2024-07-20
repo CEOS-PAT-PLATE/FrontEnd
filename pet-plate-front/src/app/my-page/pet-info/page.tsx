@@ -9,6 +9,7 @@ import InputField from "@components/input-data1/inputField"
 import RadioCheck from "@components/my-page/radioCheck"
 import NextButton from '@components/input-data1/nextButton'
 import { petAPI } from '@api/petAPI';
+import { useRouter } from 'next/navigation';
 
 interface Pet {
   petId: number;
@@ -21,6 +22,7 @@ interface Pet {
 }
 
 export default function Page() {
+  const router = useRouter();
   const [petInfo, setPetInfo] = useState<Pet | null>(null);
 
   useEffect(() => {
@@ -76,11 +78,15 @@ export default function Page() {
         await petAPI.putPetInfo(petInfo.petId, petInfo);
         localStorage.setItem('petInfo', JSON.stringify(petInfo));
         console.log('정보가 성공적으로 수정되었습니다.');
+        router.push('/my-page');
       } catch (error) {
         console.error('펫 정보 수정 실패', error);
         console.log('정보 수정에 실패했습니다.');
+        router.push('/my-page');
       }
     }
+
+
   };
 
   const radioOptionsActivness = [
