@@ -71,7 +71,7 @@ export default function Page() {
       handleDeleteAllMeals(petId, dailyMealId);
       setIsExitModalOpen(false);
     } else {
-      console.error('Cannot proceed without valid petId and dailyMealId');
+      setIsExitModalOpen(false);
     }
   };
 
