@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    if (typeof window === 'undefined') {
+    if (typeof window === undefined) {
       // 서버 컴포넌트에서 쿠키에서 토큰을 읽음
       const { cookies } = require('next/headers');
       const cookieStore = cookies();

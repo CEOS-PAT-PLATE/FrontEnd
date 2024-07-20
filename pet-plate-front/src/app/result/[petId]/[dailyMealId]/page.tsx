@@ -642,7 +642,7 @@ const storeAllNutrientDataInLocalStorage = (petId: number, dailyMealId: number, 
 };
 
 const getPetInfoFromLocalStorage = () => {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === undefined) return null;
   const petInfoString = localStorage.getItem('petInfo');
   if (!petInfoString) {
     console.error('No petInfo');
@@ -658,7 +658,7 @@ const getPetInfoFromLocalStorage = () => {
 };
 
 const getSelectedDate = () => {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === undefined' return null;
   const selectedDate = localStorage.getItem('selectedDate');
   if (!selectedDate) {
     console.error('');

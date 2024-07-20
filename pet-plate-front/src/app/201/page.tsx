@@ -65,7 +65,7 @@ export default function Page() {
   const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
 
   const getPetIdFromLocalStorage = () => {
-    if (typeof window === 'undefined') return null;
+    if (typeof window == undefined) return null;
     const petInfoString = localStorage.getItem('petInfo');
     console.log('petInfoString:', petInfoString);
     if (!petInfoString) {
