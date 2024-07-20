@@ -10,13 +10,19 @@ import NaverLogo from '@public/svg/Naver.svg?url';
 import GapButton from '@components/main/gapbtn';
 
 export default function Home() {
+
+  if(typeof window === undefined)return null;
+
   const loginNaver = () => {
-    window.location.href = NAVER_AUTH_URL;
-  };
+   
+    window.location.href = NAVER_AUTH_URL;}
+
+
   const API_BASE_URL = 'http://13.209.156.246:8080';
   const NAVER_AUTH_URL = API_BASE_URL + '/oauth2/authorization/naver?redirect_uri=' + window.location.href;
 
   console.log(window.location.href);
+  
 
   const buttonContent = (
     <>

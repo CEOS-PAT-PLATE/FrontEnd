@@ -19,7 +19,7 @@ const getTodayDate = () => {
 };
 
 const getPetIdFromLocalStorage = () => {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === undefined) return null;
   const petInfoString = localStorage.getItem('petInfo');
   if (!petInfoString) {
     console.error('No petInfo found in localStorage');

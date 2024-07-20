@@ -658,7 +658,7 @@ const getPetInfoFromLocalStorage = () => {
 };
 
 const getSelectedDate = () => {
-  if (typeof window === undefined' return null;
+  if (typeof window === undefined) return null;
   const selectedDate = localStorage.getItem('selectedDate');
   if (!selectedDate) {
     console.error('');

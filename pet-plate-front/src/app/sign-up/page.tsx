@@ -8,6 +8,7 @@ const SignUp = () => {
 
   useEffect(() => {
 
+    if (typeof window !== undefined) {
 
     const accessToken = new URL(window.location.href).searchParams.get('accessToken');
     const refreshToken = new URL(window.location.href).searchParams.get('refreshToken');
@@ -31,6 +32,7 @@ const SignUp = () => {
     } else {
       router.push('/sign-up/load');
     }
+  }
   }, [router]);
 
   return null; // 컴포넌트는 렌더링할 내용이 없으므로 null 반환

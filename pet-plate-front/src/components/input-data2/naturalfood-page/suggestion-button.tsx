@@ -8,6 +8,7 @@ const googleFormUrl = 'https://www.google.com/intl/ko_kr/forms/about/';
 
 export default function SuggestionButton() {
   const handleClick = () => {
+    if(typeof window === undefined)return null;
     window.open(googleFormUrl, '_blank');
   };
 
