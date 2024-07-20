@@ -50,6 +50,8 @@ export default function Page() {
   const [petInfo, setPetInfo] = useState<Pet | null>(null);
   const [resultData, setResultData] = useState<ResultData[]>([]);
 
+  
+  
   const fetchDailyMealId = async (petId: number, date?: string) => {
     const response = await dailyMealsAPI.getPetDailyMeals(petId, date);
     return response.data.data;
