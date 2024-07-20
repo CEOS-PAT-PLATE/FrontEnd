@@ -38,7 +38,7 @@ const fetchPets = async () => {
 };
 
 export default async function Page({ searchParams }: { searchParams?: { keyword?: string } }) {
-  //const petId = 3;
+  const petId = 3;
 
   // 최근 2일동안 섭취한 자연식
   // 쿼리 클라이언트
@@ -46,12 +46,12 @@ export default async function Page({ searchParams }: { searchParams?: { keyword?
   const keyword = searchParams?.keyword || '';
 
   const pets = await fetchPets();
-
+  /*
   if (pets.length === 0) {
     return <div>Error: No pets found</div>;
-  }
+  }*/
 
-  const petId = pets[0].petId;
+  //const petId = pets[0].petId;
 
   console.log(petId);
   console.log(pets[0]);
