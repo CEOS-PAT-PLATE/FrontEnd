@@ -71,7 +71,8 @@ export default function Page() {
       handleDeleteAllMeals(petId, dailyMealId);
       setIsExitModalOpen(false);
     } else {
-      setIsExitModalOpen(false);
+      router.push('/main/analyze');
+      //setIsExitModalOpen(false);
     }
   };
 
