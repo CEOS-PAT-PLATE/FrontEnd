@@ -5,18 +5,29 @@ import styled from "styled-components"
 import Image from 'next/image'
 import BackButton from '@public/svg/back-button.svg?url'
 import ExitButton from '@public/svg/exit-button.svg?url'
-import Link from 'next/link';
+import { useResetRecoilState } from 'recoil';
+import { petInfoState } from '@lib/atoms';
+import { useRouter } from 'next/navigation'
+
 
 interface InputDataFirstHeaderProps {
   onClickBackButton: () => void;
 }
 
 const InputDataFirstHeader: React.FC<InputDataFirstHeaderProps> = ({ onClickBackButton }) => {
+  const resetPetInfo = useResetRecoilState(petInfoState);
+  const router = useRouter();
+
+  const handleOnclick = () => {
+    resetPetInfo(); // Recoil 상태 초기화
+    router.push("/main/analyze-info");
+  };
+
   return (
     <HeaderWrapper>
-      <BackButtonImage src={BackButton} alt="back-button" onClick={onClickBackButton}/>
+      <BackButtonImage src={BackButton} alt="back-button" onClick={onClickBackButton} />
       <Header>반려견 정보 입력</Header>
-      <ExitButtonWrapper href={'/main/analyze-info'}>
+      <ExitButtonWrapper onClick={handleOnclick}>
         <ExitButtonImage src={ExitButton} alt="exit-button" />
       </ExitButtonWrapper>
     </HeaderWrapper>
@@ -47,6 +58,6 @@ const Header = styled.h2`
   font-weight: bold;
 `;
 
-const ExitButtonWrapper = styled(Link)`
-  //나중에 클릭시 작성중이던 정보 삭제로 수정
-`
+const ExitButtonWrapper = styled.div`
+  cursor: pointer;
+`;
