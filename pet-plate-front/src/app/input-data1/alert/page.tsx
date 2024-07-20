@@ -25,6 +25,8 @@ export default function Page() {
     }
   }, [petInfo]);
 
+  console.log(petInfo);
+
   const buttonContent = (
     <>
     <span style={{color : "#fff"}}>종료할래요</span>

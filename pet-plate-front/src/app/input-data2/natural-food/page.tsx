@@ -46,6 +46,7 @@ export default async function Page({ searchParams }: { searchParams?: { keyword?
   const keyword = searchParams?.keyword || '';
 
   const pets = await fetchPets();
+  console.log(pets);
 
   if (pets.length === 0) {
     return <div>Error: No pets found</div>;
