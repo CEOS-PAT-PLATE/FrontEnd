@@ -10,9 +10,9 @@ const SignUp = () => {
   useEffect(() => {
     const accessToken = new URL(window.location.href).searchParams.get('accessToken');
     const refreshToken = new URL(window.location.href).searchParams.get('refreshToken');
-    const enrollPet = new URL(window.location.href).searchParams.get('enrollPet');
+    const enrollPet = new URL(window.location.href).searchParams.get('enrollPet')||'false';
 
-    if (accessToken && refreshToken && enrollPet) {
+    if (accessToken && refreshToken) {
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('enrollPet', enrollPet);
