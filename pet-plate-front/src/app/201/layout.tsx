@@ -6,6 +6,9 @@ import ExitButton from '@public/svg/exit-button.svg?url';
 
 import { isExitModalOpenState, isCompleteModalOpenState } from '@recoil/atoms';
 
+import InputDataFirstHeader from '@components/input-data2/common/inputDataFirstHeader';
+
+
 export default function Layout({
   children,
   CompletionModal,
@@ -20,6 +23,7 @@ export default function Layout({
 
   return (
     <Wrapper>
+      <InputDataFirstHeader onClickBackButton={()=>{}} />
       <ExitButtonImage
         src={ExitButton}
         alt="exit-button"
