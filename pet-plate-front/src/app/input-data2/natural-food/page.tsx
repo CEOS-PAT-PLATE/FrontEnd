@@ -32,36 +32,35 @@ const fetchPets = async () => {
     const response = await petAPI.getAllPetsInfo();
     return response.data.data;
   } catch (error) {
-    console.error('펫 못가져옴', error);
+    console.error('펫 정보 조회 실패', error);
     return [];
   }
 };
 
 export default async function Page({ searchParams }: { searchParams?: { keyword?: string } }) {
-  //const petId = 3;
-
-  // 최근 2일동안 섭취한 자연식
-  // 쿼리 클라이언트
-
   const keyword = searchParams?.keyword || '';
 
   const pets = await fetchPets();
-  console.log(pets);
-
+  if (pets.length === 0) {
+    console.error('펫 정보가 없습니다.');
+    return (
+      <>
+        <InfoLayout
+          title="자연식 정보를 적어주세요"
+          description="가열하지 않은, 날 것 그대로 급여하는 음식을 의미해요. 바나나, 오이, 딸기 등을 포함해요."
+        />
+        <NoticeText>펫 정보를 불러올 수 없습니다. 다시 시도해 주세요.</NoticeText>
+      </>
+    );
+  }
 
   const petId = pets[0].petId;
-
   console.log(petId);
   console.log(pets[0]);
 
-  // data 속성을 추출하고, 그 값을 naturalFoodLists라는 변수에 할당
-  const { data: naturalFoodLists } = await fetchNaturalFoodLists(keyword);
+  const naturalFoodLists = await fetchNaturalFoodLists(keyword);
+  const recentNaturalFoodLists = await fetchRecentNaturalFoodLists(petId);
 
-  //console.log(naturalFoodLists);
-
-  const { data: recentNaturalFoodLists } = await fetchRecentNaturalFoodLists(petId);
-
-  // name과 serving이 유일한 값만 남기기
   const uniqueRecentNaturalFoodLists = filterUniqueByNameAndServing(recentNaturalFoodLists);
 
   return (
