@@ -1,5 +1,6 @@
-// Wrapper.tsx
+
 'use client';
+
 import styled from 'styled-components';
 
 const WrapperStyleWrapper = styled.div`
