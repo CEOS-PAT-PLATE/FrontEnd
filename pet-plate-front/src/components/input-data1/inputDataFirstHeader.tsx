@@ -6,7 +6,7 @@ import Image from 'next/image'
 import BackButton from '@public/svg/back-button.svg?url'
 import ExitButton from '@public/svg/exit-button.svg?url'
 import { useResetRecoilState } from 'recoil';
-import { petInfoState } from '@lib/atoms';
+import { petInfoState, scrollIndexState } from '@lib/atoms';
 import { useRouter } from 'next/navigation'
 
 
@@ -16,10 +16,12 @@ interface InputDataFirstHeaderProps {
 
 const InputDataFirstHeader: React.FC<InputDataFirstHeaderProps> = ({ onClickBackButton }) => {
   const resetPetInfo = useResetRecoilState(petInfoState);
+  const resetCurrentIndex = useResetRecoilState(scrollIndexState);
   const router = useRouter();
 
   const handleOnclick = () => {
-    resetPetInfo(); // Recoil 상태 초기화
+    resetPetInfo(); // 기록중이던 반려견 정보 초기화
+    resetCurrentIndex(); // 다시 1번화면과 프로그래스바로 이동할 수 있게 초기화
     router.push("/main/analyze-info");
   };
 
