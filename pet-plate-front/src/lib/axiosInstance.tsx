@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const NEXT_PUBLIC_API_URL = 'http://13.209.156.246:8080/api/v1';
+const NEXT_PUBLIC_API_URL = 'https://apitest.petplate.kr/api/v1';
 
 //const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const BASE_URL = NEXT_PUBLIC_API_URL;

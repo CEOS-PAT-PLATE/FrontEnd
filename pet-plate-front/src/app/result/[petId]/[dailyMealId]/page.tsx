@@ -1,4 +1,3 @@
-
 /*'use client';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
@@ -703,11 +702,11 @@ export default function Page({ params }: ResultProps) {
   const [petInfo, setPetInfo] = useState<PetInfo | null>(null);
   const [deficientNutrients, setDeficientNutrients] = useState<string[]>([]);
   const [nutrientsData, setNutrientsData] = useRecoilState(nutrientDataState);
-  const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState)
+  const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
   const [mainNutrients, setMainNutrients] = useState<string[]>([]);
 
   const date = getSelectedDate() || '0';
-  console.log(date)
+  console.log(date);
   const [year, month, day] = date.split('-');
 
   const fetchNutrientData = async (date: string) => {
@@ -727,9 +726,15 @@ export default function Page({ params }: ResultProps) {
       );
 
       const nutrientData = {
-        excessNutrients: excessNutrients.data.data.filter((_: any, index: number) => index % 2 === 0).map((nutrient: any) => nutrient.name),
-        properNutrients: properNutrients.data.data.filter((_: any, index: number) => index % 2 === 0).map((nutrient: any) => nutrient.name),
-        deficientNutrients: deficientNutrientsData.filter((_: any, index: number) => index % 2 === 0).map((nutrient: any) => nutrient.name),
+        excessNutrients: excessNutrients.data.data
+          .filter((_: any, index: number) => index % 2 === 0)
+          .map((nutrient: any) => nutrient.name),
+        properNutrients: properNutrients.data.data
+          .filter((_: any, index: number) => index % 2 === 0)
+          .map((nutrient: any) => nutrient.name),
+        deficientNutrients: deficientNutrientsData
+          .filter((_: any, index: number) => index % 2 === 0)
+          .map((nutrient: any) => nutrient.name),
         todayNutrients: todayNutrients.data.data,
         todayKcal: todayKcal?.data.kcal,
         todaykcalRatio: todaykcalRatio.data.kcalRatio,
@@ -740,12 +745,10 @@ export default function Page({ params }: ResultProps) {
       storeNutrientDataInLocalStorage(petId, dailyMealId, nutrientData);
 
       const todayNutrientsData = todayNutrients.data;
-      console.log('오늘',todayNutrients.data)
+      console.log('오늘', todayNutrients.data);
       storeAllNutrientDataInLocalStorage(petId, dailyMealId, todayNutrientsData);
-       setMainNutrients(todayNutrients.data)
-       setMainNutrients([todayNutrients.data[0],todayNutrients.data[1],,todayNutrients.data[2]])
-      
-
+      setMainNutrients(todayNutrients.data);
+      setMainNutrients([todayNutrients.data[0], todayNutrients.data[1], , todayNutrients.data[2]]);
     } catch (error) {
       console.error('오류', error);
     }
@@ -802,9 +805,7 @@ export default function Page({ params }: ResultProps) {
     setPetInfo(petInfo);
   }, []);
 
- 
   console.log(nutrientsData);
-
 
   return (
     <Wrapper>
@@ -834,14 +835,14 @@ export default function Page({ params }: ResultProps) {
           </StyledLink>
           <GraphContainer>
             <GraphText1>
-            {nutrientsData.todayProperKcal - nutrientsData.todayKcal > 0 ? (
-             <><GreenText>{Math.round(nutrientsData.todayProperKcal - nutrientsData.todayKcal)}kcal</GreenText> 더 먹어도
-             좋아요!</>
-            ) : (
-              <GreenText>칼로리가 적정 칼로리를 초과해요</GreenText> 
-             
-            )}
-             
+              {nutrientsData.todayProperKcal - nutrientsData.todayKcal > 0 ? (
+                <>
+                  <GreenText>{Math.round(nutrientsData.todayProperKcal - nutrientsData.todayKcal)}kcal</GreenText> 더
+                  먹어도 좋아요!
+                </>
+              ) : (
+                <GreenText>칼로리가 적정 칼로리를 초과해요</GreenText>
+              )}
             </GraphText1>
             <GraphText2>
               <GreenText>{petInfo?.name}</GreenText>의 하루 권장 섭취량은 {Math.round(nutrientsData.todayProperKcal)}
@@ -994,7 +995,8 @@ const GraphContainer = styled.div`
   height: 270px;
   min-height: 290px;
   margin: 16px 0;
-background: var(--grey1, #FAFAFC);`;
+  background: var(--grey1, #fafafc);
+`;
 
 const StyledLink = styled(Link)`
   text-decoration: none;

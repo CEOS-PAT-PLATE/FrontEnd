@@ -10,49 +10,44 @@ import NaverLogo from '@public/svg/Naver.svg?url';
 import GapButton from '@components/main/gapbtn';
 
 export default function Home() {
-
   if (typeof window !== 'undefined') {
-  const loginNaver = () => {
-   
-    window.location.href = NAVER_AUTH_URL;
-    
-  };
+    const loginNaver = () => {
+      window.location.href = NAVER_AUTH_URL;
+    };
 
-  const API_BASE_URL = 'http://13.209.156.246:8080';
-  const NAVER_AUTH_URL = API_BASE_URL + '/oauth2/authorization/naver?redirect_uri=' + window.location.href;
+    const API_BASE_URL = 'https://apitest.petplate.kr';
+    const NAVER_AUTH_URL = API_BASE_URL + '/oauth2/authorization/naver?redirect_uri=' + window.location.href;
 
-  console.log(window.location.href);
+    console.log(window.location.href);
 
-  const buttonContent = (
-    <>
-      <Image src={NaverLogo} alt="Naver-logo" />
-      <span style={{ color: '#fff', marginLeft: '1.438rem' }}>네이버로 시작하기</span>
-    </>
-  );
+    const buttonContent = (
+      <>
+        <Image src={NaverLogo} alt="Naver-logo" />
+        <span style={{ color: '#fff', marginLeft: '1.438rem' }}>네이버로 시작하기</span>
+      </>
+    );
 
-
-
-  return (
-    <PageWrapper>
-      <Padding />
-      <ContentWrapper>
-        <Text>하루 10분, 펫플레이트로 건강 체크!</Text>
-        <MainLogo src={mainLogo} alt="mainLogo" />
-        <SignUpGraphic src={signUpGraphic} alt="signUpGraphic" />
-      </ContentWrapper>
-      <ButtonWrapper>
-        <GapButton
-          onClick={loginNaver}
-          backgroundColor="#03C75A"
-          hoverBackgroundColor="#03C75A"
-          hoverButtonContentColor="#fff"
-          buttonContent={buttonContent}
-        />
-        <TextLink href="/main">로그인 없이 둘러보기</TextLink>
-      </ButtonWrapper>
-    </PageWrapper>
-  );
-}
+    return (
+      <PageWrapper>
+        <Padding />
+        <ContentWrapper>
+          <Text>하루 10분, 펫플레이트로 건강 체크!</Text>
+          <MainLogo src={mainLogo} alt="mainLogo" />
+          <SignUpGraphic src={signUpGraphic} alt="signUpGraphic" />
+        </ContentWrapper>
+        <ButtonWrapper>
+          <GapButton
+            onClick={loginNaver}
+            backgroundColor="#03C75A"
+            hoverBackgroundColor="#03C75A"
+            hoverButtonContentColor="#fff"
+            buttonContent={buttonContent}
+          />
+          <TextLink href="/main">로그인 없이 둘러보기</TextLink>
+        </ButtonWrapper>
+      </PageWrapper>
+    );
+  }
 }
 
 const PageWrapper = styled.div`
