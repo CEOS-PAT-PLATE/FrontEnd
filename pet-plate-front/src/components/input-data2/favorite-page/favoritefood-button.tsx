@@ -6,19 +6,40 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { selectedItemState } from '@recoil/favoritePageAtoms';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
-
+import { useState, useEffect } from 'react';
 
 import { noticeState } from '@recoil/atoms';
 
 export default function FavoriteButton() {
+  const getPetIdFromLocalStorage = () => {
+    if (typeof window === 'undefined') return null;
+    const petInfoString = localStorage.getItem('petInfo');
+    console.log('petInfoString:', petInfoString);
+    if (!petInfoString) {
+      console.error('No petInfo found in localStorage');
+      return null;
+    }
+    try {
+      const petInfo = JSON.parse(petInfoString);
+      return petInfo.petId;
+    } catch (error) {
+      console.error('Error parsing petInfo from localStorage', error);
+      return null;
+    }
+  };
+
+  const [petId, setPetId] = useState<number>(0);
+
   const { addBookmarkRaw, addBookmarkFeed, addBookmarkPackagedSnack } = useAddBookmarkToDailyMeals();
   const router = useRouter();
   const selectedItem = useRecoilValue(selectedItemState);
 
   const setNotice = useSetRecoilState(noticeState);
 
-  const petId=3;
-
+  useEffect(() => {
+    const petIdFromStorage = getPetIdFromLocalStorage();
+    setPetId(petIdFromStorage);
+  }, []);
 
   const handleClick = () => {
     if (!selectedItem || !selectedItem.id) {
