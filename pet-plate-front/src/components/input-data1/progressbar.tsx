@@ -21,7 +21,7 @@ const ProgressBar = () => {
   return (
     <ProgressContainer>
       {Array.from({ length: totalSteps }).map((_, index) => (
-        <ProgressStep key={index} filled={index <= currentIndex} />
+        <ProgressStep key={index} $filled={index <= currentIndex} />
       ))}
     </ProgressContainer>
   );
@@ -36,11 +36,11 @@ const ProgressContainer = styled.div`
   margin-bottom: 1.75rem;
 `;
 
-const ProgressStep = styled.div<{ filled: boolean }>`
+const ProgressStep = styled.div<{ $filled: boolean }>`
   width: 3rem;
   height: 0.25rem;
   border-radius: 1.25rem;
-  background-color: ${({ filled, theme }) => (filled ? theme.colors.green : theme.colors['grey4'])};
+  background-color: ${({ $filled, theme }) => ($filled ? theme.colors.green : theme.colors['grey4'])};
   transition: background-color 0.3s;
 `;
 
