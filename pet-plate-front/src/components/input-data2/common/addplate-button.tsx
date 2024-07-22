@@ -48,7 +48,7 @@ export default function AddButton() {
 
 const AddPlateButtonImage = styled(Image)`
     position:relative;
-    top:-211px;
+    top:568px;
     left: 83px;
 
     

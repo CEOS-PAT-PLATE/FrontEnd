@@ -149,14 +149,18 @@ export default function Page() {
 
   return (
     <>
-      <Wrapper>
+   <Wrapper>
+   <ProgressBarWrapper>
+   <ProgressBar/>
+   </ProgressBarWrapper>
         <AddButton />
         <div onClick={handleClick}>
           <StoreButton>
             <Image src={isValid ? StoreButtonActive : StoreButtonInactive} alt="store-button" />
           </StoreButton>
         </div>
-        <ProgressBar/>
+                  
+
         <NoticeContainer>
           <Notice />
         </NoticeContainer>
@@ -174,8 +178,8 @@ export default function Page() {
 
 const StoreButton = styled.div`
   width: 312px;
-  position: relative;
-  bottom: 200px;
+  position: absolute;
+  bottom: 36px;
   left: 24px;
   cursor: pointer;
 `;
@@ -212,4 +216,14 @@ const EmptyMessage = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 160%;
+`;
+
+
+const ProgressBarWrapper = styled.div`
+  position: absolute;
+  top: 99px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  height: 8px;
 `;
