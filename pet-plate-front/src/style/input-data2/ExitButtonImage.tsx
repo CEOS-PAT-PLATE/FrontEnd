@@ -9,7 +9,7 @@ const ExitButtonStyleWrapper = styled(Image)`
   position: relative; /* 절대적인 위치를 고정 */
   top: 72px; /* 화면 상단에 고정 */
   left: -3px; /* 좌측 정렬 */
-  z-index: 10; /* 다른 요소보다 위에 배치 */
+  z-index: 6; /* 다른 요소보다 위에 배치 */
 `;
 
 export default function ExitButtonImage({ src, alt }: { src: string, alt: string }) {

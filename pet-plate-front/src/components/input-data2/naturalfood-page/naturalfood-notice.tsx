@@ -41,7 +41,7 @@ const FullNoticeContainer = styled.div`
   font-size: 14px;
   font-weight: 600;
   text-align: center;
-  z-index: 1;
+  z-index: 8;
 `;
 
 const NaturalInfoCardImage = styled(Image)`
