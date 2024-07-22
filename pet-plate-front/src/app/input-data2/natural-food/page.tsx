@@ -1,21 +1,50 @@
+import { cookies } from 'next/headers';
 import Search from '@components/input-data2/naturalfood-page/search';
 import Table from '@components/input-data2/naturalfood-page/table';
 import InfoLayout from '@components/input-data2/common/info-layout';
 import NaturalFoodButton from '@components/input-data2/naturalfood-page/naturalfood-button';
-import { rawAPI } from '@api/rawAPI';
 import { RecentRawFood } from '@lib/types';
 import NoticeText from '@style/input-data2/NoticeText';
 import InfoCardAndButton from '@components/input-data2/naturalfood-page/naturalfood-notice';
-import petAPI from '@api/petAPI';
-import SuggestionButton from '@components/input-data2/naturalfood-page/suggestion-button'; // 경로를 실제 파일 위치에 맞게 수정하세요
+import SuggestionButton from '@components/input-data2/naturalfood-page/suggestion-button';
+
+const NEXT_PUBLIC_API_URL = 'https://apitest.petplate.kr';
+
+const fetchWithAuth = async (endpoint: string) => {
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get('accessToken')?.value;
+
+  console.log('쿠키', accessToken); // 쿠키 값을 로그로 출력
+
+  if (!accessToken) {
+    throw new Error('No access token found');
+  }
+
+  const url = `${NEXT_PUBLIC_API_URL}${endpoint}`;
+  console.log('API 요청 URL:', url); // URL 확인용 로그
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Cache-Control': 'no-cache',
+    },
+  });
+
+  if (!response.ok) {
+    console.error(`API 요청 실패: ${response.status} - ${response.statusText}`);
+    throw new Error('Failed to fetch');
+  }
+
+  return response.json();
+};
 
 const fetchNaturalFoodLists = async (keyword: string) => {
-  const response = await rawAPI.getRawsByKeyword(keyword);
+  const response = await fetchWithAuth(`/api/v1/raws?keyword=${keyword}`);
   return response.data;
 };
 
 const fetchRecentNaturalFoodLists = async (petId: number) => {
-  const response = await rawAPI.getRecentRaws(petId);
+  const response = await fetchWithAuth(`/api/v1/pets/${petId}/raws/recent`);
   return response.data;
 };
 
@@ -26,11 +55,10 @@ const filterUniqueByNameAndServing = (foodList: RecentRawFood[]): RecentRawFood[
   );
 };
 
-// 맨 먼저 임시로 Petid 가져오려고 실행
 const fetchPets = async () => {
   try {
-    const response = await petAPI.getAllPetsInfo();
-    return response.data.data;
+    const response = await fetchWithAuth('/api/v1/pets');
+    return response.data;
   } catch (error) {
     console.error('펫 정보 조회 실패', error);
     return [];

@@ -27,11 +27,10 @@ export const petAPI = {
     return await axiosInstance.get(`/pets/${petId}`);
   },
 
-    // 반려견 정보 수정
+  // 반려견 정보 수정
   putPetInfo: async (petId: number, petInfo: Pet) => {
     return await axiosInstance.put(`/pets/${petId}`, petInfo);
   },
-
 };
 /**
    * 

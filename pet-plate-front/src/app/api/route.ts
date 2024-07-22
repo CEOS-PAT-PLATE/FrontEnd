@@ -8,25 +8,25 @@ export async function POST(request: NextRequest) {
   response.cookies.set('accessToken', accessToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none',
+    sameSite: 'lax', // localhost에서 작업할 때는 'lax' 또는 'strict'로 설정
     path: '/',
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: 60 * 60 * 24 * 30, // 30일
   });
 
   response.cookies.set('refreshToken', refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none',
+    sameSite: 'lax', // localhost에서 작업할 때는 'lax' 또는 'strict'로 설정
     path: '/',
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: 60 * 60 * 24 * 30, // 30일
   });
 
   response.cookies.set('enrollPet', enrollPet, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none',
+    sameSite: 'lax', // localhost에서 작업할 때는 'lax' 또는 'strict'로 설정
     path: '/',
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: 60 * 60 * 24 * 30, // 30일
   });
 
   return response;
