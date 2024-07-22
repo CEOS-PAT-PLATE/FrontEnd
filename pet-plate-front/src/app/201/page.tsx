@@ -183,6 +183,7 @@ const StoreButton = styled.div`
   bottom: 36px;
   left: 24px;
   cursor: pointer;
+  z-index: 120;
 `;
 
 const NoticeContainer = styled.div``;
@@ -191,10 +192,10 @@ const ContentContainer = styled.div`
   margin-top: 20px;
   z-index: 10;
   position: absolute;
-  top: 205px;
+  top: 225px;
   left: 24px;
-  height: 380px;
-  max-height: 380px;
+  height: 480px;
+  max-height: 487px;
   width: 312px;
   display: flex;
   flex-direction: column;

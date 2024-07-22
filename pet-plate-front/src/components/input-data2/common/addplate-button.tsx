@@ -50,7 +50,7 @@ const AddPlateButtonImage = styled(Image)`
     position:relative;
     top:568px;
     left: 83px;
-
+z-index: 100;
     
     margin: 20px;
     cursor: pointer;
