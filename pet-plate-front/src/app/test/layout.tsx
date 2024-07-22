@@ -12,9 +12,7 @@ export default function Page() {
       <InputDataFirstHeader onClickBackButton={() => {}} />
       <Progressbar />
       <PageContainer>
-        <FixedButtonContainer>
-          <NextButton onClick={() => {}} />
-        </FixedButtonContainer>
+        <FixedButtonContainer></FixedButtonContainer>
       </PageContainer>
     </>
   );
