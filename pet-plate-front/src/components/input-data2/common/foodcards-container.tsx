@@ -38,7 +38,7 @@ export default function FoodCardsContainer({ dailyMeals }: FoodCardsContainerPro
   const renderCards = (mealType: string, meals: any[]) => {
     return meals.map((meal) => (
       <FavoriteContainer
-        key={meal.dailyRawId + mealType+meal.name}
+        key={meal.dailyRawId + mealType + meal.name}
         id={meal.dailyRawId}
         type={mealType}
         name={meal.name}
@@ -98,9 +98,8 @@ const Container = styled.div`
   border-radius: 8px;
   margin-bottom: 8px;
   position: relative;
-      border: 1px solid var(--grey2, #eceef0);
-
-
+  background: var(--white, #fff);
+  border: 1px solid var(--grey2, #eceef0);
 `;
 
 const FavoriteText = styled.div`

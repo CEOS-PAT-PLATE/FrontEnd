@@ -149,17 +149,18 @@ export default function Page() {
 
   return (
     <>
-   <Wrapper>
-   <ProgressBarWrapper>
-   <ProgressBar/>
-   </ProgressBarWrapper>
+      <Wrapper>
+        <ProgressBarWrapper>
+          <ProgressBar />
+        </ProgressBarWrapper>
+        <Text1>오늘 하루 먹은 식단을 입력해주세요!</Text1>
+        <Text2>식단은 사료, 자연식, 포장간식으로 나뉘어져 있어요. 아래 설명을 참고하여 식단을 추가해보아요.</Text2>
         <AddButton />
         <div onClick={handleClick}>
           <StoreButton>
             <Image src={isValid ? StoreButtonActive : StoreButtonInactive} alt="store-button" />
           </StoreButton>
         </div>
-                  
 
         <NoticeContainer>
           <Notice />
@@ -218,7 +219,6 @@ const EmptyMessage = styled.div`
   line-height: 160%;
 `;
 
-
 const ProgressBarWrapper = styled.div`
   position: absolute;
   top: 99px;
@@ -226,4 +226,37 @@ const ProgressBarWrapper = styled.div`
   width: 100%;
   z-index: 10;
   height: 8px;
+`;
+
+const Text1 = styled.div`
+  color: var(--grey11, #36393c);
+  position: absolute;
+  width: 274px;
+  height: 32px;
+top:131px;
+left:24px;
+
+  /* header_bold_20pt */
+  font-family: SUIT;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 160%; /* 32px */
+  letter-spacing: -0.75px;
+`;
+
+const Text2 = styled.div`
+  position: absolute;
+  width: 274px;
+  height: 32px;
+  top:171px;
+  left:24px;
+  color: var(--grey8, #7c8389);
+
+  /* body2_regular_14pt */
+  font-family: SUIT;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 22.4px */
 `;
