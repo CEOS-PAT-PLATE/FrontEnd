@@ -1,12 +1,21 @@
 'use client'
 
-import React from 'react';
-import { useRecoilValue } from 'recoil';
+import React, { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { usePathname } from 'next/navigation';
 import { scrollIndexState } from '@lib/atoms';
 import styled from 'styled-components';
 
 const ProgressBar = () => {
-  const currentIndex = useRecoilValue(scrollIndexState);
+  const [currentIndex, setCurrentIndex] = useRecoilState(scrollIndexState);
+  const pathname = usePathname();
+  
+  useEffect(() => {
+    if (pathname === '/201') {
+      setCurrentIndex(5);
+    }
+  }, [pathname, setCurrentIndex]);
+
   const totalSteps = 6; // 총 단계 수
 
   return (

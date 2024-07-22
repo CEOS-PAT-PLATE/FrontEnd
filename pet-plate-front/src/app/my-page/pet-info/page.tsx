@@ -7,7 +7,7 @@ import Image from "next/image"
 import backIcon from "@public/svg/back-button.svg?url"
 import InputField from "@components/input-data1/inputField"
 import RadioCheck from "@components/my-page/radioCheck"
-import NextButton from '@components/input-data1/nextButton'
+import GapButton from '@components/main/gapbtn';
 import { petAPI } from '@api/petAPI';
 import { useRouter } from 'next/navigation';
 
@@ -101,6 +101,12 @@ export default function Page() {
     { name: "neutering", value: "NEUTERED", text: "중성화 했어요" },
   ];
 
+  const buttonContent = (
+    <>
+      <span style={{ color: '#fff' }}>입력완료</span>
+    </>
+  );
+
   return (
     <PageWrapper>
       <MypageHeader>
@@ -178,7 +184,13 @@ export default function Page() {
           </ContentWrapper>
 
           <FixedButtonContainer>
-            <NextButton onClick={handleSave} />
+            <GapButton
+              onClick={handleSave}
+              backgroundColor={(props) => props.theme.colors['grey10']}
+              hoverBackgroundColor={(props) => props.theme.colors['grey10']}
+              hoverButtonContentColor="#fff"
+              buttonContent={buttonContent}
+            />         
           </FixedButtonContainer>
         </>
       )}

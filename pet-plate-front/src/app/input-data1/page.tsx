@@ -72,10 +72,7 @@ export default function Page() {
         petInfo.age !== undefined && !isNaN(Number(petInfo.age)) &&
         petInfo.weight !== undefined && !isNaN(Number(petInfo.weight))
       ) {
-        // 유효성 검사 통과 시 인덱스를 증가시켜 마지막 프로그레스 바를 채움
-        setCurrentIndex(currentIndex + 1);
-        // 이후 경로 변경
-        route.push('/input-data1/alert');
+        route.push('/input-data1/result');
       } else {
         // 유효성 검사 실패 시(사실상 쓰일 일 없음)
         alert("모든 답변을 완료하세요!");

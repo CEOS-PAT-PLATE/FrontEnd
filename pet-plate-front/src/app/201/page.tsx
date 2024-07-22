@@ -14,6 +14,7 @@ import { isCompleteValid, noticeState, isCompleteModalOpenState, dailyMealsState
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import ProgressBar from '@components/input-data1/progressbar';
 
 /*
 const petData = {
@@ -149,13 +150,13 @@ export default function Page() {
   return (
     <>
       <Wrapper>
-        <Image src={id_200} alt="id-200" priority />
         <AddButton />
         <div onClick={handleClick}>
           <StoreButton>
             <Image src={isValid ? StoreButtonActive : StoreButtonInactive} alt="store-button" />
           </StoreButton>
         </div>
+        <ProgressBar/>
         <NoticeContainer>
           <Notice />
         </NoticeContainer>
