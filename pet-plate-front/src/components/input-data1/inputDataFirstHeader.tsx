@@ -16,17 +16,7 @@ interface InputDataFirstHeaderProps {
 }
 
 const InputDataFirstHeader: React.FC<InputDataFirstHeaderProps> = ({ onClickBackButton }) => {
-  const resetPetInfo = useResetRecoilState(petInfoState);
-  const resetCurrentIndex = useResetRecoilState(scrollIndexState);
   const [isExitModalOpen, setIsExitModalOpen] = useRecoilState(isExitModalOpenState);
-  const router = useRouter();
-
-  const handleOnclick = () => {
-
-    resetPetInfo(); // 기록중이던 반려견 정보 초기화
-    resetCurrentIndex(); // 다시 1번화면과 프로그래스바로 이동할 수 있게 초기화
-    router.push("/main/analyze-info");
-  };
 
   return (
     <HeaderWrapper>

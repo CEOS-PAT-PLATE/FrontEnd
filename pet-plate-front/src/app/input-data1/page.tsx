@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { petAPI } from '@api/petAPI';
 import { scrollIndexState, petInfoState } from '@lib/atoms';
-import { useRecoilState } from 'recoil';
+import { useResetRecoilState, useRecoilState} from 'recoil';
 import styled from 'styled-components';
 import InputDataFirstHeader from '@components/input-data1/inputDataFirstHeader';
 import ProgressBar from '@components/input-data1/progressbar';
@@ -18,6 +18,8 @@ import NeuteringSurgeryContent from '@components/input-data1/pageContents/neuter
 export default function Page() {
   const divRefs = useRef<HTMLDivElement[]>([]);
   const [currentIndex, setCurrentIndex] = useRecoilState(scrollIndexState);
+  const resetPetInfo = useResetRecoilState(petInfoState);
+  const resetCurrentIndex = useResetRecoilState(scrollIndexState);
   const [petInfo] = useRecoilState(petInfoState);
   const route = useRouter();
 
@@ -56,6 +58,8 @@ export default function Page() {
         setCurrentIndex(prevIndex);
       }
     } else if (currentIndex === 0) {
+      resetPetInfo(); // 기록중이던 반려견 정보 초기화
+      resetCurrentIndex(); // 다시 1번화면과 프로그래스바로 이동할 수 있게 초기화
       route.push('/main/analyze-info');
     }
   };
