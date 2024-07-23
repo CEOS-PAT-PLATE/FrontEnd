@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { petAPI } from '@api/petAPI';
 import { scrollIndexState, petInfoState } from '@lib/atoms';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -66,10 +67,22 @@ export default function Page() {
         setCurrentIndex(nextIndex);
       }
     } else if (currentIndex === divRefs.current.length - 1) {
-      // 마지막 페이지에서 한 번 더 버튼을 클릭할 경우
+      // 마지막 페이지에서 한 번 더 버튼을 클릭할 경우 반려견 정보저장 후 라우팅
       if (
        isStepValid() == true
       ) {
+        const addPetInfo = async () => {
+          try {
+            const response = await petAPI.addPetInfo(petInfo);
+            console.log('Pet info added successfully:', response.data);
+          } catch (error) {
+            console.error('Failed to add pet info:', error);
+          }
+        };
+    
+        if (petInfo) {
+          addPetInfo();
+        }
         route.push('/input-data1/result');
       } else {
         // 유효성 검사 실패 시(사실상 쓰일 일 없음)
