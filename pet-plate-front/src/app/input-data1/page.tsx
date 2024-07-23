@@ -68,9 +68,7 @@ export default function Page() {
     } else if (currentIndex === divRefs.current.length - 1) {
       // 마지막 페이지에서 한 번 더 버튼을 클릭할 경우
       if (
-        petInfo.name.trim() !== '' &&
-        petInfo.age !== undefined && !isNaN(Number(petInfo.age)) &&
-        petInfo.weight !== undefined && !isNaN(Number(petInfo.weight))
+       isStepValid() == true
       ) {
         route.push('/input-data1/result');
       } else {
