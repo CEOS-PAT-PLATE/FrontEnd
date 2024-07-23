@@ -100,6 +100,7 @@ const Header = styled.div`
     flex-direction: row;
     align-items: center;
     gap: 5.188rem;
+    margin-bottom: 1rem;
 
     font-size: 1rem;
     font-weight: bold;

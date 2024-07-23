@@ -12,7 +12,7 @@ const InputDataFirstHeader = () => {
 const router = useRouter();    
 const handleExit = () => {
     localStorage.setItem('enrollPet', 'true');
-    router.push('/main/analyze')
+    router.push('/main')
 }
 
   return (
