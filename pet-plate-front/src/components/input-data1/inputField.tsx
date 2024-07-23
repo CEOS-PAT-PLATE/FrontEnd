@@ -30,6 +30,7 @@ const InputFileld = styled.input`
     border: solid 0.063rem ${(props) => props.theme.colors['grey5']};
     border-radius: 0.5rem;
     color:  ${(props) => props.theme.colors['grey11']};
+    background-color: transparent;
 
     &::placeholder {
         color: ${(props) => props.theme.colors['grey6']};

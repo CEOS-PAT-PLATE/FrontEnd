@@ -71,6 +71,7 @@ export default function Page() {
       <ResultHeader/>
       <Progressbar />
       <PageContainer>
+        <Info>정보를 다시 한번 확인해주세요</Info>
         <React.Fragment key={pets[0]?.petId}>
           <ResultList title="반려견의 이름" value={pets[0]?.name} />
           <ResultList title="나이" value={`${pets[0]?.age}세`} />
@@ -94,6 +95,14 @@ export default function Page() {
   );
 }
 
+const Info = styled.div`
+  width: 312px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 160%;
+  color: ${(props) => props.theme.colors['grey11']};
+  margin-bottom: 1.438rem;
+`
 
 const PageContainer = styled.div`
   display: flex;
@@ -101,6 +110,7 @@ const PageContainer = styled.div`
   align-items: center;
   position: relative;
   height: 42rem;
+  width: 100%;
   overflow: hidden;
 `;
 

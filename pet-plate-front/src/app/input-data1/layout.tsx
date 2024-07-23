@@ -31,6 +31,7 @@ export default function Layout({
     flex-direction: column;
     align-items: center;
     position: relative;
+    background-color: ${(props) => props.theme.colors['grey1']};
   `
   const Padding = styled.div`
     width: 100%;
