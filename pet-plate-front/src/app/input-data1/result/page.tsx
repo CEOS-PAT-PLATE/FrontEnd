@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import InputDataFirstHeader from '@components/input-data1/inputDataFirstHeader';
+import styled, { keyframes } from 'styled-components';
 import Progressbar from '@components/input-data1/progressbar';
 import LinkButton from "@components/main/linkBtn";
 import ResultList from '@components/input-data1/resultList';
 import { petAPI } from '@api/petAPI';
-import ResultHeader from '@components/input-data1/resultHeader'
+import ResultHeader from '@components/input-data1/resultHeader';
+import Image from "next/image";
+import alertTip from "@public/svg/alert-result-tip.svg?url";
 
 interface Pet {
   petId: number;
@@ -19,11 +20,23 @@ interface Pet {
   profileImgPath: string | null;
 }
 
+// Bounce 애니메이션 정의
+const bounce = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+`;
+
 export default function Page() {
   const buttonContent = (
     <><span style={{ color: "#fff" }}>다음으로</span></>
   );
-
 
   const [pets, setPets] = useState<Pet[]>([]);
 
@@ -62,13 +75,9 @@ export default function Page() {
     fetchPets();
   }, []);
 
-  console.log(pets);
-
- 
-
   return (
     <>
-      <ResultHeader/>
+      <ResultHeader />
       <Progressbar />
       <PageContainer>
         <Info>정보를 다시 한번 확인해주세요</Info>
@@ -82,6 +91,7 @@ export default function Page() {
         <Text>반려견 정보 수정 탭에서 언제든지 바꿀 수 있어요</Text>
 
         <FixedButtonContainer>
+          <AlertTip src={alertTip} alt="tip" />
           <LinkButton
             href="/input-data1/alert-final"
             backgroundcolor={(props) => props.theme.colors.green}
@@ -102,7 +112,7 @@ const Info = styled.div`
   line-height: 160%;
   color: ${(props) => props.theme.colors['grey11']};
   margin-bottom: 1.438rem;
-`
+`;
 
 const PageContainer = styled.div`
   display: flex;
@@ -114,16 +124,23 @@ const PageContainer = styled.div`
   overflow: hidden;
 `;
 
+const AlertTip = styled(Image)`
+  animation: ${bounce} 2s ease infinite;
+`;
+
 const FixedButtonContainer = styled.div`
   position: absolute;
   bottom: 2rem;
   width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 `;
+
 const Text = styled.div`
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 160%;
-  color: ${(props)=>props.theme.colors['grey6']}
-`
+  color: ${(props) => props.theme.colors['grey6']}
+`;
