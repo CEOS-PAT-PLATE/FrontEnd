@@ -2,10 +2,11 @@
 
 import styled from "styled-components"
 import Button from '@components/modal/button';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { isExitModalOpenState } from '@recoil/atoms';
 import { useRouter } from 'next/navigation';
-
+import { petInfoState, scrollIndexState } from '@lib/atoms'
+ 
 
 
 export default function page() {
@@ -13,14 +14,19 @@ export default function page() {
     const color2 = false; //primary
 
     const [isExitModalOpen, setIsExitModalOpen] = useRecoilState(isExitModalOpenState);
-
+    const resetPetInfo = useResetRecoilState(petInfoState);
+    const resetscrollIndex = useResetRecoilState(scrollIndexState);
+    const router = useRouter();
 
     const handleModalCancel = () => {
+      resetPetInfo();
+      resetscrollIndex();
       setIsExitModalOpen(false);
+      router.push('/main/analyze-info'); // 종료 후 이동할 경로 설정
     };
 
     const handleModalConfirm = () => {
-
+      setIsExitModalOpen(false);
     }
 
     return (
