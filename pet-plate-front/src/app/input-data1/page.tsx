@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { petAPI } from '@api/petAPI';
 import { scrollIndexState, petInfoState } from '@lib/atoms';
@@ -21,6 +21,12 @@ export default function Page() {
   const [petInfo] = useRecoilState(petInfoState);
   const route = useRouter();
 
+  // 스크롤을 currentIndex 로 맞춤
+  useEffect(() => {
+    if (divRefs.current[currentIndex]) {
+      divRefs.current[currentIndex].scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [currentIndex]);
 
   //nextbutton 활성화 여부
   const isStepValid = () => {
@@ -75,6 +81,7 @@ export default function Page() {
           try {
             const response = await petAPI.addPetInfo(petInfo);
             console.log('Pet info added successfully:', response.data);
+
           } catch (error) {
             console.error('Failed to add pet info:', error);
           }

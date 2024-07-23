@@ -78,15 +78,18 @@ export default function Page() {
         await petAPI.putPetInfo(petInfo.petId, petInfo);
         localStorage.setItem('petInfo', JSON.stringify(petInfo));
         console.log('정보가 성공적으로 수정되었습니다.');
-        router.push('/my-page');
+        
+        const enrollPet = localStorage.getItem('enrollPet');
+        if (enrollPet === 'false') {
+          router.push('/input-data1/result');
+        } else {
+          router.push('/my-page/pet-info/result');
+        }
       } catch (error) {
         console.error('펫 정보 수정 실패', error);
         console.log('정보 수정에 실패했습니다.');
-        router.push('/my-page');
       }
     }
-
-
   };
 
   const radioOptionsActivness = [

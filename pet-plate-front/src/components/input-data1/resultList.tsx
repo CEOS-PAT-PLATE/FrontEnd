@@ -4,6 +4,7 @@ import Image from "next/image"
 import arrowIcon from '@public/svg/arrow-right.svg?url'
 import {useRecoilValue} from 'recoil'
 import {petInfoState} from "@lib/atoms"
+import Link from "next/link"
 
 interface ResultListProps {
   title: string; 
@@ -15,7 +16,7 @@ const  petInfo = useRecoilValue(petInfoState);
 console.log(petInfo);
 
   return (
-    <ResultListWrapper>
+    <ResultListWrapper href={'/my-page/pet-info'}>
         <Title>{title}</Title>
         <Wrapper>
             <Value>{value}</Value>
@@ -25,13 +26,14 @@ console.log(petInfo);
   )
 }
 
-const ResultListWrapper = styled.div`
+const ResultListWrapper = styled(Link)`
     width: 19.5rem;
     height: 3rem;
     border: solid 0.063rem ${(props) => props.theme.colors['grey5']};
     border-radius: 0.5rem;
     padding: 0 1rem;
     margin-bottom: 1rem;
+    text-decoration: none;
 
     display: flex;
     align-items: center;

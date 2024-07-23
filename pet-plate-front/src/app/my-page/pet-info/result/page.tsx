@@ -21,7 +21,7 @@ interface Pet {
 
 export default function Page() {
   const buttonContent = (
-    <><span style={{ color: "#fff" }}>다음으로</span></>
+    <><span style={{ color: "#fff" }}>수정완료</span></>
   );
 
 
@@ -68,8 +68,7 @@ export default function Page() {
 
   return (
     <>
-      <ResultHeader/>
-      <Progressbar />
+      <Header>반려견 정보 확인</Header>
       <PageContainer>
         <React.Fragment key={pets[0]?.petId}>
           <ResultList title="반려견의 이름" value={pets[0]?.name} />
@@ -82,7 +81,7 @@ export default function Page() {
 
         <FixedButtonContainer>
           <LinkButton
-            href="/input-data1/alert-final"
+            href="/my-page"
             backgroundcolor={(props) => props.theme.colors.green}
             hoverbackgroundcolor={(props) => props.theme.colors.green}
             hoverbuttoncontentcolor="#fff"
@@ -94,6 +93,18 @@ export default function Page() {
   );
 }
 
+const Header = styled.div`
+    width: 100%;
+    height: 3.25rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5.188rem;
+
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: 7.938rem;
+`
 
 const PageContainer = styled.div`
   display: flex;

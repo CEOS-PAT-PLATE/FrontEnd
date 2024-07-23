@@ -5,9 +5,17 @@ import Link from "next/link";
 import Image from "next/image";
 import alertGraphic from "@public/svg/alert-graphic.svg?url"
 import alertTip from "@public/svg/alert-final-tip.svg?url"
+import { useRouter } from "next/navigation";
 
 
 export default function page() {
+const router = useRouter();
+const handleContinue = () => {
+    // 로컬스토리지에 enrollPet을 true로 설정
+    localStorage.setItem('enrollPet', 'true');
+    router.push('/201');
+};
+
   return (
     <PageContainer>
         <AlertWrapper>
@@ -15,7 +23,7 @@ export default function page() {
             <AlertGraphic src={alertGraphic} alt="alert-graphic"/>
             <Text2>오늘의 식단을 입력해주시면 <br/> 맞춤형 영양정보를 알려드릴게요.</Text2>
             <AlertTip src={alertTip} alt="tip"/>
-            <ContinueBtn href="/201">다음으로</ContinueBtn>
+            <ContinueBtn onClick={handleContinue}>다음으로</ContinueBtn>
         </AlertWrapper>
     </PageContainer>
 );
@@ -69,7 +77,7 @@ const AlertTip = styled(Image)`
     margin-top: 1.375rem;
 `
 
-const ContinueBtn = styled(Link)`
+const ContinueBtn = styled.div`
 width: 14rem;
 height: 3rem;
 border: none;
