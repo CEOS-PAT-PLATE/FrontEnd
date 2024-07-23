@@ -14,7 +14,7 @@ export default function ageContent() {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        const newWeight = value === '' ? undefined : parseInt(value.trim(), 10); // 입력값을 정수로 파싱하거나 비어 있으면 undefined로 설정
+        const newWeight = value !== '' && !isNaN(Number(value)) ? Number(value.trim()) : undefined;
         const updatedPetInfo = { ...petInfo, weight: newWeight };
         setPetInfo(updatedPetInfo);
       };
