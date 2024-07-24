@@ -7,6 +7,8 @@ import dailyMealsAPI from '@api/dailyMealsAPI';
 import RightArrow from '@components/result/right-arrow';
 import { nutrientExcessInfo } from '@lib/descriptionData';
 import Wrapper from '@style/input-data2/Wrapper';
+import Image from 'next/image';
+import alertGraphic from '@public/svg/alert-graphic.svg?url';
 
 interface ResultProps {
   params: { petId: number; dailyMealId: number };
@@ -50,15 +52,24 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
   };
 
   const filteredNutrientExcessInfo = nutrientExcessInfo.filter((info) =>
-    excessNutrients.some((nutrient) => nutrient.name === info.nutrientName)
+    excessNutrients.some((nutrient) => nutrient.name === info.nutrientName),
   );
 
   return (
     <>
-    
       <Wrapper>
         {filteredNutrientExcessInfo.length === 0 ? (
-          <EmptyMessage>과잉 영양소가 없어요!</EmptyMessage>
+          <ImageWrapper>
+            <EmptyText1>부족하거나 과한 영양소가 없어요!</EmptyText1>
+            <AlertGraphic src={alertGraphic} alt="alert-graphic" />
+            <EmptyText2>
+              000의 영양 관리를 잘 하고 계시네요.
+              <br />
+              000의 식단이 바뀌어 영양 상태가 궁금해지면,
+              <br />
+              언제든 펫플레이트로 돌아와 영양 분석을 해주세요!{' '}
+            </EmptyText2>
+          </ImageWrapper>
         ) : (
           <>
             <div>
@@ -86,6 +97,40 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
     </>
   );
 }
+
+//alert text
+const EmptyText1 = styled.div`
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 160%;
+  color: ${(props) => props.theme.colors['grey10']};
+  margin-bottom: 32px;
+  text-align: center;
+`;
+
+const EmptyText2 = styled.div`
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 160%;
+  color: ${(props) => props.theme.colors['grey9']};
+  text-align: center;
+  margin-top: 240px;
+`;
+
+const AlertGraphic = styled(Image)`
+  margin-left: 45px;
+  position: absolute;
+`;
+
+const ImageWrapper = styled.div`
+  width: 300px;
+  height: 230px;
+  position: absolute;
+  top: 247px;
+  left: 30px;
+`;
+
+//-----//
 
 const Content = styled.div`
   overflow-y: scroll;
@@ -375,4 +420,3 @@ const orderArray = [
   { index: 9, word: '아홉' },
   { index: 10, word: '열' },
 ];
-

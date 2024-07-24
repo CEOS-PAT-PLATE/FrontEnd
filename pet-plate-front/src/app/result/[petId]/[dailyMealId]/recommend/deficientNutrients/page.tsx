@@ -7,7 +7,7 @@ import nutrientAPI from '@api/nutrientAPI';
 import RightArrow from '@components/result/right-arrow';
 import { nutritionDeficientInfo } from '@lib/descriptionData';
 import SupplementModal from '@components/modal/SupplementModal';
-
+import alertGraphic from '@public/svg/alert-graphic.svg?url';
 import Image from 'next/image';
 
 interface Supplement {
@@ -83,12 +83,23 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
   const deficientNutrientGroups = nutrientGroups.filter((group) =>
     nutritionDeficientInfo.some((info) => info.nutrientName === group.nutrientName),
   );
+  console.log(nutritionDeficientInfo.length);
 
   return (
     <>
       <SupplementModal />
       {nutritionDeficientInfo.length === 0 ? (
-        <EmptyMessage>부족 영양소가 없어요!</EmptyMessage>
+        <EmptyImageWrapper>
+          <EmptyText1>부족하거나 과한 영양소가 없어요!</EmptyText1>
+          <AlertGraphic src={alertGraphic} alt="alert-graphic" />
+          <EmptyText2>
+            000의 영양 관리를 잘 하고 계시네요.
+            <br />
+            000의 식단이 바뀌어 영양 상태가 궁금해지면,
+            <br />
+            언제든 펫플레이트로 돌아와 영양 분석을 해주세요!{' '}
+          </EmptyText2>
+        </EmptyImageWrapper>
       ) : (
         <Content>
           {deficientNutrientGroups.map((group, index) => (
@@ -130,6 +141,42 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
   );
 }
 
+// empty message
+//alert text
+const EmptyText1 = styled.div`
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 160%;
+  color: ${(props) => props.theme.colors['grey10']};
+  margin-bottom: 32px;
+  text-align: center;
+`;
+
+const EmptyText2 = styled.div`
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 160%;
+  color: ${(props) => props.theme.colors['grey9']};
+  text-align: center;
+  margin-top: 240px;
+`;
+
+const AlertGraphic = styled(Image)`
+  margin-left: 45px;
+  position: absolute;
+`;
+
+const EmptyImageWrapper = styled.div`
+  width: 300px;
+  height: 230px;
+  position: absolute;
+  top: 247px;
+  left: 30px;
+  z-index: 3000;
+`;
+
+//---//
+
 const orderArray = [
   { index: 1, word: '첫' },
   { index: 2, word: '두' },
@@ -169,7 +216,6 @@ const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number
 };
 
 const Content = styled.div`
-
   overflow-y: auto;
   position: absolute;
   top: 150px;

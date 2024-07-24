@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import Image from 'next/image';
 
@@ -9,12 +9,13 @@ import ScrollCarousel from '@components/main/scrollCarousel';
 import GapButton from '@components/main/gapbtn';
 
 export default function page() {
-  const router = useRouter();  
+  const router = useRouter();
 
   const handleOnclick = () => {
-    const enrollPet = window.localStorage.getItem('enrollPet'); 
+    const enrollPet = window.localStorage.getItem('enrollPet');
 
-    if (enrollPet === null || enrollPet === undefined) { //로그인되지 않은 사용자인 경우 다시 생각하기
+    if (enrollPet === null || enrollPet === undefined) {
+      //로그인되지 않은 사용자인 경우 다시 생각하기
       alert('로그인 후 이용해 주세요.');
     } else {
       const isEnrolled = JSON.parse(enrollPet);
@@ -26,7 +27,7 @@ export default function page() {
       }
     }
   };
-  
+
   const buttonContent = (
     <>
       <span style={{ color: '#fff' }}>반려견 영양분석 하러가기</span>
@@ -133,4 +134,3 @@ const Text = styled.div`
     color: ${(props) => props.theme.colors['green']};
   }
 `;
-
