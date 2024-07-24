@@ -8,6 +8,7 @@ import React, { useEffect } from 'react';
 import userAPI from "@api/userAPI"
 import { userDataState } from '@lib/atoms'
 import { useRecoilState } from "recoil"
+import toggle from '@public/svg/toggle.svg?url'
 
 interface UserData {
   loginMethod: string,
@@ -62,6 +63,7 @@ export default function page() {
         <Divider/>
         <ReceiveAdWrapper>
           <Info>마케팅 정보 수신 동의</Info>
+          <Toggle src={toggle} alt="toggle"/>
         </ReceiveAdWrapper>
         <Divider/>
         <ClickkWrapper>
@@ -135,11 +137,12 @@ const Info = styled.div`
 `;
 
 const ReceiveAdWrapper = styled.div`
-  width: 312px;
+  width: 100%;
   height: 4.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 `
 
 const ClickkWrapper = styled.div`
@@ -148,4 +151,8 @@ const ClickkWrapper = styled.div`
   flex-direction: column;
   gap : 0.813rem;
   margin: 1.75rem 0;
+`
+const Toggle = styled(Image)`
+  margin-left: 7.125rem;
+  align-items: center;
 `
