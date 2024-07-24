@@ -79,6 +79,32 @@ export default function Page() {
     fetchPets();
   }, []);
 
+  const getActivityDescription = (activity: string) => {
+    switch (activity) {
+      case 'INACTIVE':
+        return '차분';
+      case 'SOMEWHAT_ACTIVE':
+        return '보통';
+      case 'ACTIVE':
+        return '활발';
+      case 'VERY_ACTIVE':
+        return '초활발';
+      default:
+        return activity;
+    }
+  };
+
+  const getNeuteringDescription = (neutering: string) => {
+    switch (neutering) {
+      case 'INTACT':
+        return '중성화 안했어요';
+      case 'NEUTERED':
+        return '중성화 했어요';
+      default:
+        return neutering;
+    }
+  };
+
   return (
     <>
       <ResultHeader />
@@ -89,8 +115,8 @@ export default function Page() {
           <ResultList title="반려견의 이름" value={pets[0]?.name} />
           <ResultList title="나이" value={`${pets[0]?.age}세`} />
           <ResultList title="몸무게" value={`${pets[0]?.weight}kg`} />
-          <ResultList title="활동량" value={pets[0]?.activity} />
-          <ResultList title="중성화 여부" value={pets[0]?.neutering} />
+          <ResultList title="활동량" value={getActivityDescription(pets[0]?.activity)} />
+          <ResultList title="중성화 여부" value={getNeuteringDescription(pets[0]?.neutering)} />
         </React.Fragment>
         <Text>반려견 정보 수정 탭에서 언제든지 바꿀 수 있어요</Text>
 
