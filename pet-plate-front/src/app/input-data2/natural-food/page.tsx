@@ -29,7 +29,7 @@ const fetchWithAuth = async (endpoint: string, useAuth = true, cacheOption: Requ
     headers['Authorization'] = `Bearer ${accessToken}`;
   }
 
-  const url = `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`;
+  const url = `${NEXT_PUBLIC_API_URL}${endpoint}`;
   console.log('API 요청 URL:', url); // URL 확인용 로그
 
   const response = await fetch(url, { headers });
