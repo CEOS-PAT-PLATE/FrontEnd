@@ -53,8 +53,8 @@ const ExitButtonImage = styled(Image)`
 `;
 
 const Header = styled.h2`
-  font-size: 1rem;
-  font-weight: bold;
+  color: ${(props) => props.theme.colors['grey11']};
+
 `;
 
 const ExitButtonWrapper = styled.div`

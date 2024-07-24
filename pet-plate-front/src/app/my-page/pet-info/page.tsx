@@ -218,12 +218,13 @@ const PageWrapper = styled.div`
   align-items: center;
 `;
 
-const MypageHeader = styled.h1`
+const MypageHeader = styled.h2`
   width: 100%;
   height: 3.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${(props) => props.theme.colors['grey11']};
 `;
 
 const BackIconWrapper = styled.div`
@@ -245,7 +246,9 @@ const RowContainer = styled.div`
   flex-direction: row;
 `;
 
-const Title = styled.h1`
+const Title = styled.h2`
+  color: ${(props) => props.theme.colors['grey11']};
+
 `;
 
 const FixedButtonContainer = styled.div`

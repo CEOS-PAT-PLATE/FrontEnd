@@ -103,7 +103,7 @@ const Header = styled.div`
     margin-bottom: 1rem;
 
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 400;
     margin-left: 7.938rem;
 `
 
