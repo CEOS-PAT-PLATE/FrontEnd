@@ -9,7 +9,7 @@ export const saveDailyMealsNutrients = async (petId: number) => {
   console.log(isDoneAlready);
 
   try {
-    if (!isDoneAlready) {
+   if (!isDoneAlready) {
       const response = await axiosInstance.post(`/pet/${petId}/dailyMeals/nutrients`);
       console.log(response);
 

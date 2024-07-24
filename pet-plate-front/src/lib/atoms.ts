@@ -15,4 +15,5 @@ export const petInfoState = atom<PetInfo>({
     weight: undefined,
     activity: '',
     neutering: '',
-  }})
+  },
+});

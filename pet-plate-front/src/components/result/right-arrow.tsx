@@ -15,9 +15,8 @@ interface Supplement {
 }
 
 interface RightArrowProps {
-  detail: { supplement: Supplement, nutrient: string };
+  detail: { supplement: Supplement; nutrient: string };
 }
-
 
 export default function RightArrow({ detail }: RightArrowProps) {
   const [isVisible, setIsVisible] = useRecoilState(isModalVisibleState);
