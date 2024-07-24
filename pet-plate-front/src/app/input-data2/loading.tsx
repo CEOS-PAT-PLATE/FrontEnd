@@ -1,7 +1,6 @@
 'use client';
 import LoadingSVGImage from '@public/svg/analyze-loading-img.svg?url';
 import Image from 'next/image';
-import Wrapper from '@style/input-data2/Wrapper';
 import styled from 'styled-components';
 
 export default function Page() {
@@ -14,7 +13,7 @@ export default function Page() {
         <DateTitle>잠시만 기다려 주세요!</DateTitle>
       </TextWrapper>
       <ImageWrapper>
-        <Image src={LoadingSVGImage} width={300} height={330} alt="loading" />
+        <Image src={LoadingSVGImage} width={200} height={220} alt="loading" />
       </ImageWrapper>
       <DescriptionWrapper>
         <Description>펫플레이트는 질병 치료 목적의 서비스가 아닌,</Description>
@@ -27,16 +26,17 @@ export default function Page() {
 
 const DescriptionWrapper = styled.div`
   position: absolute;
-  top: 649px;
-  left: 50px;
+  top: 549px;
+  left: 25px;
 `;
 
 const ImageWrapper = styled.div`
   width: 300px;
-  height: 330px;
+  height: 230px;
   position: absolute;
   top: 247px;
-  margin: auto 30px;
+  left: 60px;
+
 `;
 
 const GreenText = styled.span`
@@ -75,5 +75,13 @@ const Description = styled.div`
 const TextWrapper = styled.div`
   position: absolute;
   top: 92px;
-  left: 24px;
+  left: 4px;
+`;
+
+const Wrapper = styled.div`
+  width: 360px;
+  height: 640px;
+  position: absolute;
+
+  top: -100px;
 `;
