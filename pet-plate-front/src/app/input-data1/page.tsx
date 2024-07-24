@@ -79,7 +79,7 @@ export default function Page() {
     } else if (currentIndex === divRefs.current.length - 1) {
       // 마지막 페이지에서 한 번 더 버튼을 클릭할 경우 반려견 정보저장 후 라우팅
       if (
-       isStepValid() == true
+       isStepValid() === true
       ) {
         const addPetInfo = async () => {
           try {

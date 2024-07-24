@@ -79,45 +79,41 @@ export default function Page() {
     fetchPets();
   }, []);
 
+  const activityDescriptions: { [key: string]: string } = {
+    INACTIVE: '차분',
+    SOMEWHAT_ACTIVE: '보통',
+    ACTIVE: '활발',
+    VERY_ACTIVE: '초활발',
+  };
+  
+  const neuteringDescriptions: { [key: string]: string } = {
+    INTACT: '중성화 안했어요',
+    NEUTERED: '중성화 했어요',
+  };
+  
   const getActivityDescription = (activity: string) => {
-    switch (activity) {
-      case 'INACTIVE':
-        return '차분';
-      case 'SOMEWHAT_ACTIVE':
-        return '보통';
-      case 'ACTIVE':
-        return '활발';
-      case 'VERY_ACTIVE':
-        return '초활발';
-      default:
-        return activity;
-    }
+    return activityDescriptions[activity] || activity;
   };
-
+  
   const getNeuteringDescription = (neutering: string) => {
-    switch (neutering) {
-      case 'INTACT':
-        return '중성화 안했어요';
-      case 'NEUTERED':
-        return '중성화 했어요';
-      default:
-        return neutering;
-    }
+    return neuteringDescriptions[neutering] || neutering;
   };
-
+  
   return (
     <>
       <ResultHeader />
       <Progressbar />
       <PageContainer>
         <Info>정보를 다시 한번 확인해주세요</Info>
-        <React.Fragment key={pets[0]?.petId}>
-          <ResultList title="반려견의 이름" value={pets[0]?.name} />
-          <ResultList title="나이" value={`${pets[0]?.age}세`} />
-          <ResultList title="몸무게" value={`${pets[0]?.weight}kg`} />
-          <ResultList title="활동량" value={getActivityDescription(pets[0]?.activity)} />
-          <ResultList title="중성화 여부" value={getNeuteringDescription(pets[0]?.neutering)} />
-        </React.Fragment>
+        {pets.length > 0 && (
+          <React.Fragment key={pets[0]?.petId}>
+            <ResultList title="반려견의 이름" value={pets[0]?.name} />
+            <ResultList title="나이" value={`${pets[0]?.age}세`} />
+            <ResultList title="몸무게" value={`${pets[0]?.weight}kg`} />
+            <ResultList title="활동량" value={getActivityDescription(pets[0]?.activity)} />
+            <ResultList title="중성화 여부" value={getNeuteringDescription(pets[0]?.neutering)} />
+          </React.Fragment>
+        )}
         <Text>반려견 정보 수정 탭에서 언제든지 바꿀 수 있어요</Text>
 
         <FixedButtonContainer>

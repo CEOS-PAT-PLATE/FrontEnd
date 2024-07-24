@@ -61,32 +61,26 @@ export default function Page() {
     fetchPets();
   }, []);
 
+  const activityDescriptions: { [key: string]: string } = {
+    INACTIVE: '차분',
+    SOMEWHAT_ACTIVE: '보통',
+    ACTIVE: '활발',
+    VERY_ACTIVE: '초활발',
+  };
+  
+  const neuteringDescriptions: { [key: string]: string } = {
+    INTACT: '중성화 안했어요',
+    NEUTERED: '중성화 했어요',
+  };
+  
   const getActivityDescription = (activity: string) => {
-    switch (activity) {
-      case 'INACTIVE':
-        return '차분';
-      case 'SOMEWHAT_ACTIVE':
-        return '보통';
-      case 'ACTIVE':
-        return '활발';
-      case 'VERY_ACTIVE':
-        return '초활발';
-      default:
-        return activity;
-    }
+    return activityDescriptions[activity] || activity;
   };
-
+  
   const getNeuteringDescription = (neutering: string) => {
-    switch (neutering) {
-      case 'INTACT':
-        return '중성화 안했어요';
-      case 'NEUTERED':
-        return '중성화 했어요';
-      default:
-        return neutering;
-    }
+    return neuteringDescriptions[neutering] || neutering;
   };
-
+  
   return (
     <>
       <Header>반려견 정보 수정</Header>
