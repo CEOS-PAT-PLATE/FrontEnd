@@ -11,7 +11,9 @@ const SignUpLoad = () => {
 
     if (enrollPet === 'true') {
       router.push('/main/analyze');
-    }else{ router.push('/sign-up/welcome');}
+    } else {
+      router.push('/sign-up/welcome');
+    }
   }, [router]);
 
   return null; // 컴포넌트는 렌더링할 내용이 없으므로 null 반환

@@ -10,29 +10,25 @@ import SuggestionButton from '@components/input-data2/naturalfood-page/suggestio
 
 const NEXT_PUBLIC_API_URL = 'https://apitest.petplate.kr';
 
-const fetchWithAuth = async (endpoint: string, useAuth = true, cacheOption: RequestCache = 'no-cache') => {
-  const headers: HeadersInit = {
-    'Cache-Control': cacheOption,
-  };
+const fetchWithAuth = async (endpoint: string) => {
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get('accessToken')?.value;
 
-  // 자연식 검색 요청 제외하고, header에 엑세스 토큰 추가
-  if (useAuth) {
-    const cookieStore = cookies();
-    const accessToken = cookieStore.get('accessToken')?.value;
+  console.log('쿠키', accessToken); // 쿠키 값을 로그로 출력
 
-    console.log('쿠키', accessToken); // 쿠키 값을 로그로 출력
-
-    if (!accessToken) {
-      throw new Error('No access token found');
-    }
-
-    headers['Authorization'] = `Bearer ${accessToken}`;
+  if (!accessToken) {
+    throw new Error('No access token found');
   }
 
   const url = `${NEXT_PUBLIC_API_URL}${endpoint}`;
   console.log('API 요청 URL:', url); // URL 확인용 로그
 
-  const response = await fetch(url, { headers });
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Cache-Control': 'no-cache',
+    },
+  });
 
   if (!response.ok) {
     console.error(`API 요청 실패: ${response.status} - ${response.statusText}`);
@@ -43,13 +39,13 @@ const fetchWithAuth = async (endpoint: string, useAuth = true, cacheOption: Requ
 };
 
 const fetchNaturalFoodLists = async (keyword: string) => {
-  // 이 요청만 토큰 없이 캐시를 강제 사용
-  return await fetchWithAuth(`/api/v1/raws?keyword=${keyword}`, false, 'force-cache');
+  const response = await fetchWithAuth(`/api/v1/raws?keyword=${keyword}`);
+  return response.data;
 };
 
 const fetchRecentNaturalFoodLists = async (petId: number) => {
-  // 여전히 토큰 필요, 캐시는 사용하지 않음
-  return await fetchWithAuth(`/api/v1/pets/${petId}/raws/recent`, true, 'no-cache');
+  const response = await fetchWithAuth(`/api/v1/pets/${petId}/raws/recent`);
+  return response.data;
 };
 
 // id는 달라도 입력정보가 동일하면 중복으로 처리 (이름, 양으로 필터링)
@@ -61,7 +57,8 @@ const filterUniqueByNameAndServing = (foodList: RecentRawFood[]): RecentRawFood[
 
 const fetchPets = async () => {
   try {
-    return await fetchWithAuth('/api/v1/pets', true, 'no-cache');
+    const response = await fetchWithAuth('/api/v1/pets');
+    return response.data;
   } catch (error) {
     console.error('펫 정보 조회 실패', error);
     return [];
