@@ -1,5 +1,5 @@
 'use client';
-import LoadingSVGImage from '@public/svg/analyze-loading-img.svg?url';
+import LoadingSVGImage from '@public/svg/201_image.svg?url';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -7,18 +7,14 @@ export default function Page() {
   return (
     <Wrapper>
       <TextWrapper>
-        <DateTitle>
-          <GreenText>식단 추가</GreenText>화면으로 이동중이에요.
-        </DateTitle>
+        <DateTitle>식단 추가 페이지를 로딩중이에요.</DateTitle>
         <DateTitle>잠시만 기다려 주세요!</DateTitle>
       </TextWrapper>
       <ImageWrapper>
-        <Image src={LoadingSVGImage} width={200} height={220} alt="loading" />
+        <Image src={LoadingSVGImage} width={280} height={260} alt="loading" />
       </ImageWrapper>
       <DescriptionWrapper>
-        <Description>펫플레이트는 질병 치료 목적의 서비스가 아닌,</Description>
-        <Description>반려견 건강 관리를 위한 보조적인 수단입니다.</Description>
-        <Description>질병이 있는 경우 반드시 수의사와 상담하시기 바랍니다.</Description>
+        <Description>사료, 자연식, 포장간식으로 나눠 식단 기록을 시작해보아요.</Description>
       </DescriptionWrapper>
     </Wrapper>
   );
@@ -35,8 +31,7 @@ const ImageWrapper = styled.div`
   height: 230px;
   position: absolute;
   top: 247px;
-  left: 60px;
-
+  left: 15px;
 `;
 
 const GreenText = styled.span`
