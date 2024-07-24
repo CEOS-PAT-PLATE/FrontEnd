@@ -15,6 +15,7 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import ProgressBar from '@components/input-data1/progressbar';
+import LoadingSVGImage from '@public/svg/201_image.svg?url';
 
 /*
 const petData = {
@@ -169,7 +170,8 @@ export default function Page() {
           {dailyMeals ? (
             <FoodCardsContainer dailyMeals={dailyMeals} />
           ) : (
-            <EmptyMessage>아직 추가된 식단이 없어요!</EmptyMessage>
+            <EmptyMessage>        <Image src={LoadingSVGImage} width={280} height={260} alt="loading" />
+</EmptyMessage>
           )}
         </ContentContainer>
       </Wrapper>
@@ -204,20 +206,11 @@ const ContentContainer = styled.div`
 
 const EmptyMessage = styled.div`
   position: absolute;
-
-  left: 28%;
-  top: 160px;
+  top: 32px;
+  left: 15px;
 
   z-index: 10;
 
-  color: var(--grey8, #7c8389);
-  text-align: center;
-
-  font-family: SUIT;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 160%;
 `;
 
 const ProgressBarWrapper = styled.div`
