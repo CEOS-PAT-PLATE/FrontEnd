@@ -327,7 +327,8 @@ const ChartWrapper = styled.div`
     overflow-y: scroll;
     height:440px;
     top: 350px;
-    left:30px;
+    width: 302px;
+    left:24px;
     position: absolute;
    
 

@@ -41,10 +41,12 @@ function NutrientBar({
         borderRadius: 20,
         barPercentage: 2,
         borderSkipped: false,
-        minBarLength: 2
+        minBarLength: 2,
       },
     ],
   };
+
+
 
   const options = {
     barThickness: 7,
@@ -62,6 +64,7 @@ function NutrientBar({
         grid: {
           display: false,
         },
+       
       },
     },
     plugins: {
@@ -73,6 +76,8 @@ function NutrientBar({
       },
     },
     responsive: true,
+    maintainAspectRatio: false, // 고정된 가로세로 비율을 유지x -> 부모 요소의 크기에 맞게 너비/높이 독립적으로 조절.. 드디어..
+
   };
 
   return (
@@ -87,10 +92,10 @@ function NutrientBar({
   );
 }
 
-export default function LineChart({ nutrientData, group }: { nutrientData: any[], group: number }) {
+export default function LineChart({ nutrientData, group }: { nutrientData: any[]; group: number }) {
   let defaultNutrients = [] as any[];
 
-  switch(group) {
+  switch (group) {
     case 1: // 기본 영양소
       defaultNutrients = [
         { name: '탄수화물', amount: 0, properAmount: 0 },
@@ -115,8 +120,8 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
       break;
   }
 
-  const mergedNutrients = defaultNutrients.map(defaultNutrient => {
-    const foundNutrient = nutrientData.find(nutrient => nutrient.name === defaultNutrient.name);
+  const mergedNutrients = defaultNutrients.map((defaultNutrient) => {
+    const foundNutrient = nutrientData.find((nutrient) => nutrient.name === defaultNutrient.name);
     return foundNutrient ? foundNutrient : defaultNutrient;
   });
 
@@ -136,15 +141,13 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
 }
 
 const LineWrapper = styled.div`
-  top: 370px;
-  left: 240px;
   display: flex;
   flex-direction: column;
 `;
 
 const BarWrapper = styled.div`
   position: relative;
-  width: 230px;
+
   height: 40px;
   margin-bottom: 12px;
   z-index: 20;
@@ -156,7 +159,7 @@ const BarBackground = styled.div`
   position: absolute;
   top: 16px;
   left: 0;
-  width: 100%;
+  width: 302px;
   height: 17%;
   z-index: -10;
 `;
