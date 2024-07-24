@@ -82,7 +82,7 @@ export default function Page() {
     };
 
     fetchPets();
-  }, [pathName,pets]);
+  }, [pathName]);
 
   const activityDescriptions: { [key: string]: string } = {
     INACTIVE: '차분',
