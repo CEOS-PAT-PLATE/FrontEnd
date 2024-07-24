@@ -104,8 +104,8 @@ export default function Page() {
         <FixedBtnWrapper>
           <LinkButton
             href="/201"
-            backgroundcolor={(props) => props.theme.colors.green}
-            hoverbackgroundcolor={(props) => props.theme.colors.green}
+            backgroundcolor={(props) => props.theme.colors['green-800']}
+            hoverbackgroundcolor={(props) => props.theme.colors['green-800']}
             hoverbuttoncontentcolor="#fff"
             buttonContent={buttonContent}
           />
