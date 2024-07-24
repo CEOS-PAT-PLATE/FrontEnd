@@ -55,6 +55,7 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
 
   return (
     <>
+    
       <Wrapper>
         {filteredNutrientExcessInfo.length === 0 ? (
           <EmptyMessage>과잉 영양소가 없어요!</EmptyMessage>
@@ -374,3 +375,4 @@ const orderArray = [
   { index: 9, word: '아홉' },
   { index: 10, word: '열' },
 ];
+

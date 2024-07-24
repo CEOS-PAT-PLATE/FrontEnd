@@ -51,7 +51,7 @@ export default function Layout({
 
   return (
     <Wrapper>
-      <Title>분석 결과</Title>
+      <Title>추천 영양성분</Title>
       <Navbar deficientCount={deficientCount} excessCount={excessCount} params={{ petId, dailyMealId }} />
       <Content>{children}</Content>
     </Wrapper>
@@ -64,12 +64,17 @@ const Content = styled.div`
 `;
 
 const Title = styled.h1`
-  font-family: SUIT;
-  font-size: 18px;
-  font-weight: 600;
-  top: 44px;
+color: var(--grey11, #36393C);
+font-family: SUIT;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 140%; /* 22.4px */
+letter-spacing: -0.3px;
+  top: 59px;
   position: absolute;
   width: 360px;
   margin-bottom: 15px;
   left: 40%;
+  z-index: 100;
 `;
