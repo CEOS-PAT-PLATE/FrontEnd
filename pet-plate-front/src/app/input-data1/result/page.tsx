@@ -38,6 +38,10 @@ export default function Page() {
     <><span style={{ color: "#fff" }}>다음으로</span></>
   );
 
+  const changeButtonContent = (
+    <><span style={{ color: "#fff" }}>수정하기</span></>
+  );
+
   const [pets, setPets] = useState<Pet[]>([]);
 
   useEffect(() => {
@@ -93,9 +97,16 @@ export default function Page() {
         <FixedButtonContainer>
           <AlertTip src={alertTip} alt="tip" />
           <LinkButton
-            href="/input-data1/alert-final"
+            href="/my-page/pet-info"
             backgroundcolor={(props) => props.theme.colors.green}
             hoverbackgroundcolor={(props) => props.theme.colors.green}
+            hoverbuttoncontentcolor="#fff"
+            buttonContent={changeButtonContent}
+          />
+          <LinkButton
+            href="/input-data1/alert-final"
+            backgroundcolor={(props) => props.theme.colors['grey10']}
+            hoverbackgroundcolor={(props) => props.theme.colors['grey10']}
             hoverbuttoncontentcolor="#fff"
             buttonContent={buttonContent}
           />
@@ -136,6 +147,7 @@ const FixedButtonContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
 `;
 
 const Text = styled.div`

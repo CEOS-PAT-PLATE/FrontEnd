@@ -72,6 +72,15 @@ export default function Page() {
     }
   };
 
+  const handleBackButton = () => {
+    const enrollPet = localStorage.getItem('enrollPet');
+    if (enrollPet === 'false') {
+      router.push('/input-data1/result');
+    } else {
+      router.push('/my-page');
+    }
+  }
+
   const handleSave = async () => {
     if (petInfo) {
       try {
@@ -113,7 +122,7 @@ export default function Page() {
   return (
     <PageWrapper>
       <MypageHeader>
-        <BackIconWrapper href={"/my-page"}>
+        <BackIconWrapper onClick={handleBackButton}>
           <BackIcon src={backIcon} alt="go back" />
         </BackIconWrapper>
         반려견 정보 수정
@@ -217,7 +226,7 @@ const MypageHeader = styled.h1`
   justify-content: center;
 `;
 
-const BackIconWrapper = styled(Link)`
+const BackIconWrapper = styled.div`
 `;
 
 const BackIcon = styled(Image)`

@@ -16,17 +16,16 @@ const  petInfo = useRecoilValue(petInfoState);
 console.log(petInfo);
 
   return (
-    <ResultListWrapper href={'/my-page/pet-info'}>
+    <ResultListWrapper>
         <Title>{title}</Title>
         <Wrapper>
             <Value>{value}</Value>
-            <ArrowIcon src={arrowIcon} alt="modify"/>
         </Wrapper>
     </ResultListWrapper>
   )
 }
 
-const ResultListWrapper = styled(Link)`
+const ResultListWrapper = styled.div`
     width: 19.5rem;
     height: 3rem;
     border: solid 0.063rem ${(props) => props.theme.colors['grey5']};

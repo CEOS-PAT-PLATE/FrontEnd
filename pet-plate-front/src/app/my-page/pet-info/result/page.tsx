@@ -68,7 +68,7 @@ export default function Page() {
 
   return (
     <>
-      <Header>반려견 정보 확인</Header>
+      <Header>반려견 정보 수정</Header>
       <PageContainer>
         <React.Fragment key={pets[0]?.petId}>
           <ResultList title="반려견의 이름" value={pets[0]?.name} />
