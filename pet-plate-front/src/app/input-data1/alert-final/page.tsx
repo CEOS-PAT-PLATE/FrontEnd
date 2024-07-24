@@ -6,6 +6,7 @@ import Image from 'next/image';
 import alertGraphic from "@public/svg/alert-graphic.svg?url";
 import alertTip from "@public/svg/alert-final-tip.svg?url";
 import { useRouter } from 'next/navigation';
+import background from '@public/svg/input-data1-final-background.svg?url'
 
 // Bounce 애니메이션 정의
 const bounce = keyframes`
@@ -30,6 +31,7 @@ export default function Page() {
 
   return (
     <PageContainer>
+      <BackgroundImage src={background} alt='background'/>
       <AlertWrapper>
         <Text1>이제 얼마 안남았어요!</Text1>
         <AlertGraphic src={alertGraphic} alt="alert-graphic" />
@@ -41,14 +43,23 @@ export default function Page() {
   );
 }
 
+const BackgroundImage = styled(Image)`
+    position: absolute;
+    top : 0;
+    left: 0;
+    z-index: 1;
+`
+
 const PageContainer = styled.div`
   width: 100%;
   height: 47.25rem;
-  background-color: rgba(75, 147, 125, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: transparent;
+  position: relative;
+  z-index: 100;
 `;
 
 const AlertWrapper = styled.div`
@@ -61,6 +72,7 @@ const AlertWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 `;
 
 const Text1 = styled.div`
