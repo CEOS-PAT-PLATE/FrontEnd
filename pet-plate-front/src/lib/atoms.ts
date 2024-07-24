@@ -16,3 +16,21 @@ export const petInfoState = atom<PetInfo>({
     activity: '',
     neutering: '',
   }})
+
+
+  //userData
+  interface userData {
+    loginMethod: string,
+    name: string,
+    email: string,
+    receiveAd: boolean    
+  }
+
+  export const userDataState = atom<userData>({
+    key: 'userDataState',
+    default: {
+      loginMethod: '로그인 해주세요',
+      name: '로그인 해주세요',
+      email: '로그인 해주세요',
+      receiveAd: false   
+    }})
