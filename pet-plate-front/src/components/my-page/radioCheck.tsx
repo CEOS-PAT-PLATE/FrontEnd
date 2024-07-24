@@ -29,7 +29,6 @@ const RadioWrapper = styled.div`
     align-items: center;
     padding: 0 0.75rem;
     gap: 0.5rem;
-    margin-bottom: 0.5rem;
     &:hover{
         border: solid 0.063rem ${(props) => props.theme.colors['green-400']};
         background-color: ${(props) => props.theme.colors['green-100']};

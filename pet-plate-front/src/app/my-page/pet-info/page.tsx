@@ -169,6 +169,7 @@ export default function Page() {
 
           <ContentWrapper>
             <Title>활동량</Title>
+            <RadioWrapper>
             {radioOptionsActivness.map((option, index) => (
               <RadioCheck
                 key={index}
@@ -179,10 +180,12 @@ export default function Page() {
                 onChange={() => activenessChange(option.value)}
               />
             ))}
+          </RadioWrapper>
           </ContentWrapper>
 
           <ContentWrapper>
             <Title>중성화 여부</Title>
+            <RadioWrapper>
             {radioOptionsNeutering.map((option, index) => (
               <RadioCheck
                 key={index}
@@ -193,6 +196,7 @@ export default function Page() {
                 onChange={() => neuteredChange(option.value)}
               />
             ))}
+            </RadioWrapper>
           </ContentWrapper>
 
           <FixedButtonContainer>
@@ -221,35 +225,54 @@ const PageWrapper = styled.div`
 const MypageHeader = styled.h2`
   width: 100%;
   height: 3.25rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
   color: ${(props) => props.theme.colors['grey11']};
 `;
 
 const BackIconWrapper = styled.div`
+  margin-left: 1.25rem;
+  margin-right: 5.313rem;
 `;
 
 const BackIcon = styled(Image)`
+
 `;
 
 const ContentWrapper = styled.div`
-  width: 100%;
+  width: 312px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom : 1.5rem
+
 `;
 
 const ContentHalfWrapper = styled.div`
   width: 50%;
+  margin-bottom : 1.5rem;
 `;
 
 const RowContainer = styled.div`
+  width: 312px;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const Title = styled.h2`
+  width: 100%;
+  margin-bottom: 0.5rem;
   color: ${(props) => props.theme.colors['grey11']};
-
 `;
+
+const RadioWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
 
 const FixedButtonContainer = styled.div`
   position: absolute;
