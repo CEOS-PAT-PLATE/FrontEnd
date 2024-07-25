@@ -44,10 +44,9 @@ export default function Page() {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       try {
+        router.push('/'); 
         await userAPI.logout(accessToken);
         localStorage.clear(); // 모든 아이템 제거
-        setUser({ loginMethod: '', name: '', email: '', receiveAd: false }); // 사용자 상태 초기화
-        router.push('/'); 
       } catch (error) {
         console.error('로그아웃 실패', error);
       }
@@ -55,6 +54,16 @@ export default function Page() {
       console.error('No access token found');
     }
   };
+
+  const handleUserDelete = async () => {
+      try {
+        router.push('/'); 
+        await userAPI.userDelete();
+        localStorage.clear(); // 모든 아이템 제거
+      } catch (error) {
+        console.error('로그아웃 실패', error);
+      }
+  }; 
 
 
   const userInfoList = [
@@ -87,7 +96,7 @@ export default function Page() {
         <Divider/>
         <ClickkWrapper>
           <Title onClick={handleLogout}>로그아웃</Title>
-          <Title>회원 탈퇴</Title>
+          <Title onClick={handleUserDelete}>회원 탈퇴</Title>
         </ClickkWrapper>
       </ContentWrapper>
     </PageWrapper>
