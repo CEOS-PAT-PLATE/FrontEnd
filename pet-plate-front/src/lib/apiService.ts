@@ -1,7 +1,6 @@
 import axiosInstance from './axiosInstance';
 import { nutrientAPI } from '@api/nutrientAPI';
-import {dailyMealsAPI} from '@api/dailyMealsAPI';
-
+import { dailyMealsAPI } from '@api/dailyMealsAPI';
 
 // 식단 저장 -> 분석 진행
 export const saveDailyMealsNutrients = async (petId: number) => {
@@ -9,14 +8,14 @@ export const saveDailyMealsNutrients = async (petId: number) => {
   console.log(isDoneAlready);
 
   try {
-   if (!isDoneAlready) {
-      const response = await axiosInstance.post(`/pet/${petId}/dailyMeals/nutrients`);
-      console.log(response);
+    //  if (!isDoneAlready) {
+    const response = await axiosInstance.post(`/pet/${petId}/dailyMeals/nutrients`);
+    console.log(response);
 
-      return response;
-    } else {
-      return null;
-    }
+    return response;
+    //   } else {
+    //    return null;
+    //  }
   } catch (e: any) {
     if (e.response.status === 400) {
       localStorage.setItem('isDoneAlready', '분석완료');
@@ -67,11 +66,9 @@ const petData = {
   neutering: 'NEUTERED',
 };
 
+// 식사 내역 전체 삭제
 
-// 식사 내역 전체 삭제 
-
-export const handleDeleteAllMeals = async (petId:number, dailyMealId:number) => {
-
+export const handleDeleteAllMeals = async (petId: number, dailyMealId: number) => {
   try {
     await Promise.all([
       dailyMealsAPI.deleteBookmarkRawMeals(petId, dailyMealId),
@@ -85,5 +82,5 @@ export const handleDeleteAllMeals = async (petId:number, dailyMealId:number) => 
   } catch (error) {
     console.error('식단 삭제 중 오류 발생:', error);
     alert('식단 삭제 중 오류가 발생했습니다.');
-  } 
+  }
 };
