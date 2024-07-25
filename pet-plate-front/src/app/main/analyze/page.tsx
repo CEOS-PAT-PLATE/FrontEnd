@@ -98,7 +98,7 @@ export default function Page() {
 
   return (
     <PageWrapper>
-      <MainHeader />
+      <MainHeader  backgroundColor={''}/>
       <InfoCardContainer>
         <InfoCard src={infoCard} alt="info" />
         <FixedBtnWrapper>
