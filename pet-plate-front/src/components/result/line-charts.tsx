@@ -24,7 +24,7 @@ function NutrientBar({
   color,
   markerStart,
   markerEnd,
-  unit
+  unit,
 }: {
   label: string;
   intake: number;
@@ -34,7 +34,7 @@ function NutrientBar({
   markerEnd: number;
   unit: string;
 }) {
-  const maxNutrientValue = (recommended * 10) / 6;
+  const maxNutrientValue = (recommended * 10) /6;
   const normalizedIntake = Math.min(intake, maxNutrientValue);
 
   const chartData = {
@@ -82,27 +82,34 @@ function NutrientBar({
     maintainAspectRatio: false,
   };
 
-  console.log(markerStart, markerEnd);
+  const startPosition = (markerStart / maxNutrientValue) * 302; // 302는 그래프의 최대 너비로
+  const endPosition = (markerEnd / maxNutrientValue) * 302;
+  const rangeWidth = endPosition - startPosition;
 
   return (
     <BarWrapper>
       <BarBackground />
-    < NutrientTextWrapper>
-      <NutrientNameText>{label}</NutrientNameText>
-      <NutrientText>
-        {intake}{unit}
-      </NutrientText>
+      <NutrientTextWrapper>
+        <NutrientNameText>
+          {label}
+        </NutrientNameText>
+        <NutrientText>
+          {intake}
+          {unit}
+        </NutrientText>
       </NutrientTextWrapper>
-      <NutrientRange $length={markerEnd - markerStart} $position={markerStart}>
-       <NutrientRangeText $length={markerEnd - markerStart}>적정 범위</NutrientRangeText> 
+      <NutrientRange $length={rangeWidth} $position={startPosition}>
+        <NutrientRangeText $length={rangeWidth}>적정 범위</NutrientRangeText>
         <MarkerStart />
-        <MarkerStartText $position={markerStart}$length={markerEnd - markerStart} >{markerStart}</MarkerStartText> 
+        <MarkerStartText $position={startPosition} $length={rangeWidth}>
+          {markerStart.toFixed(1)}
+        </MarkerStartText>
         <MarkerEnd />
-        <MarkerEndText $position={markerEnd} $length={markerEnd - markerStart}>{markerEnd}</MarkerEndText> 
+        <MarkerEndText $position={endPosition} $length={rangeWidth}>
+          {markerEnd.toFixed(1)}
+        </MarkerEndText>
       </NutrientRange>
-     
       <Bar data={chartData} options={options} />
-    
     </BarWrapper>
   );
 }
@@ -113,9 +120,9 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
   switch (group) {
     case 1: // 기본 영양소
       defaultNutrients = [
-        { name: '탄수화물', amount: 0, properAmount: 0, markerStart: 291.9, markerEnd: 456.5,units: 'g' },
-        { name: '단백질', amount: 0, properAmount: 0, markerStart: 78.6, markerEnd: 154.5,  units: 'g' },
-        { name: '지방', amount: 0, properAmount: 0, markerStart: 36.3, markerEnd: 145.5,  units: 'g' },
+        { name: '탄수화물', amount: 0, properAmount: 0, markerStart: 45.5, markerEnd: 496, units: 'g' },
+        { name: '단백질', amount: 0, properAmount: 0, markerStart: 7.86, markerEnd: 15.72, units: 'g' },
+        { name: '지방', amount: 0, properAmount: 0, markerStart: 3.63, markerEnd: 5.445, units: 'g' },
       ];
       break;
     case 2: // 미네랄
@@ -137,7 +144,7 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
 
   const mergedNutrients = defaultNutrients.map((defaultNutrient) => {
     const foundNutrient = nutrientData.find((nutrient) => nutrient.name === defaultNutrient.name);
-    return foundNutrient ? { ...defaultNutrient, ...foundNutrient, } : defaultNutrient;
+    return foundNutrient ? { ...defaultNutrient, ...foundNutrient } : defaultNutrient;
   });
 
   return (
@@ -146,8 +153,8 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
         <NutrientBar
           key={index}
           label={nutrient.name}
-          intake={Math.round(Math.abs(nutrient.amount))}
-          recommended={Math.round(nutrient.properAmount)}
+          intake={nutrient.amount.toFixed(1)}
+          recommended={nutrient.properAmount.toFixed(1)}
           color={index % 2 === 0 ? '#40C97F' : '#FF4D46'}
           markerStart={nutrient.markerStart}
           markerEnd={nutrient.markerEnd}
@@ -161,15 +168,20 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
 const LineWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 40px;
+  
+ 
 `;
 
 const BarWrapper = styled.div`
   position: relative;
   height: 40px;
-  margin-bottom: 12px;
+  margin-bottom: 32px;
+  margin-top:0px;
   z-index: 20;
-  max-width: 302px;
-`;
+  max-width: 320px;
+
+`;;
 
 const BarBackground = styled.div`
   background-color: #eceef0;
@@ -191,30 +203,29 @@ const NutrientTextWrapper = styled.div`
   position: absolute;
   width: 302px;
   top: -14px;
+
+   margin-top: 5px;
 `;
 
 const NutrientText = styled.div`
-color: var(--grey11, #36393C);
+  color: var(--grey11, #36393c);
+  font-family: SUIT;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 160%;
 
-/* body2_semibold_14pt */
-font-family: SUIT;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: 160%; /* 22.4px */
-
+  margin-top: -15px;
+  
 `;
 
-const NutrientNameText = styled.div`  
- color: var(--grey9, #64696E);
+const NutrientNameText = styled.div`
+  color: var(--grey9, #64696e);
   margin-right: 5px;
-
-/* body2_regular_14pt */
-font-family: SUIT;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 160%; /* 22.4px */
+  font-family: SUIT;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 160%;
+  margin-top: -15px;
 `;
 
 const NutrientRange = styled.div<{ $length: number; $position: number }>`
@@ -227,25 +238,20 @@ const NutrientRange = styled.div<{ $length: number; $position: number }>`
   background: rgba(100, 105, 110, 0.2);
   display: flex;
   align-items: center;
-
- 
 `;
 
 const NutrientRangeText = styled.div<{ $length: number }>`
-position: absolute;
+  position: absolute;
   top: -16px;
-  left: ${({ $length }) => $length/2-19}px;
-
-  // 글자
+  left: ${({ $length }) => $length / 2 - 19}px;
   color: var(--grey6, #afb8c1);
-
-  /* caption_regular_10pt */
   font-family: SUIT;
   font-size: 10px;
-  font-style: normal;
   font-weight: 400;
-  line-height: 160%; /* 16px */
+  line-height: 160%;
+  width: 38px;
 `;
+
 const Marker = styled.div`
   width: 2px;
   height: 100%;
@@ -261,35 +267,26 @@ const MarkerEnd = styled(Marker)`
   right: 0;
 `;
 
-
-const MarkerStartText = styled.div<{ $position: number, $length: number }>`
+const MarkerStartText = styled.div<{ $position: number; $length: number }>`
   position: absolute;
-  top: +13px;
-  left: 0px;
+  top: 13px;
   width: 38px;
 
-color: var(--grey6, #AFB8C1);
-
-/* caption_regular_10pt */
-font-family: SUIT;
-font-size: 10px;
-font-style: normal;
-font-weight: 400;
-line-height: 160%; /* 16px */
+  left: -10px;
+  color: var(--grey6, #afb8c1);
+  font-family: SUIT;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 160%;
 `;
 
-const MarkerEndText = styled.div<{ $position: number, $length: number }>`
+const MarkerEndText = styled.div<{ $position: number; $length: number }>`
   position: absolute;
-  top: +13px;
-  right: -27px;
-  width: 38px;
-
-color: var(--grey6, #AFB8C1);
-
-/* caption_regular_10pt */
-font-family: SUIT;
-font-size: 10px;
-font-style: normal;
-font-weight: 400;
-line-height: 160%; /* 16px */
+  top: 13px;
+  right: -10px;
+  color: var(--grey6, #afb8c1);
+  font-family: SUIT;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 160%;
 `;

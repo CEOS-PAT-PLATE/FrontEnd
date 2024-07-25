@@ -181,6 +181,7 @@ const Wrapper = styled.div`
 
 
 const Content = styled.div`
+
   flex: 1;
   overflow-y: auto;
 `;
@@ -340,8 +341,6 @@ letter-spacing: -0.2px;
 `;
 
 const ChartWrapper = styled.div`
-  padding-bottom:38px;
-
 
     height:700px;
     top: 350px;
@@ -352,7 +351,7 @@ const ChartWrapper = styled.div`
 
     `;
     const SectionBorder = styled.div`
-  width: 280px;
+  width: 330px;
   background: #dde0e4;
   height: 1px;
   margin-top: 8px;
