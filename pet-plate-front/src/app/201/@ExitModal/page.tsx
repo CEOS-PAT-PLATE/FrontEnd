@@ -72,7 +72,7 @@ export default function Page() {
       setIsExitModalOpen(false);
     } else {
       router.push('/main/analyze');
-      //setIsExitModalOpen(false);
+      setIsExitModalOpen(false);
     }
   };
 
