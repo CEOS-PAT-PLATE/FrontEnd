@@ -20,7 +20,6 @@ ChartJS.register(LinearScale, CategoryScale, BarElement, PointElement, Legend, T
 function NutrientBar({
   label,
   intake,
-  recommended,
   color,
   markerStart,
   markerEnd,
@@ -29,15 +28,13 @@ function NutrientBar({
 }: {
   label: string;
   intake: number;
-  recommended: number;
   color: string;
   markerStart: number;
   markerEnd: number;
   unit: string;
   ratio: number;
 }) {
-  const NutrientBarlength= (recommended * 10) /6;
-  const maxNutrientValue = (recommended * 10) /ratio;
+  const maxNutrientValue = ( markerStart * 10) /ratio;
   const normalizedIntake = Math.min(intake, maxNutrientValue);
 
   const chartData = {
@@ -165,10 +162,10 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           markerEnd: 2.64,
           units: 'g',
           color: '#40C97F',
-          ratio: 4.9,
+          ratio: 5,
 
         },
-        { name: '인', amount: 0, properAmount: 0, markerStart: 1.04, markerEnd: 2.08, units: 'g', color: '#40C97F',          ratio: 4.8,
+        { name: '인', amount: 0, properAmount: 0, markerStart: 1.04, markerEnd: 2.08, units: 'g', color: '#40C97F',          ratio: 5,
         },
       ];
       break;
@@ -194,7 +191,7 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           markerEnd: 1437.52,
           units: 'IU',
           color: '#FF4D46',
-          ratio: 1,
+          ratio: 0.21,
         },
         {
           name: '비타민 E',
@@ -224,7 +221,6 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           key={index}
           label={nutrient.name}
           intake={nutrient.amount.toFixed(1)}
-          recommended={nutrient.properAmount.toFixed(1)}
           markerStart={nutrient.markerStart}
           markerEnd={nutrient.markerEnd}
           unit={nutrient.units}
