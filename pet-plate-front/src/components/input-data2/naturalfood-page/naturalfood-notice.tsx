@@ -33,7 +33,7 @@ export default function InfoCardAndButton() {
         
         <NaturalInfoCardImage>
           <Head>자연식이 뭔지 모르겠어요!</Head>
-          <HeadInfo>펫플레이트의 자연식은 생식과 생 간식을 의미해요. 즉, 가열하지 않은, 날 것 그대로 급여하는 음식으로 사람과 강아지 둘 다 먹을 수 있는 음식이에요.</HeadInfo>
+          <HeadInfo>펫플레이트의 자연식은 생식과 생 간식을 의미해요. 즉, 가열하지 않은, 날 것 그대로 급여하는 음식으로 사람과 반려견 둘 다 먹을 수 있는 음식이에요.</HeadInfo>
           {foodCategories.map((category, index) => (
             <div key={index}>
               <CategoryTitle>{category.title}</CategoryTitle>
