@@ -1,14 +1,15 @@
-'use client'
+'use client';
 
-import styled from "styled-components"
-import Image from "next/image"
-import Link from "next/link"
-import backIcon from "@public/svg/back-button.svg?url"
+import styled from "styled-components";
+import Image from "next/image";
+import Link from "next/link";
+import backIcon from "@public/svg/back-button.svg?url";
 import React, { useEffect } from 'react';
-import userAPI from "@api/userAPI"
-import { userDataState } from '@lib/atoms'
-import { useRecoilState } from "recoil"
-import toggle from '@public/svg/toggle.svg?url'
+import userAPI from "@api/userAPI";
+import { userDataState } from '@lib/atoms';
+import { useRecoilState } from "recoil";
+import toggle from '@public/svg/toggle.svg?url';
+import { useRouter } from 'next/navigation';
 
 interface UserData {
   loginMethod: string,
@@ -17,8 +18,9 @@ interface UserData {
   receiveAd: boolean    
 }
 
-export default function page() {
-  const [user, setUser] = useRecoilState<UserData>(userDataState)
+export default function Page() {
+  const [user, setUser] = useRecoilState<UserData>(userDataState);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -28,7 +30,7 @@ export default function page() {
         setUser(userData);
 
         if (userData) {
-          console.log(user)
+          console.log(user);
         }
       } catch (error) {
         console.error('유저 정보 조회 실패', error);
@@ -38,11 +40,28 @@ export default function page() {
     fetchUser();
   }, []);
 
+  const handleLogout = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      try {
+        await userAPI.logout(accessToken);
+        localStorage.clear(); // 모든 아이템 제거
+        setUser({ loginMethod: '', name: '', email: '', receiveAd: false }); // 사용자 상태 초기화
+        router.push('/'); 
+      } catch (error) {
+        console.error('로그아웃 실패', error);
+      }
+    } else {
+      console.error('No access token found');
+    }
+  };
+
+
   const userInfoList = [
     { title: '로그인 방식', data: user.loginMethod },
     { title: '이름', data: user.name },
     { title: '이메일', data: user.email },
-  ]
+  ];
 
   return (
     <PageWrapper>
@@ -67,12 +86,12 @@ export default function page() {
         </ReceiveAdWrapper>
         <Divider/>
         <ClickkWrapper>
-          <Title>로그아웃</Title>
+          <Title onClick={handleLogout}>로그아웃</Title>
           <Title>회원 탈퇴</Title>
         </ClickkWrapper>
       </ContentWrapper>
     </PageWrapper>
-  )
+  );
 }
 
 const PageWrapper = styled.div`
@@ -97,9 +116,7 @@ const BackIconWrapper = styled(Link)`
   margin-right: 6.688rem;
 `;
 
-const BackIcon = styled(Image)`
-
-`;
+const BackIcon = styled(Image)``;
 
 const ContentWrapper = styled.div`
   width: 100%;
@@ -127,6 +144,7 @@ const Title = styled.div`
   line-height: 160%;
   color: ${(props) => props.theme.colors['grey7']};
   margin-bottom: 0.5rem;
+  cursor: pointer;
 `;
 
 const Info = styled.div`
@@ -152,7 +170,8 @@ const ClickkWrapper = styled.div`
   gap : 0.813rem;
   margin: 1.75rem 0;
 `
+
 const Toggle = styled(Image)`
   margin-left: 7.125rem;
   align-items: center;
-`
+`;
