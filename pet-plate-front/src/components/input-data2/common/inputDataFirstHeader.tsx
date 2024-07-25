@@ -17,12 +17,12 @@ export default function InputDataFirstHeader({ onClickBackButton }: InputDataFir
   const router = useRouter();
 
   const handleOnclick = () => {
-    router.push('/main/analyze-info');
+    router.push('/main/analyze');
   };
 
   return (
     <HeaderWrapper>
-      <BackButtonImage src={BackButton} alt="back-button" onClick={onClickBackButton} />
+      <BackButtonImage src={BackButton} alt="back-button" onClick={handleOnclick} />
       <Header>반려견 식단 입력</Header>
       {/*
       <ExitButtonWrapper onClick={handleOnclick}>
@@ -33,19 +33,18 @@ export default function InputDataFirstHeader({ onClickBackButton }: InputDataFir
 }
 
 const HeaderWrapper = styled.div`
-position:absolute;
-margin-top: 48px;
-display: flex;
-width: 360px;
-height: 52px;
-padding: 13px 20px;
-justify-content: center;
-align-items: flex-start;
-gap: 83px;
-flex-shrink: 0;
-left:-55px;
-z-index: 100;
-  
+  position: absolute;
+  margin-top: 48px;
+  display: flex;
+  width: 360px;
+  height: 52px;
+  padding: 13px 20px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 83px;
+  flex-shrink: 0;
+  left: -55px;
+  z-index: 100;
 `;
 
 const BackButtonImage = styled(Image)`
@@ -55,15 +54,15 @@ const BackButtonImage = styled(Image)`
 const ExitButtonImage = styled(Image)``;
 
 const Header = styled.h2`
- color: var(--black, #191919);
-text-align: center;
+  color: var(--black, #191919);
+  text-align: center;
 
-/* title2_regular_16pt */
-font-family: SUIT;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 160%; /* 25.6px */
+  /* title2_regular_16pt */
+  font-family: SUIT;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 25.6px */
 `;
 
 const ExitButtonWrapper = styled.div`
