@@ -61,7 +61,7 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
       console.log('petInfo:', petInfo);
     }
     setPetName(petInfo?.name);
-    
+
 
     setPetId(petId);
     setDailyMealId(dailyMealId);
@@ -388,12 +388,13 @@ const SymptomItem = styled.li`
   width: 256px;
 `;
 
-const SymptomIcon = styled.img`
+const SymptomIcon = styled(Image)`
   width: 36px;
   height: 36px;
   background-size: contain;
   margin-right: 15px;
 `;
+
 
 const SymptomName = styled.div`
   width: 165px;
