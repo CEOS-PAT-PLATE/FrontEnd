@@ -48,11 +48,10 @@ export default function AddButton() {
 
 const AddPlateButtonImage = styled(Image)`
     position:relative;
-    top:568px;
+    top:595px;
     left: 83px;
 z-index: 100;
-    
-    margin: 20px;
+    margin:20px;
     cursor: pointer;
  
 `;
