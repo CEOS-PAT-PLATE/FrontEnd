@@ -129,7 +129,7 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           markerEnd: 496.31,
           units: 'g',
           color: '#FF4D46',
-          ratio: 6,
+          ratio: 5.9,
         },
         {
           name: '단백질',
@@ -139,7 +139,7 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           markerEnd: 93.62,
           units: 'g',
           color: '#40C97F',
-          ratio: 5.1,
+          ratio: 5,
 
         },
         {
@@ -150,7 +150,7 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           markerEnd: 24.99,
           units: 'g',
           color: '#40C97F',
-          ratio: 5.9,
+          ratio: 5.7,
 
         },
       ];
@@ -165,10 +165,10 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           markerEnd: 2.64,
           units: 'g',
           color: '#40C97F',
-          ratio: 5,
+          ratio: 4.9,
 
         },
-        { name: '인', amount: 0, properAmount: 0, markerStart: 1.04, markerEnd: 2.08, units: 'g', color: '#40C97F',          ratio: 4.9,
+        { name: '인', amount: 0, properAmount: 0, markerStart: 1.04, markerEnd: 2.08, units: 'g', color: '#40C97F',          ratio: 4.8,
         },
       ];
       break;
