@@ -10,7 +10,7 @@ import profileIcon from '@public/svg/profile_grey.svg?url';
 import NavbarFooter from '@components/main/navbarFooter';
 
 export default function Page() {
-  const [petName, setPetName] = useState<string>('김백순'); // 디폴트 값 설정
+  const [petName, setPetName] = useState<string>('김백순'); 
 
   const buttonContent = (
     <>
