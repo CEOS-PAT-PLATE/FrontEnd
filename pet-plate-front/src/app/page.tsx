@@ -29,12 +29,10 @@ export default function Home() {
   }, []);
 
   const loginNaver = () => {
-    if (naverAuthUrl) {
-      window.location.href = naverAuthUrl;
+    if (naverAuthUrl && typeof window !== 'undefined') {
+        window.location.href = naverAuthUrl;
     }
   };
-
-    console.log(window.location.href);
 
     const buttonContent = (
       <>
