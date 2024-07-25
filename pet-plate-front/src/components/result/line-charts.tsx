@@ -120,22 +120,22 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
   switch (group) {
     case 1: // 기본 영양소
       defaultNutrients = [
-        { name: '탄수화물', amount: 0, properAmount: 0, markerStart: 45.5, markerEnd: 496, units: 'g' },
-        { name: '단백질', amount: 0, properAmount: 0, markerStart: 7.86, markerEnd: 15.72, units: 'g' },
-        { name: '지방', amount: 0, properAmount: 0, markerStart: 3.63, markerEnd: 5.445, units: 'g' },
+        { name: '탄수화물', amount: 0, properAmount: 0, markerStart: 45.5, markerEnd: 496, units: 'g' ,color:'#FF4D46'},
+        { name: '단백질', amount: 0, properAmount: 0, markerStart: 7.86, markerEnd: 15.72, units: 'g',color:'#40C97F' },
+        { name: '지방', amount: 0, properAmount: 0, markerStart: 3.63, markerEnd: 5.445, units: 'g',color:'#40C97F' },
       ];
       break;
     case 2: // 미네랄
       defaultNutrients = [
-        { name: '칼슘', amount: 0, properAmount: 0, markerStart: 288, markerEnd: 1144.46, units: 'mg' },
-        { name: '인', amount: 0, properAmount: 0, markerStart: 357, markerEnd: 976.87, units: 'mg' },
+        { name: '칼슘', amount: 0, properAmount: 0, markerStart: 288, markerEnd: 1144.46, units: 'mg',color:'#40C97F' },
+        { name: '인', amount: 0, properAmount: 0, markerStart: 357, markerEnd: 976.87, units: 'mg',color:'#40C97F' },
       ];
       break;
     case 3: // 비타민
       defaultNutrients = [
-        { name: '비타민 A', amount: 0, properAmount: 0, markerStart: 3783, markerEnd: 18915, units: 'IU' },
-        { name: '비타민 D', amount: 0, properAmount: 0, markerStart: 30, markerEnd: 300, units: 'IU' },
-        { name: '비타민 E', amount: 0, properAmount: 0, markerStart: 8.1, markerEnd: 81, units: 'IU' },
+        { name: '비타민 A', amount: 0, properAmount: 0, markerStart: 3783, markerEnd: 18915, units: 'IU',color:'#FF4D46' },
+        { name: '비타민 D', amount: 0, properAmount: 0, markerStart: 30, markerEnd: 300, units: 'IU',color:'#FF4D46' },
+        { name: '비타민 E', amount: 0, properAmount: 0, markerStart: 8.1, markerEnd: 81, units: 'IU',color:'#40C97F' },
       ];
       break;
     default:
@@ -155,10 +155,10 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           label={nutrient.name}
           intake={nutrient.amount.toFixed(1)}
           recommended={nutrient.properAmount.toFixed(1)}
-          color={index % 2 === 0 ? '#40C97F' : '#FF4D46'}
           markerStart={nutrient.markerStart}
           markerEnd={nutrient.markerEnd}
           unit={nutrient.units}
+          color={nutrient.color}
         />
       ))}
     </LineWrapper>
