@@ -137,8 +137,10 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
             <div key={group.nutrientName}>
               <NutrientInfoSection nutrient={group.nutrientName} index={index} />
               <ContainerWrapper>
-                <Text1>비슷한 고민을 가진 반려인들은</Text1>
-                <Text2>이 영양제를 많이 써요.</Text2>
+                <Text1>비슷한 고민을 가진 반려인들은 
+                <br />
+                  이 영양제를 많이 써요.
+                  </Text1>
                 <Container>
                   {group.drugResponseDtoList.length > 0 ? (
                     group.drugResponseDtoList.map((supplement) => (
@@ -274,7 +276,6 @@ const Content = styled.div`
 `;
 
 const ContainerWrapper = styled.div`
-  padding-top: 10px;
   margin-top: 20px;
   height: auto;
   min-width: 360px;
@@ -287,7 +288,7 @@ const Container = styled.div`
   height: auto;
   min-width: 360px;
   padding: 16px;
-  margin-top: 54px;
+  margin-top: 104px;
   overflow-y: auto;
 `;
 
@@ -369,6 +370,7 @@ const Text1 = styled.div`
   background: var(--50, #ecfaf2);
   color: var(--700, #26784c);
   padding: 0px 16px;
+  margin-top: 36px;
 `;
 
 const Text2 = styled.div`
