@@ -12,11 +12,15 @@ export const userAPI = {
     return await axiosInstance.post('/auth/logout', null, {
         headers: {
             accessToken,
-        },
-    });
-},
+        }}
+    )},
 
+    //회원 탈퇴
+    userDelete: async () => {
+        return await axiosInstance.delete(`/users/delete`);
+    }
 }
+
 /**
    * 
    * 

@@ -3,20 +3,36 @@
 import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
+import {useState, useEffect} from 'react';
 
 import signUpGraphic from '@public/svg/signup1.svg?url';
 import mainLogo from '@public/svg/main-logo.svg?url';
 import NaverLogo from '@public/svg/Naver.svg?url';
 import GapButton from '@components/main/gapbtn';
+import React from 'react';
 
 export default function Home() {
-  if (typeof window !== 'undefined') {
-    const loginNaver = () => {
-      window.location.href = NAVER_AUTH_URL;
-    };
+  const [naverAuthUrl, setNaverAuthUrl] = useState('');
 
-    const API_BASE_URL = 'https://apitest.petplate.kr';
-    const NAVER_AUTH_URL = API_BASE_URL + '/oauth2/authorization/naver?redirect_uri=' + window.location.href;
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const API_BASE_URL = 'https://apitest.petplate.kr';
+      const NAVER_AUTH_URL = `${API_BASE_URL}/oauth2/authorization/naver?redirect_uri=${window.location.href}`;
+      setNaverAuthUrl(NAVER_AUTH_URL);
+
+      const reloaded = sessionStorage.getItem('reloaded');
+      if (!reloaded) {
+        sessionStorage.setItem('reloaded', 'true');
+        window.location.reload();
+      }
+    }
+  }, []);
+
+  const loginNaver = () => {
+    if (naverAuthUrl) {
+      window.location.href = naverAuthUrl;
+    }
+  };
 
     console.log(window.location.href);
 
@@ -48,7 +64,7 @@ export default function Home() {
       </PageWrapper>
     );
   }
-}
+
 
 const PageWrapper = styled.div`
   width: 100%;
