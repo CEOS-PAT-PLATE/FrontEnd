@@ -1,12 +1,27 @@
-import Image from 'next/image';
-import 고관절 from '@public/svg/고관절.svg?url';
-import 면역 from '@public/svg/면역.svg?url';
-import 모질 from '@public/svg/모질.svg?url';
-import 심혈관 from '@public/svg/심혈관.svg?url';
-import 야맹증 from '@public/svg/야맹증.svg?url';
-import 염증 from '@public/svg/염증.svg?url';
-import 피부 from '@public/svg/피부.svg?url';
-import 위장 from '@public/svg/위장.svg?url';
+import 근육 from '@public/svg/단백질/근육.svg?url'; 
+import 면역 from '@public/svg/단백질/면역.svg?url';
+import 모질 from '@public/svg/단백질/모질.svg?url';
+import 비만 from '@public/svg/단백질/비만.svg?url';
+import 성장저하 from '@public/svg/단백질/성장저하.svg?url';
+
+
+import 염증 from '@public/svg/지방/염증.svg?url';
+import 위장 from '@public/svg/지방/위장.svg?url';
+import 출혈 from '@public/svg/지방/출혈.svg?url';
+import 피부 from '@public/svg/지방/피부.svg?url';
+
+import 고관절 from '@public/svg/칼슘/고관절.svg?url';
+import 신장결석 from '@public/svg/칼슘/신장결석.svg?url';
+import 치아 from '@public/svg/칼슘/치아.svg?url';
+
+import 야맹증 from '@public/svg/비타민A/눈.svg?url';
+
+import 조직석회화 from '@public/svg/비타민D/조직석회화.svg?url';
+
+import 신경 from '@public/svg/비타민E/신경.svg?url';
+import 지용성비타민흡수방해 from '@public/svg/비타민E/지용성비타민흡수방해.svg?url';
+
+
 
 import styled from 'styled-components';
 
@@ -20,13 +35,13 @@ export const nutritionDeficientInfo = [
       {
         name: '성장 저하',
         description: '동일한 품종 / 나이의 다른 개들에 비해 작은 크기',
-        src: 고관절,
+        src: 성장저하,
       },
       {
         name: '근육 손실 및 약화',
         description:
           '눈에 띄는 금육량 감소가 생기면 일어나기, 걷기, 뛰기와 같은 활동에 어려움을 느끼거나 움직이려 할 때 떨림이 있어요',
-        src: 염증,
+        src: 근육,
       },
       {
         name: '모질 상태 불량 및 탈모',
@@ -44,6 +59,8 @@ export const nutritionDeficientInfo = [
     definition:
       '단백질은 아미노산으로 이루어진 큰 복합 분자로, 신체 조직과 기관의 구조, 기능, 조절에 필수적이에요. 조직의 형성과 수리, 효소와 호르몬의 생산, 면역 기능 지원에 중요한 역할을 하고 있어요.',
   },
+
+
   {
     nutrientName: '지방',
     title: '지방 (오메가-3 및 오메가-6)',
@@ -104,7 +121,7 @@ export const nutritionDeficientInfo = [
       {
         name: '치아 약화',
         description: '느슨하거나 빠진 치아, 먹거나 씹기 어려움, 구취 또는 염증이 있는 잇몸을 통해 알 수 있어요',
-        src: 면역,
+        src: 치아,
       },
     ],
     definition:
@@ -125,13 +142,13 @@ export const nutritionDeficientInfo = [
       {
         name: '치아 약화',
         description: '느슨하거나 빠진 치아, 먹거나 씹기 어려움, 구취 또는 염증이 있는 잇몸을 통해 알 수 있어요',
-        src: 면역,
+        src: 치아,
       },
       {
         name: '근육 약화',
         description:
           '눈에 띄는 금육량 감소가 생기면 일어나기, 걷기, 뛰기와 같은 활동에 어려움을 느끼거나 움직이려 할 때 떨림이 있어요',
-        src: 염증,
+        src: 근육,
       },
     ],
     definition:
@@ -193,7 +210,7 @@ export const nutritionDeficientInfo = [
         name: '근육 약화',
         description:
           '눈에 띄는 금육량 감소가 생기면 일어나기, 걷기, 뛰기와 같은 활동에 어려움을 느끼거나 움직이려 할 때 떨림이 있어요',
-        src: 염증,
+        src: 근육,
       },
     ],
     definition:
@@ -209,13 +226,13 @@ export const nutritionDeficientInfo = [
         name: '근육 약화',
         description:
           '눈에 띄는 금육량 감소가 생기면 일어나기, 걷기, 뛰기와 같은 활동에 어려움을 느끼거나 움직이려 할 때 떨림이 있어요',
-        src: 염증,
+        src: 근육,
       },
       {
         name: '신경 문제',
         description:
           '발작이나 떨림을 보이거나, 비협조적인 움직임 또는 마비를 겪는지 주의 깊게 관찰해보세요. 또한, 행동이나 의식의 갑작스러운 변화, 걷기 어려움, 균형을 잃는 모습, 또는 극심한 혼란이나 방향 감각 상실의 증상을 보이는지 확인해야 돼요',
-        src: 면역,
+        src: 신경,
       },
       {
         name: '시력 문제',
@@ -247,7 +264,7 @@ export const nutrientExcessInfo = [
       {
         name: '체중 증가 / 비만',
         description: '눈에 띄는 체중 증가와 지방 축적, 움직임의 어려움이나 숨 가쁨, 지방 덮개로 인해 눈에 띄지 않는 갈비뼈를 통해 알아차릴 수 있어요. 또한, BCS (Body Condition Score)를 확인해보는걸 추천드려요.',
-        src: 고관절,
+        src: 비만,
       },
     ],
     definition:
@@ -262,7 +279,7 @@ export const nutrientExcessInfo = [
       {
         name: '출혈 증가',
         description: '작은 상처나 부상에서 과도한 출혈, 빈번한 코피, 쉽게 멍이 드는지 여부로 인식할 수 있어요',
-        src: 염증,
+        src: 출혈,
       },
       {
         name: '위장 문제',
@@ -277,9 +294,11 @@ export const nutrientExcessInfo = [
       {
         name: '비만',
         description: '눈에 띄는 체중 증가와 지방 축적, 움직임의 어려움이나 숨 가쁨, 지방 덮개로 인해 눈에 띄지 않는 갈비뼈를 통해 알아차릴 수 있어요. 또한, BCS (Body Condition Score)를 확인해보는걸 추천드려요.',
-        src: 고관절,
+        src: 비만,
       },
     ],
+
+
     definition: '지방은 신체의 주요 에너지원이에요. 또한 세포막의 구조와 기능, 그리고 지용성 비타민의 흡수에 중요해요.',
     subDefinitions: [
       {
@@ -303,7 +322,7 @@ export const nutrientExcessInfo = [
       {
         name: '신장 결석',
         description: '배뇨 횟수가 증가하거나 소변에 피가 섞이는지, 배뇨 시 통증의 징후를 보이는지 확인하여 알아차릴 수 있어요',
-        src: 고관절,
+        src: 신장결석,
       },
       {
         name: '골격 이상',
@@ -328,7 +347,7 @@ export const nutrientExcessInfo = [
       {
         name: '신장 손상',
         description: '배뇨 횟수가 증가하거나 소변에 피가 섞이는지, 배뇨 시 통증의 징후를 보이는지 확인하여 알아차릴 수 있어요',
-        src: 고관절,
+        src: 신장결석,
       },
     ],
     definition:
@@ -363,12 +382,12 @@ export const nutrientExcessInfo = [
       {
         name: '신장 결석',
         description: '배뇨 횟수가 증가하거나 소변에 피가 섞이는지, 배뇨 시 통증의 징후를 보이는지 확인하여 알아차릴 수 있어요',
-        src: 고관절,
+        src: 신장결석,
       },
       {
         name: '조직 석회화',
         description: '특정 부위에 딱딱한 덩어리나 결절이 생기는지, 만질 때 통증이나 불편함을 느끼는지, 해당 부위의 움직임이 제한되는지를 관찰함으로써 알 수 있어요',
-        src: 고관절,
+        src: 조직석회화,
       },
       {
         name: '위장 문제',
@@ -393,7 +412,7 @@ export const nutrientExcessInfo = [
       {
         name: '지용성 비타민 흡수 방해',
         description: '비타민 E 과다 섭취는 다른 지용성 비타민(A, D, K)의 흡수를 방해할 수 있어요',
-        src: 위장,
+        src: 지용성비타민흡수방해,
       },
     ],
     definition:
