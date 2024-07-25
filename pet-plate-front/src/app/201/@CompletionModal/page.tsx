@@ -136,7 +136,8 @@ export const Modal = styled.div`
   flex-direction: column;
   gap: 14px;
   align-items: center;
-  height: 225px;
+  height: 203px;
+  max-height: 203px;
   width: 290px;
   justify-content: center;
   border-radius: 12px;
