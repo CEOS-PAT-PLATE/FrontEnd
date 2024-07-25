@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import SuggestionIcon from '@public/svg/건의하기.svg?url';
 import Image from 'next/image';
 
-const googleFormUrl = 'https://www.google.com/intl/ko_kr/forms/about/';
+const googleFormUrl = 'https://forms.gle/2BoA7Vk3NQMFSksr6';
 
 export default function SuggestionButton() {
   const handleClick = () => {
