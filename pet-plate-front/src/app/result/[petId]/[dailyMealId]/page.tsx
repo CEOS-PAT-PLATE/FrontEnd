@@ -429,7 +429,7 @@ const RecommendationButton = styled.button`
   color: white;
   cursor: pointer;
   font-family: SUIT;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 160%;
   outline: none;
