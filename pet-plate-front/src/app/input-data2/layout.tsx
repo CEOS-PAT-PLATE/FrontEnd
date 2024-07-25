@@ -7,8 +7,12 @@ import ExitButtonImage from '@style/input-data2//ExitButtonImage';
 import Content from '@style/input-data2//Content';
 import Wrapper from '@style/input-data2/Wrapper';
 import Notice from '@components/input-data2/common/notice';
+import { useRouter } from 'next/navigation';
+
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
+
+
   return (
     <>
       <Wrapper>
@@ -16,7 +20,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
           <NavbarContainer>
             <Navbar />
           </NavbarContainer>
-          <ExitButtonImage src={ExitButton} alt="exit-button" />
+          <ExitButtonImage src={ExitButton} alt="exit-button"/>
           <Content>{children}</Content>
         </GridContainer>
         <Notice />

@@ -3,6 +3,7 @@
 import styled from 'styled-components';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const ExitButtonStyleWrapper = styled(Image)`
   grid-area: exit-button; /* 이미지를 exit-button 영역에 배치 */
@@ -12,6 +13,7 @@ const ExitButtonStyleWrapper = styled(Image)`
   z-index: 6; /* 다른 요소보다 위에 배치 */
 `;
 
-export default function ExitButtonImage({ src, alt }: { src: string, alt: string }) {
-  return <ExitButtonStyleWrapper src={src} alt={alt} />;
+export default function ExitButtonImage({ src, alt }: { src: string; alt: string }) {
+  const router = useRouter();
+  return <ExitButtonStyleWrapper src={src} alt={alt} onClick={() => router.push(`/201`)} />;
 }
