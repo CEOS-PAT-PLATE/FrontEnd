@@ -25,6 +25,7 @@ function NutrientBar({
   markerStart,
   markerEnd,
   unit,
+  ratio
 }: {
   label: string;
   intake: number;
@@ -33,8 +34,10 @@ function NutrientBar({
   markerStart: number;
   markerEnd: number;
   unit: string;
+  ratio: number;
 }) {
-  const maxNutrientValue = (recommended * 10) /6;
+  const NutrientBarlength= (recommended * 10) /6;
+  const maxNutrientValue = (recommended * 10) /ratio;
   const normalizedIntake = Math.min(intake, maxNutrientValue);
 
   const chartData = {
@@ -90,9 +93,7 @@ function NutrientBar({
     <BarWrapper>
       <BarBackground />
       <NutrientTextWrapper>
-        <NutrientNameText>
-          {label}
-        </NutrientNameText>
+        <NutrientNameText>{label}</NutrientNameText>
         <NutrientText>
           {intake}
           {unit}
@@ -120,22 +121,91 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
   switch (group) {
     case 1: // 기본 영양소
       defaultNutrients = [
-        { name: '탄수화물', amount: 0, properAmount: 0, markerStart: 45.5, markerEnd: 496, units: 'g' ,color:'#FF4D46'},
-        { name: '단백질', amount: 0, properAmount: 0, markerStart: 7.86, markerEnd: 15.72, units: 'g',color:'#40C97F' },
-        { name: '지방', amount: 0, properAmount: 0, markerStart: 3.63, markerEnd: 5.445, units: 'g',color:'#40C97F' },
+        {
+          name: '탄수화물',
+          amount: 0,
+          properAmount: 0,
+          markerStart: 291.95,
+          markerEnd: 496.31,
+          units: 'g',
+          color: '#FF4D46',
+          ratio: 6,
+        },
+        {
+          name: '단백질',
+          amount: 0,
+          properAmount: 0,
+          markerStart: 46.81,
+          markerEnd: 93.62,
+          units: 'g',
+          color: '#40C97F',
+          ratio: 5.1,
+
+        },
+        {
+          name: '지방',
+          amount: 0,
+          properAmount: 0,
+          markerStart: 14.28,
+          markerEnd: 24.99,
+          units: 'g',
+          color: '#40C97F',
+          ratio: 5.9,
+
+        },
       ];
       break;
     case 2: // 미네랄
       defaultNutrients = [
-        { name: '칼슘', amount: 0, properAmount: 0, markerStart: 288, markerEnd: 1144.46, units: 'mg',color:'#40C97F' },
-        { name: '인', amount: 0, properAmount: 0, markerStart: 357, markerEnd: 976.87, units: 'mg',color:'#40C97F' },
+        {
+          name: '칼슘',
+          amount: 0,
+          properAmount: 0,
+          markerStart: 1.32,
+          markerEnd: 2.64,
+          units: 'g',
+          color: '#40C97F',
+          ratio: 5,
+
+        },
+        { name: '인', amount: 0, properAmount: 0, markerStart: 1.04, markerEnd: 2.08, units: 'g', color: '#40C97F',          ratio: 4.9,
+        },
       ];
       break;
     case 3: // 비타민
       defaultNutrients = [
-        { name: '비타민 A', amount: 0, properAmount: 0, markerStart: 3783, markerEnd: 18915, units: 'IU',color:'#FF4D46' },
-        { name: '비타민 D', amount: 0, properAmount: 0, markerStart: 30, markerEnd: 300, units: 'IU',color:'#FF4D46' },
-        { name: '비타민 E', amount: 0, properAmount: 0, markerStart: 8.1, markerEnd: 81, units: 'IU',color:'#40C97F' },
+        {
+          name: '비타민 A',
+          amount: 0,
+          properAmount: 0,
+          markerStart: 1579.38,
+          markerEnd: 7896.94,
+          units: 'IU',
+          color: '#FF4D46',
+          ratio: 2,
+          
+          
+        },
+        {
+          name: '비타민 D',
+          amount: 0,
+          properAmount: 143.75,
+          markerStart: 30,
+          markerEnd: 1437.52,
+          units: 'IU',
+          color: '#FF4D46',
+          ratio: 1,
+        },
+        {
+          name: '비타민 E',
+          amount: 0,
+          properAmount: 0,
+          markerStart: 9.45,
+          markerEnd: 94.57,
+          units: 'IU',
+          color: '#40C97F',
+          ratio: 1,
+        },
       ];
       break;
     default:
@@ -159,6 +229,7 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           markerEnd={nutrient.markerEnd}
           unit={nutrient.units}
           color={nutrient.color}
+          ratio={nutrient.ratio}
         />
       ))}
     </LineWrapper>
@@ -169,19 +240,16 @@ const LineWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 40px;
-  
- 
 `;
 
 const BarWrapper = styled.div`
   position: relative;
   height: 40px;
   margin-bottom: 32px;
-  margin-top:0px;
+  margin-top: 0px;
   z-index: 20;
   max-width: 320px;
-
-`;;
+`;
 
 const BarBackground = styled.div`
   background-color: #eceef0;
@@ -204,7 +272,7 @@ const NutrientTextWrapper = styled.div`
   width: 302px;
   top: -14px;
 
-   margin-top: 5px;
+  margin-top: 5px;
 `;
 
 const NutrientText = styled.div`
@@ -215,7 +283,6 @@ const NutrientText = styled.div`
   line-height: 160%;
 
   margin-top: -15px;
-  
 `;
 
 const NutrientNameText = styled.div`
