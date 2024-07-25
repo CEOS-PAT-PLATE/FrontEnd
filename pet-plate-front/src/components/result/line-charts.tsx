@@ -24,6 +24,7 @@ function NutrientBar({
   color,
   markerStart,
   markerEnd,
+  unit
 }: {
   label: string;
   intake: number;
@@ -31,6 +32,7 @@ function NutrientBar({
   color: string;
   markerStart: number;
   markerEnd: number;
+  unit: string;
 }) {
   const maxNutrientValue = (recommended * 10) / 6;
   const normalizedIntake = Math.min(intake, maxNutrientValue);
@@ -85,16 +87,22 @@ function NutrientBar({
   return (
     <BarWrapper>
       <BarBackground />
+    < NutrientTextWrapper>
+      <NutrientNameText>{label}</NutrientNameText>
+      <NutrientText>
+        {intake}{unit}
+      </NutrientText>
+      </NutrientTextWrapper>
       <NutrientRange $length={markerEnd - markerStart} $position={markerStart}>
        <NutrientRangeText $length={markerEnd - markerStart}>적정 범위</NutrientRangeText> 
         <MarkerStart />
+        <MarkerStartText $position={markerStart}$length={markerEnd - markerStart} >{markerStart}</MarkerStartText> 
         <MarkerEnd />
+        <MarkerEndText $position={markerEnd} $length={markerEnd - markerStart}>{markerEnd}</MarkerEndText> 
       </NutrientRange>
-      <NutrientNameText>{label}</NutrientNameText>
+     
       <Bar data={chartData} options={options} />
-      <NutrientText>
-        {intake}g / {recommended}g
-      </NutrientText>
+    
     </BarWrapper>
   );
 }
@@ -105,22 +113,22 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
   switch (group) {
     case 1: // 기본 영양소
       defaultNutrients = [
-        { name: '탄수화물', amount: 0, properAmount: 0, markerStart: 291.9, markerEnd: 456.5 },
-        { name: '단백질', amount: 0, properAmount: 0, markerStart: 78.6, markerEnd: 154.5 },
-        { name: '지방', amount: 0, properAmount: 0, markerStart: 36.3, markerEnd: 145.5 },
+        { name: '탄수화물', amount: 0, properAmount: 0, markerStart: 291.9, markerEnd: 456.5,units: 'g' },
+        { name: '단백질', amount: 0, properAmount: 0, markerStart: 78.6, markerEnd: 154.5,  units: 'g' },
+        { name: '지방', amount: 0, properAmount: 0, markerStart: 36.3, markerEnd: 145.5,  units: 'g' },
       ];
       break;
     case 2: // 미네랄
       defaultNutrients = [
-        { name: '칼슘', amount: 0, properAmount: 0, markerStart: 288, markerEnd: 1144.46 },
-        { name: '인', amount: 0, properAmount: 0, markerStart: 357, markerEnd: 976.87 },
+        { name: '칼슘', amount: 0, properAmount: 0, markerStart: 288, markerEnd: 1144.46, units: 'mg' },
+        { name: '인', amount: 0, properAmount: 0, markerStart: 357, markerEnd: 976.87, units: 'mg' },
       ];
       break;
     case 3: // 비타민
       defaultNutrients = [
-        { name: '비타민 A', amount: 0, properAmount: 0, markerStart: 3783, markerEnd: 18915 },
-        { name: '비타민 D', amount: 0, properAmount: 0, markerStart: 30, markerEnd: 300 },
-        { name: '비타민 E', amount: 0, properAmount: 0, markerStart: 8.1, markerEnd: 81 },
+        { name: '비타민 A', amount: 0, properAmount: 0, markerStart: 3783, markerEnd: 18915, units: 'IU' },
+        { name: '비타민 D', amount: 0, properAmount: 0, markerStart: 30, markerEnd: 300, units: 'IU' },
+        { name: '비타민 E', amount: 0, properAmount: 0, markerStart: 8.1, markerEnd: 81, units: 'IU' },
       ];
       break;
     default:
@@ -129,7 +137,7 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
 
   const mergedNutrients = defaultNutrients.map((defaultNutrient) => {
     const foundNutrient = nutrientData.find((nutrient) => nutrient.name === defaultNutrient.name);
-    return foundNutrient ? { ...defaultNutrient, ...foundNutrient } : defaultNutrient;
+    return foundNutrient ? { ...defaultNutrient, ...foundNutrient, } : defaultNutrient;
   });
 
   return (
@@ -143,6 +151,7 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           color={index % 2 === 0 ? '#40C97F' : '#FF4D46'}
           markerStart={nutrient.markerStart}
           markerEnd={nutrient.markerEnd}
+          unit={nutrient.units}
         />
       ))}
     </LineWrapper>
@@ -173,28 +182,45 @@ const BarBackground = styled.div`
   z-index: -10;
 `;
 
-const NutrientText = styled.div`
-  margin-top: -15px;
-  color: var(--grey8, #7c8389);
-  font-family: SUIT;
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 160%;
+const NutrientTextWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 5px;
+  position: absolute;
+  width: 302px;
+  top: -14px;
 `;
 
-const NutrientNameText = styled.div`
-  position: absolute;
-  
-  color: var(--grey11, #36393c);
-  font-family: SUIT;
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 160%;
+const NutrientText = styled.div`
+color: var(--grey11, #36393C);
+
+/* body2_semibold_14pt */
+font-family: SUIT;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 160%; /* 22.4px */
+
+`;
+
+const NutrientNameText = styled.div`  
+ color: var(--grey9, #64696E);
+  margin-right: 5px;
+
+/* body2_regular_14pt */
+font-family: SUIT;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 160%; /* 22.4px */
 `;
 
 const NutrientRange = styled.div<{ $length: number; $position: number }>`
   position: absolute;
   width: ${({ $length }) => $length}px;
+  max-width: ${({ $length }) => $length}px;
   height: 9.5px;
   top: 15px;
   left: ${({ $position }) => $position}px;
@@ -233,4 +259,37 @@ const MarkerStart = styled(Marker)`
 
 const MarkerEnd = styled(Marker)`
   right: 0;
+`;
+
+
+const MarkerStartText = styled.div<{ $position: number, $length: number }>`
+  position: absolute;
+  top: +13px;
+  left: 0px;
+  width: 38px;
+
+color: var(--grey6, #AFB8C1);
+
+/* caption_regular_10pt */
+font-family: SUIT;
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: 160%; /* 16px */
+`;
+
+const MarkerEndText = styled.div<{ $position: number, $length: number }>`
+  position: absolute;
+  top: +13px;
+  right: -27px;
+  width: 38px;
+
+color: var(--grey6, #AFB8C1);
+
+/* caption_regular_10pt */
+font-family: SUIT;
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: 160%; /* 16px */
 `;

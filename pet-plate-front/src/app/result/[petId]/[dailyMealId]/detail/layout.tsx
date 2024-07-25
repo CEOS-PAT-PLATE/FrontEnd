@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
-import Wrapper from '@style/input-data2/Wrapper';
 import { useRouter } from 'next/navigation';
 import { dailyMealsAPI } from '@api/dailyMealsAPI';
 import CancelButton from '@public/svg/cancel-button.svg?url';
@@ -169,6 +168,18 @@ export default function Layout({
   );
 }
 
+
+const Wrapper = styled.div`
+  background-color: ${(props) => props.theme.colors['grey1']}; // body 배경색 설정
+  width: 360px;
+  height: 800px;
+  position: absolute;
+  overflow-y:scroll;
+  overflow-x:hidden;
+`;
+
+
+
 const Content = styled.div`
   flex: 1;
   overflow-y: auto;
@@ -315,17 +326,24 @@ font-family: SUIT middle;
     `;
 
     const SectionTitle = styled.h2`
-  font-family: SUIT;
-  font-size: 16px;
-  font-weight: 600;
-  margin: 16px 0;
+color: var(--grey7, #959CA4);
+
+/* title1_semibold_18pt */
+font-family: SUIT;
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+line-height: 160%; /* 28.8px */
+letter-spacing: -0.2px;
+  margin-bottom:16px;
+  margin-top:24px;
 `;
 
 const ChartWrapper = styled.div`
-    padding: 0 16px;
+  padding-bottom:38px;
 
-    overflow-y: scroll;
-    height:440px;
+
+    height:700px;
     top: 350px;
     width: 302px;
     left:24px;
