@@ -22,17 +22,18 @@ function NutrientBar({
   intake,
   recommended,
   color,
+  markerStart,
+  markerEnd,
 }: {
   label: string;
   intake: number;
   recommended: number;
   color: string;
+  markerStart: number;
+  markerEnd: number;
 }) {
-let normalizedIntake=0;
-  if(intake>recommended*10/6)
-    {normalizedIntake = recommended*10/6;}
-  else{normalizedIntake = intake;}
- 
+  const maxNutrientValue = (recommended * 10) / 6;
+  const normalizedIntake = Math.min(intake, maxNutrientValue);
 
   const chartData = {
     labels: [label],
@@ -58,7 +59,7 @@ let normalizedIntake=0;
         grid: {
           display: false,
         },
-        max: recommended*10/6,
+        max: maxNutrientValue,
       },
       y: {
         display: false,
@@ -79,14 +80,17 @@ let normalizedIntake=0;
     maintainAspectRatio: false,
   };
 
+  console.log(markerStart, markerEnd);
+
   return (
     <BarWrapper>
       <BarBackground />
-      <NutrientRange>
-      <MarkerStart />
-      <MarkerMiddle />
-      <MarkerEnd />
-    </NutrientRange>      <NutrientNameText>{label}</NutrientNameText>
+      <NutrientRange $length={markerEnd - markerStart} $position={markerStart}>
+       <NutrientRangeText $length={markerEnd - markerStart}>적정 범위</NutrientRangeText> 
+        <MarkerStart />
+        <MarkerEnd />
+      </NutrientRange>
+      <NutrientNameText>{label}</NutrientNameText>
       <Bar data={chartData} options={options} />
       <NutrientText>
         {intake}g / {recommended}g
@@ -101,22 +105,22 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
   switch (group) {
     case 1: // 기본 영양소
       defaultNutrients = [
-        { name: '탄수화물', amount: 0, properAmount: 0 },
-        { name: '단백질', amount: 0, properAmount: 0 },
-        { name: '지방', amount: 0, properAmount: 0 },
+        { name: '탄수화물', amount: 0, properAmount: 0, markerStart: 291.9, markerEnd: 456.5 },
+        { name: '단백질', amount: 0, properAmount: 0, markerStart: 78.6, markerEnd: 154.5 },
+        { name: '지방', amount: 0, properAmount: 0, markerStart: 36.3, markerEnd: 145.5 },
       ];
       break;
     case 2: // 미네랄
       defaultNutrients = [
-        { name: '칼슘', amount: 0, properAmount: 0 },
-        { name: '인', amount: 0, properAmount: 0 },
+        { name: '칼슘', amount: 0, properAmount: 0, markerStart: 288, markerEnd: 1144.46 },
+        { name: '인', amount: 0, properAmount: 0, markerStart: 357, markerEnd: 976.87 },
       ];
       break;
     case 3: // 비타민
       defaultNutrients = [
-        { name: '비타민 A', amount: 0, properAmount: 0 },
-        { name: '비타민 D', amount: 0, properAmount: 0 },
-        { name: '비타민 E', amount: 0, properAmount: 0 },
+        { name: '비타민 A', amount: 0, properAmount: 0, markerStart: 3783, markerEnd: 18915 },
+        { name: '비타민 D', amount: 0, properAmount: 0, markerStart: 30, markerEnd: 300 },
+        { name: '비타민 E', amount: 0, properAmount: 0, markerStart: 8.1, markerEnd: 81 },
       ];
       break;
     default:
@@ -125,7 +129,7 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
 
   const mergedNutrients = defaultNutrients.map((defaultNutrient) => {
     const foundNutrient = nutrientData.find((nutrient) => nutrient.name === defaultNutrient.name);
-    return foundNutrient ? foundNutrient : defaultNutrient;
+    return foundNutrient ? { ...defaultNutrient, ...foundNutrient } : defaultNutrient;
   });
 
   return (
@@ -137,6 +141,8 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
           intake={Math.round(Math.abs(nutrient.amount))}
           recommended={Math.round(nutrient.properAmount)}
           color={index % 2 === 0 ? '#40C97F' : '#FF4D46'}
+          markerStart={nutrient.markerStart}
+          markerEnd={nutrient.markerEnd}
         />
       ))}
     </LineWrapper>
@@ -146,7 +152,6 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
 const LineWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
 `;
 
 const BarWrapper = styled.div`
@@ -155,8 +160,6 @@ const BarWrapper = styled.div`
   margin-bottom: 12px;
   z-index: 20;
   max-width: 302px;
-   
-
 `;
 
 const BarBackground = styled.div`
@@ -165,7 +168,7 @@ const BarBackground = styled.div`
   position: absolute;
   top: 16px;
   left: 0;
-  width: 270px;
+  width: 302px;
   height: 17%;
   z-index: -10;
 `;
@@ -175,49 +178,59 @@ const NutrientText = styled.div`
   color: var(--grey8, #7c8389);
   font-family: SUIT;
   font-size: 10px;
- font-weight: 400;
+  font-weight: 400;
   line-height: 160%;
-  `
+`;
 
-
-  const NutrientNameText = styled.div`
+const NutrientNameText = styled.div`
   position: absolute;
+  
   color: var(--grey11, #36393c);
   font-family: SUIT;
   font-size: 10px;
   font-weight: 400;
   line-height: 160%;
-;`
-
-
-// 적정 영양소 범위 표시 위한 요소
-const NutrientRange = styled.div`
-  position: relative;
-  width: 59px;
-  height: 10px;
-  flex-shrink: 0;
-  background: rgba(100, 105, 110, 0.20);
-  display: flex;
-  align-items: center;
 `;
 
-const Marker = styled.div`
+const NutrientRange = styled.div<{ $length: number; $position: number }>`
   position: absolute;
-width: 1px;
-background-color: var(--grey8, #7C8389);
+  width: ${({ $length }) => $length}px;
+  height: 9.5px;
+  top: 15px;
+  left: ${({ $position }) => $position}px;
+  background: rgba(100, 105, 110, 0.2);
+  display: flex;
+  align-items: center;
+
+ 
+`;
+
+const NutrientRangeText = styled.div<{ $length: number }>`
+position: absolute;
+  top: -16px;
+  left: ${({ $length }) => $length/2-19}px;
+
+  // 글자
+  color: var(--grey6, #afb8c1);
+
+  /* caption_regular_10pt */
+  font-family: SUIT;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 16px */
+`;
+const Marker = styled.div`
+  width: 2px;
   height: 100%;
+  background-color: var(--grey8, #7c8389);
+  position: absolute;
 `;
 
 const MarkerStart = styled(Marker)`
   left: 0;
 `;
 
-const MarkerMiddle = styled(Marker)`
-  left: 50%;
-  transform: translateX(-50%);
-`;
-
 const MarkerEnd = styled(Marker)`
   right: 0;
 `;
-
