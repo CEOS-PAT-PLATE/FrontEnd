@@ -7,57 +7,66 @@ interface radioListProps {
     onChange: () => void;
 }
 
-
 export default function radioLists({name, value, text, onChange} : radioListProps) {
   return (
     <RadioWrapper>
-        <input type="radio" name={name} value={value} onChange={onChange}/> 
-        <span>{text}</span>
+        <input type="radio" name={name} value={value} onChange={onChange} id={value}/> 
+        <label htmlFor={value}>{text}</label>
     </RadioWrapper>
   )
 }
 
 const RadioWrapper = styled.div`
-    width: 19.5rem;
-    height: 3rem;
-    border: solid 0.063rem ${(props) => props.theme.colors['grey5']};
-    border-radius: 0.5rem;
-    background-color: ${(props) => props.theme.colors['grey2']};
+    position: relative;
+    margin-bottom: 0.25rem;
 
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 0.75rem;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-    &:hover{
-        border: solid 0.063rem ${(props) => props.theme.colors['green-400']};
-        background-color: ${(props) => props.theme.colors['green-100']};
+    input {
+        display: none;
     }
 
-
-    input{
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        margin: 0;
-        border: 0.313rem solid ${(props) => props.theme.colors['grey5']};
-        border-radius: 50%;
-
-        &:checked{
-            border: 0.313rem solid ${(props) => props.theme.colors['green-400']};
-        }
-    }
-
-    span{
-        width: 16.25rem;
-        height: 1.625rem;
+    label {
+        position: relative;
+        border: solid 0.063rem ${(props) => props.theme.colors['grey5']}; 
+        border-radius: 0.5rem;
+        padding: 11px 16px 11px 40px;
+        width: 312px;
+        height: 48px;
         display: flex;
         align-items: center;
-        color: ${(props) => props.theme.colors['grey8']};
+        cursor: pointer;
 
         font-size: 1rem;
         font-weight: 400;
         line-height: 160%;
+        color: ${(props) => props.theme.colors['grey8']};
+
+        &:hover {
+            background-color: ${(props) => props.theme.colors['green-100']};
+            border: solid 0.063rem ${(props) => props.theme.colors['green-400']}; 
+            color: ${(props) => props.theme.colors['grey11']};
+        }
     }
-`
+
+    label:before {
+        content: '';
+        position: absolute;
+        left: 12px;
+        width: 10px;
+        height: 10px;
+        border: 5px solid ${(props) => props.theme.colors['grey5']};
+        border-radius: 50%;
+        background-color: ${(props) => props.theme.colors['white']}; 
+    }
+
+    input:checked + label {
+        background-color: ${(props) => props.theme.colors['green-100']};
+        border: solid 0.063rem ${(props) => props.theme.colors['green-400']}; 
+        color: ${(props) => props.theme.colors['grey11']};
+    }
+
+    input:checked + label:before {
+        width: 10px;
+        height: 10px;
+        border: 5px solid ${(props) => props.theme.colors['green-400']};
+    }
+`;

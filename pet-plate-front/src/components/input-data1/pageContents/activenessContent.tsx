@@ -31,6 +31,7 @@ const radioOptions = [
             성견 (1~7살) : 30분~120분 <br/>
             노견 (7살 이상) : 30분~60분 <br/>
         </Text>
+        <RadioListsWrapper>
         {radioOptions.map((option, index) => (
                 <RadioLists
                     key={index}
@@ -40,6 +41,7 @@ const radioOptions = [
                     onChange={() => handleChange(option.value)}
                 />
             ))}
+        </RadioListsWrapper>
     </ContentWrapper>
   )
 }
@@ -70,4 +72,11 @@ const Text = styled.div`
     margin-bottom: 1.125rem;
     width: 100%;
     padding-left: 1.563rem;
+`
+const RadioListsWrapper = styled.div`
+    width: 100%;
+    height: 13.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `

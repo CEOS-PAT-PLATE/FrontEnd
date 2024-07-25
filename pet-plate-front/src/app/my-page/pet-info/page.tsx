@@ -102,15 +102,15 @@ export default function Page() {
   };
 
   const radioOptionsActivness = [
-    { name: "activity", value: "VERY_ACTIVE", text: "초활발" },
-    { name: "activity", value: "ACTIVE", text: "활발" },
-    { name: "activity", value: "SOMEWHAT_ACTIVE", text: "보통" },
-    { name: "activity", value: "INACTIVE", text: "차분" }
+    { name: "activity", value: "VERY_ACTIVE", text: "초활발", width: "4.5rem" },
+    { name: "activity", value: "ACTIVE", text: "활발", width: "4.5rem" },
+    { name: "activity", value: "SOMEWHAT_ACTIVE", text: "보통", width: "4.5rem" },
+    { name: "activity", value: "INACTIVE", text: "차분", width: "4.5rem" }
   ];
 
   const radioOptionsNeutering = [
-    { name: "neutering", value: "INTACT", text: "중성화 안했어요" },
-    { name: "neutering", value: "NEUTERED", text: "중성화 했어요" },
+    { name: "neutering", value: "INTACT", text: "중성화 안했어요", width: "9.25rem" },
+    { name: "neutering", value: "NEUTERED", text: "중성화 했어요", width: "9.25rem" },
   ];
 
   const buttonContent = (
@@ -169,30 +169,34 @@ export default function Page() {
 
           <ContentWrapper>
             <Title>활동량</Title>
-            {radioOptionsActivness.map((option, index) => (
-              <RadioCheck
-                key={index}
-                name={option.name}
-                value={option.value}
-                text={option.text}
-                checked={petInfo.activity === option.value}
-                onChange={() => activenessChange(option.value)}
-              />
-            ))}
+            <RadioWrapper>
+              {radioOptionsActivness.map((option, index) => (
+                <RadioCheck
+                  key={index}
+                  name={option.name}
+                  value={option.value}
+                  text={option.text}
+                  marginLeft='43px'
+                  onChange={() => activenessChange(option.value)}
+                />
+              ))}
+            </RadioWrapper>
           </ContentWrapper>
 
           <ContentWrapper>
             <Title>중성화 여부</Title>
-            {radioOptionsNeutering.map((option, index) => (
-              <RadioCheck
-                key={index}
-                name={option.name}
-                value={option.value}
-                text={option.text}
-                checked={petInfo.neutering === option.value}
-                onChange={() => neuteredChange(option.value)}
-              />
-            ))}
+            <RadioWrapper>
+              {radioOptionsNeutering.map((option, index) => (
+                <RadioCheck
+                  key={index}
+                  name={option.name}
+                  value={option.value}
+                  text={option.text}
+                  marginLeft='20px'
+                  onChange={() => neuteredChange(option.value)}
+                />
+              ))}
+            </RadioWrapper>
           </ContentWrapper>
 
           <FixedButtonContainer>
@@ -221,34 +225,54 @@ const PageWrapper = styled.div`
 const MypageHeader = styled.h2`
   width: 100%;
   height: 3.25rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
   color: ${(props) => props.theme.colors['grey11']};
 `;
 
 const BackIconWrapper = styled.div`
+  margin-left: 1.25rem;
+  margin-right: 5.313rem;
 `;
 
 const BackIcon = styled(Image)`
+
 `;
 
 const ContentWrapper = styled.div`
-  width: 100%;
+  width: 312px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
 `;
 
 const ContentHalfWrapper = styled.div`
   width: 50%;
+  margin-bottom: 1.5rem;
 `;
 
 const RowContainer = styled.div`
+  width: 312px;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const Title = styled.h2`
+  width: 100%;
+  margin-bottom: 0.5rem;
   color: ${(props) => props.theme.colors['grey11']};
+`;
 
+const RadioWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap; 
+  gap: 0.5rem;
 `;
 
 const FixedButtonContainer = styled.div`
