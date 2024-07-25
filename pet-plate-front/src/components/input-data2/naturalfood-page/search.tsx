@@ -65,7 +65,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
         />
         {searchQuery && <ResetButton src={SearchbarResetButton} alt="Reset Icon" onClick={handleReset} priority />}
       </SearchInputWrapper>
-      <TextDescription>닭가슴살 등 강아지가 먹은 간식을 검색해보세요</TextDescription>
+      <TextDescription>닭가슴살 등 반려견이 먹은 간식을 검색해보세요</TextDescription>
       {searchQuery === '' && <Info>최근 섭취한 자연식</Info>}
     </SearchContainer>
   );
