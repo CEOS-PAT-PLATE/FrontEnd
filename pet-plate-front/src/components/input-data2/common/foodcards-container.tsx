@@ -22,6 +22,7 @@ interface Foodlist {
   name: string;
   onClick: () => void;
   isClicked: boolean;
+  serving: string;
 }
 
 interface FoodCardsContainerProps {
@@ -44,6 +45,7 @@ export default function FoodCardsContainer({ dailyMeals }: FoodCardsContainerPro
         name={meal.name}
         onClick={() => handleCardClick(meal.dailyRawId)}
         isClicked={clickedId === meal.dailyRawId}
+        serving={meal.serving}
       />
     ));
   };
@@ -68,23 +70,26 @@ interface Foodlist {
   isClicked: boolean;
 }
 
-const FavoriteContainer = ({ id, type, name, onClick, isClicked }: Foodlist) => {
+const FavoriteContainer = ({ id, type, name, onClick, isClicked, serving }: Foodlist) => {
   const foodIcon = foodIconList.find((icon) => icon.type === type);
 
   return (
     <Container onClick={onClick}>
-      <IconImage src={foodIcon?.img || ''} alt={type} />
-      <FavoriteText>{name}</FavoriteText>
-      <FavoriteIconWrapper></FavoriteIconWrapper>
+      <>
+        <IconImage src={foodIcon?.img || ''} alt={type} />
+        <FavoriteText>{name}</FavoriteText>
+      </>
+      <ServingText>{serving}g</ServingText>
     </Container>
   );
 };
 
 const IconImage = styled(Image)`
-  position: absolute;
   width: 26px;
   height: 26px;
   top: 16px;
+  left: 16px;
+  position: absolute;
 `;
 
 const Container = styled.div`
@@ -92,9 +97,10 @@ const Container = styled.div`
   min-height: 58px;
   width: 312px;
   height: 58px;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   border-radius: 8px;
   margin-bottom: 8px;
   position: relative;
@@ -103,7 +109,6 @@ const Container = styled.div`
 `;
 
 const FavoriteText = styled.div`
-  position: absolute;
   width: 180px;
   height: 32px;
   color: var(--grey10, #4f5357);
@@ -113,8 +118,26 @@ const FavoriteText = styled.div`
   font-weight: 400;
   line-height: 180%;
   letter-spacing: -0.75px;
-  left: 58px;
   top: 14px;
+  position: absolute;
+  left: 64px;
+  margin-left: -10px;
+`;
+
+const ServingText = styled.div`
+  top: 14px;
+  position: absolute;
+right: 16px;
+  color: var(--grey10, #4f5357);
+  text-overflow: ellipsis;
+  position: absolute;
+  /* title1_regular_18pt */
+  font-family: SUIT;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 180%; /* 32.4px */
+  letter-spacing: -0.75px;
 `;
 
 const FavoriteIconWrapper = styled.div`
