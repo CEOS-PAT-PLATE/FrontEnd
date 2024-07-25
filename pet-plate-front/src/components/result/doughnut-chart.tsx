@@ -50,7 +50,7 @@ export default function DoughnutChart({ todayKcal, todayProperKcal }: { todayKca
         borderWidth: 0,
         circumference: 300,
         rotation: 210,
-        cutout: 68,
+        cutout: 72,
         borderRadius: 8,
       },
     ],

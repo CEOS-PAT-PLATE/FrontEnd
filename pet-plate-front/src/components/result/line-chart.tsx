@@ -105,7 +105,7 @@ export default function LineChart({ nutrientData }: { nutrientData: any[] }) {
 }
 
 const LineWrapper = styled.div`
-  top: 370px;
+  top: 435px;
   left: 230px;
   position: absolute;
   display: flex;

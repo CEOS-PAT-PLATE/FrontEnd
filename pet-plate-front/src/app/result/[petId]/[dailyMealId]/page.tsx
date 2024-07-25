@@ -283,7 +283,7 @@ export default function Page({ params }: ResultProps) {
               )}
             </GraphText1>
             <GraphText2>
-              <GreenText>{petInfo?.name}</GreenText>의 하루 권장 섭취량은 {Math.round(nutrientsData.todayProperKcal)}
+            <BoldText><GreenText>{petInfo?.name}</GreenText></BoldText>의 하루 권장 섭취량은 <BoldText>{Math.round(nutrientsData.todayProperKcal)}</BoldText>
               kcal예요
             </GraphText2>
             <DoughnutChart todayKcal={nutrientsData.todayKcal} todayProperKcal={nutrientsData.todayProperKcal} />
@@ -296,7 +296,7 @@ export default function Page({ params }: ResultProps) {
             <DetailButton>영양소 상세 보기</DetailButton>
           </StyledLink>
           <MealListTitle>
-            <GreenText>{petInfo?.name}</GreenText>의 하루 식단
+            <BoldText><GreenText>{petInfo?.name}</GreenText></BoldText>의 하루 식단
           </MealListTitle>
           <ContentContainer>
             {dailyMeals ? (
@@ -315,11 +315,14 @@ export default function Page({ params }: ResultProps) {
 
 const GraphText1 = styled.div`
   color: var(--grey11, #36393c);
-  font-family: SUIT;
+  font-family: SUIT middle;
   font-size: 20px;
   font-weight: 700;
   line-height: 160%;
   letter-spacing: -0.75px;
+  margin-top:56px;
+
+
 `;
 
 const GraphText2 = styled.div`
@@ -328,6 +331,7 @@ const GraphText2 = styled.div`
   font-size: 14px;
   font-weight: 400;
   line-height: 160%;
+  margin-bottom: 20px;
 `;
 
 const RedText = styled.span`
@@ -364,7 +368,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  font-family: SUIT;
+  font-family: SUIT ;
   font-size: 18px;
   font-weight: 600;
   top: 44px;
@@ -380,11 +384,12 @@ const Content = styled.div`
 
 const DateTitle = styled.div`
   color: var(--grey11, #36393c);
-  font-family: SUIT;
+  font-family: SUIT middle;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 1000;
   line-height: 160%;
   margin-bottom: 8px;
+
 `;
 
 const FirstLine = styled.p`
@@ -415,7 +420,7 @@ const RecommendationButton = styled.button`
   width: 224px;
   height: 48px;
   padding: 14px;
-  margin-bottom: 26px;
+  margin-bottom: 56px;
   margin-top: 18px;
   margin: 16px auto;
   border-radius: 8px;
@@ -428,6 +433,7 @@ const RecommendationButton = styled.button`
   font-weight: 600;
   line-height: 160%;
   outline: none;
+      
 `;
 
 const GraphContainer = styled.div`
@@ -449,7 +455,7 @@ const DetailButton = styled.button`
   width: 224px;
   height: 48px;
   padding: 14px;
-  margin: 16px auto;
+  margin: -22px auto;
   border-radius: 8px;
   background: var(--grey1, #fafafc);
   color: white;
@@ -467,6 +473,7 @@ const DetailButton = styled.button`
   line-height: 160%;
   border-radius: 8px;
   border: 1px solid var(--600, #33a165);
+
 `;
 
 const MealListTitle = styled.h2`
@@ -574,6 +581,6 @@ const Text1 = styled.div`
   letter-spacing: -1px;
   z-index: 100;
   width: 300px;
-  margin-top: 240px;
+  margin-top: 290px;
   left: -35px;
 `;
