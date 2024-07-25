@@ -159,7 +159,10 @@ export default function Table({
         {!isRecent && someClicked && (
           <ServingWrapper>
             <ServingText>섭취량</ServingText>
-            <ServingInput type="text" value={serving} onChange={(e) => setServing(e.target.value)} placeholder=" " />
+            <ServingInput type="number" value={serving} onChange={(e) => setServing(e.target.value)} placeholder=" " />
+            <ServingUnit>g</ServingUnit>
+          
+
           </ServingWrapper>
         )}
       </TableContainer>
@@ -175,6 +178,20 @@ const TableContainer = styled.div<{ $searchQuery: string }>`
   overflow-y: scroll;
   height: 320px;
   margin-top: ${(props) => (props.$searchQuery ? '45px' : '20px')}; /* 검색어가 있을 때만 margin-top 추가 */
+`;
+
+const ServingUnit = styled.span`
+ color: var(--grey11, #36393C);
+text-align: center;
+  margin-left: -36px;
+  margin-top: 8px;
+
+/* title2_regular_16pt */
+font-family: SUIT;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 160%; /* 25.6px */
 `;
 
 const RecentContainer = styled.div`
@@ -206,6 +223,7 @@ const ServingInput = styled.input`
   width: 152px;
   height: 40px;
   padding: 8px 12px;
+  padding-right: 38px;
   flex-direction: column;
   align-items: flex-start;
   flex-shrink: 0;
