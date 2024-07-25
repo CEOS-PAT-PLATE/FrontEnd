@@ -1,22 +1,27 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 
 import mainGraphic from '@public/svg/mainGraphic.svg?url';
 import nextIcon from '@public/svg/arrow-left-line.svg?url';
+import MainHeader from '@components/main/mainHeader';
 import ScrollCarousel from '@components/main/scrollCarousel';
 import GapButton from '@components/main/gapbtn';
+import Modal from '@components/main/loginModal';
 
-export default function page() {
+
+export default function Page() {
   const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
 
   const handleOnclick = () => {
     const enrollPet = window.localStorage.getItem('enrollPet');
 
     if (enrollPet === null || enrollPet === undefined) {
-      //로그인되지 않은 사용자인 경우 다시 생각하기
-      alert('로그인 후 이용해 주세요.');
+      // 로그인되지 않은 사용자인 경우 다시 생각하기
+      setShowModal(true);
     } else {
       const isEnrolled = JSON.parse(enrollPet);
 
@@ -37,6 +42,7 @@ export default function page() {
 
   return (
     <PageWrapper>
+      <MainHeader backgroundColor = {"#B2E9CC"}/>
       <MainInfoContainer>
         <MainGraphic src={mainGraphic} alt="mainGraphic" />
       </MainInfoContainer>
@@ -78,6 +84,8 @@ export default function page() {
         </Text>
         <ScrollCarousel />
       </ScrollCarouselContatiner>
+
+      <Modal show={showModal} onClose={() => setShowModal(false)} />
     </PageWrapper>
   );
 }
@@ -87,6 +95,8 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+
 `;
 const MainInfoContainer = styled.div`
   width: 100%;
