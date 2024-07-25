@@ -1,60 +1,79 @@
-import styled from "styled-components";
+import Image from 'next/image';
+import styled from 'styled-components';
+import checkIcon from '@public/svg/checkIcon.svg?url';
 
 interface RadioListProps {
     name: string;
     value: string;
     text: string;
-    checked: boolean;
     onChange: () => void;
+    width: string; 
 }
 
-export default function RadioCheck({ name, value, text, checked, onChange }: RadioListProps) {
+export default function RadioCheck({name, value, text, onChange, width} : RadioListProps) {
   return (
-    <RadioWrapper>
-        <input type="radio" name={name} value={value} checked={checked} onChange={onChange}/> 
-        <span>{text}</span>
+    <RadioWrapper width={width}>
+        <input type="radio" name={name} value={value} onChange={onChange} id={value}/> 
+        <label htmlFor={value}>
+            <span>{text}</span>
+            <div className="check-icon">
+                <Image src={checkIcon} alt="check icon" layout="fill" objectFit="contain" />
+            </div>
+        </label>
     </RadioWrapper>
   )
 }
 
-const RadioWrapper = styled.div`
-    width: max-content;
-    height: 3rem;
-    border: solid 0.063rem ${(props) => props.theme.colors['grey5']};
-    border-radius: 0.5rem;
-    background-color: ${(props) => props.theme.colors['grey2']};
+const RadioWrapper = styled.div<{ width: string }>` 
+    position: relative;
+    margin-bottom: 0.25rem;
 
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 0.75rem;
-    gap: 0.5rem;
-    &:hover{
-        border: solid 0.063rem ${(props) => props.theme.colors['green-400']};
-        background-color: ${(props) => props.theme.colors['green-100']};
+    input {
+        display: none;
     }
 
-    input{
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        margin: 0;
-        border: 0.313rem solid ${(props) => props.theme.colors['grey5']};
-        border-radius: 50%;
-
-        &:checked{
-            border: 0.313rem solid ${(props) => props.theme.colors['green-400']};
-        }
-    }
-
-    span{
-        height: 1.625rem;
+    label {
+        position: relative;
+        border: solid 0.063rem ${(props) => props.theme.colors['grey5']}; 
+        border-radius: 0.5rem;
+        width: ${(props) => props.width}; 
+        height: 3rem;
         display: flex;
         align-items: center;
-        color: ${(props) => props.theme.colors['grey8']};
+        justify-content: center;
+        cursor: pointer;
+        text-align: center;
+        padding: 0;
 
         font-size: 1rem;
         font-weight: 400;
         line-height: 160%;
+        color: ${(props) => props.theme.colors['grey8']};
+
+        &:hover {
+            background-color: ${(props) => props.theme.colors['green-100']};
+            border: solid 0.063rem ${(props) => props.theme.colors['green-400']}; 
+            color: ${(props) => props.theme.colors['green-600']};
+        }
+
+        .check-icon {
+            display: none;
+            position: absolute;
+            left: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            z-index: 1;
+        }
+    }
+
+    input:checked + label {
+        background-color: ${(props) => props.theme.colors['green-100']};
+        border: solid 0.063rem ${(props) => props.theme.colors['green-400']}; 
+        color: ${(props) => props.theme.colors['green-600']};
+        padding-left: 10px;
+        padding-right: 5px;
+        .check-icon {
+            display: block;
+        }
     }
 `;

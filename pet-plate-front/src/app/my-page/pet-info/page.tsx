@@ -102,15 +102,15 @@ export default function Page() {
   };
 
   const radioOptionsActivness = [
-    { name: "activity", value: "VERY_ACTIVE", text: "초활발" },
-    { name: "activity", value: "ACTIVE", text: "활발" },
-    { name: "activity", value: "SOMEWHAT_ACTIVE", text: "보통" },
-    { name: "activity", value: "INACTIVE", text: "차분" }
+    { name: "activity", value: "VERY_ACTIVE", text: "초활발", width: "4.5rem" },
+    { name: "activity", value: "ACTIVE", text: "활발", width: "4.5rem" },
+    { name: "activity", value: "SOMEWHAT_ACTIVE", text: "보통", width: "4.5rem" },
+    { name: "activity", value: "INACTIVE", text: "차분", width: "4.5rem" }
   ];
 
   const radioOptionsNeutering = [
-    { name: "neutering", value: "INTACT", text: "중성화 안했어요" },
-    { name: "neutering", value: "NEUTERED", text: "중성화 했어요" },
+    { name: "neutering", value: "INTACT", text: "중성화 안했어요", width: "9.25rem" },
+    { name: "neutering", value: "NEUTERED", text: "중성화 했어요", width: "9.25rem" },
   ];
 
   const buttonContent = (
@@ -170,32 +170,32 @@ export default function Page() {
           <ContentWrapper>
             <Title>활동량</Title>
             <RadioWrapper>
-            {radioOptionsActivness.map((option, index) => (
-              <RadioCheck
-                key={index}
-                name={option.name}
-                value={option.value}
-                text={option.text}
-                checked={petInfo.activity === option.value}
-                onChange={() => activenessChange(option.value)}
-              />
-            ))}
-          </RadioWrapper>
+              {radioOptionsActivness.map((option, index) => (
+                <RadioCheck
+                  key={index}
+                  name={option.name}
+                  value={option.value}
+                  text={option.text}
+                  onChange={() => activenessChange(option.value)}
+                  width={option.width} // width를 전달합니다.
+                />
+              ))}
+            </RadioWrapper>
           </ContentWrapper>
 
           <ContentWrapper>
             <Title>중성화 여부</Title>
             <RadioWrapper>
-            {radioOptionsNeutering.map((option, index) => (
-              <RadioCheck
-                key={index}
-                name={option.name}
-                value={option.value}
-                text={option.text}
-                checked={petInfo.neutering === option.value}
-                onChange={() => neuteredChange(option.value)}
-              />
-            ))}
+              {radioOptionsNeutering.map((option, index) => (
+                <RadioCheck
+                  key={index}
+                  name={option.name}
+                  value={option.value}
+                  text={option.text}
+                  onChange={() => neuteredChange(option.value)}
+                  width={option.width} // width를 전달합니다.
+                />
+              ))}
             </RadioWrapper>
           </ContentWrapper>
 
@@ -245,13 +245,12 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom : 1.5rem
-
+  margin-bottom: 1.5rem;
 `;
 
 const ContentHalfWrapper = styled.div`
   width: 50%;
-  margin-bottom : 1.5rem;
+  margin-bottom: 1.5rem;
 `;
 
 const RowContainer = styled.div`
@@ -272,7 +271,7 @@ const RadioWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-`
+`;
 
 const FixedButtonContainer = styled.div`
   position: absolute;
