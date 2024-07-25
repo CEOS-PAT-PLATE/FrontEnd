@@ -25,6 +25,14 @@ interface PetInfo {
   profileImgPath: string | null;
 }
 
+// 활동량 매핑
+const activityMapping = {
+  VERY_ACTIVE: "초활발",
+  ACTIVE: "활발",
+  SOMEWHAT_ACTIVE: "보통",
+  INACTIVE: "차분"
+};
+
 const storeNutrientDataInLocalStorage = (petId: number, dailyMealId: number, nutrientData: any) => {
   const key = `${petId}-${dailyMealId}`;
   localStorage.setItem(key, JSON.stringify(nutrientData));
@@ -99,6 +107,10 @@ export default function Page({ params }: ResultProps) {
   const [nutrientsData, setNutrientsData] = useRecoilState(nutrientDataState);
   const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
   const [mainNutrients, setMainNutrients] = useState<string[]>([]);
+  const [activity, setActivity] = useState<string>('');
+
+
+
 
   const date = getSelectedDate() || '0';
   console.log(date);
@@ -200,9 +212,29 @@ export default function Page({ params }: ResultProps) {
   useEffect(() => {
     const petInfo = getPetInfoFromLocalStorage();
     setPetInfo(petInfo);
+   
+
+    switch (petInfo?.activity) {
+      case 'VERY_ACTIVE':
+        setActivity('초활발');
+        break;
+      case 'ACTIVE':
+       setActivity('활발');
+        break;
+      case 'SOMEWHAT_ACTIVE':
+        setActivity('보통');
+        break;
+      case 'INACTIVE':
+       setActivity('차분');
+        break;
+      default:
+       setActivity('활동량 정보 없음');
+    }
   }, []);
 
   console.log(nutrientsData);
+
+
 
   return (
     <Wrapper>
@@ -224,7 +256,7 @@ export default function Page({ params }: ResultProps) {
               <FirstLine>오늘은 부족한 영양소가 없어요!</FirstLine>
             )}
             <SecondLine>
-              몸무게 {petInfo?.weight}kg | 활동량 {petInfo?.activity}
+              몸무게 <BoldText>{petInfo?.weight}kg |</BoldText> 활동량 < BoldText>{activity}</ BoldText>
             </SecondLine>
           </SVGContent>
           <StyledLink href={`/result/${petId}/${dailyMealId}/recommend/deficientNutrients`}>
@@ -292,6 +324,12 @@ const GraphText2 = styled.div`
 const RedText = styled.span`
   color: var(--symentic-red-400, #ff706b);
   font-weight: 600;
+`;
+
+const BoldText = styled.span`
+  font-family: SUIT middle;
+
+
 `;
 
 const GreenText = styled.span`

@@ -8,7 +8,7 @@ import { dailyMealsAPI } from '@api/dailyMealsAPI';
 import CancelButton from '@public/svg/cancel-button.svg?url';
 import Image from 'next/image';
 
-import LineChart from '@components/result/line-charts'; 
+import LineChart from '@components/result/line-charts';
 
 interface ResultProps {
   params: { petId: number; dailyMealId: number };
@@ -104,7 +104,6 @@ export default function Layout({
 
       setDeficientCount(deficientCount);
       setExcessCount(excessCount);
-
     } catch (error) {
       console.error('오류', error);
     }
@@ -128,15 +127,11 @@ export default function Layout({
 
   const petIdFromStorage = getPetIdFromLocalStorage();
 
-  const mainNutrients = nutrientDetailData?.filter((nutrient: any) =>
-    ['탄수화물', '단백질', '지방'].includes(nutrient.name)
-  ) || [];
-  const mineralNutrients = nutrientDetailData?.filter((nutrient: any) =>
-    ['칼슘', '인'].includes(nutrient.name)
-  ) || [];
-  const vitaminNutrients = nutrientDetailData?.filter((nutrient: any) =>
-    ['비타민 A', '비타민 D', '비타민 E'].includes(nutrient.name)
-  ) || [];
+  const mainNutrients =
+    nutrientDetailData?.filter((nutrient: any) => ['탄수화물', '단백질', '지방'].includes(nutrient.name)) || [];
+  const mineralNutrients = nutrientDetailData?.filter((nutrient: any) => ['칼슘', '인'].includes(nutrient.name)) || [];
+  const vitaminNutrients =
+    nutrientDetailData?.filter((nutrient: any) => ['비타민 A', '비타민 D', '비타민 E'].includes(nutrient.name)) || [];
 
   return (
     <Wrapper>
@@ -146,12 +141,22 @@ export default function Layout({
           오늘 먹은 영양소는 총 {Math.round(nutrientData?.todayKcal || 0)}kcal로, 섭취량이 조금 부족한 수준이에요.
         </NaturalInfoCardImage>
         <SupplementInfo>
-          <Name>과잉 영양소 : <Color1>{nutrientData?.excessNutrients?.map(nutrient => nutrient).join(', ')}</Color1></Name>
-          <Name>부족 영양소 : <Color1> {nutrientData?.deficientNutrients?.map(nutrient => nutrient).join(', ')}</Color1></Name>
-          <Name>적정 영양소 : <Color2>{nutrientData?.properNutrients?.map(nutrient => nutrient).join(', ')}</Color2></Name>
+          <Name>
+            과잉 영양소 : <Color1>{nutrientData?.excessNutrients?.map((nutrient) => nutrient).join(', ')}</Color1>
+          </Name>
+          <Name>
+            부족 영양소 : <Color1> {nutrientData?.deficientNutrients?.map((nutrient) => nutrient).join(', ')}</Color1>
+          </Name>
+          <Name>
+            적정 영양소 : <Color2>{nutrientData?.properNutrients?.map((nutrient) => nutrient).join(', ')}</Color2>
+          </Name>
           <Vendor>* 보다 자세한 설명은 ‘추천 영양성분’에서 확인해주세요.</Vendor>
         </SupplementInfo>
-        <CancelButtonImage src={CancelButton} alt="닫기 버튼" onClick={() => router.push(`/result/${petId}/${dailyMealId}`)} />
+        <CancelButtonImage
+          src={CancelButton}
+          alt="닫기 버튼"
+          onClick={() => router.push(`/result/${petId}/${dailyMealId}`)}
+        />
       </InfoCardWrapper>
       <ChartWrapper>
         <SectionTitle>기본 영양소</SectionTitle>
@@ -168,20 +173,16 @@ export default function Layout({
   );
 }
 
-
 const Wrapper = styled.div`
   background-color: ${(props) => props.theme.colors['grey1']}; // body 배경색 설정
   width: 360px;
   height: 800px;
   position: absolute;
-  overflow-y:scroll;
-  overflow-x:hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
-
-
 const Content = styled.div`
-
   flex: 1;
   overflow-y: auto;
 `;
@@ -205,8 +206,8 @@ const InfoCardWrapper = styled.div`
   gap: 8px;
   flex-wrap: wrap;
   border-radius: 8px;
-  background: var(--white, #FFF);
-  box-shadow: 2px 2px 15px 0px rgba(149, 156, 164, 0.20);
+  background: var(--white, #fff);
+  box-shadow: 2px 2px 15px 0px rgba(149, 156, 164, 0.2);
   position: relative;
   width: 312px;
   height: 217px;
@@ -218,7 +219,7 @@ const InfoCardWrapper = styled.div`
 
 const NaturalInfoCardImage = styled.div`
   position: absolute;
-  color: var(--grey11, #36393C);
+  color: var(--grey11, #36393c);
   font-family: SUIT;
   font-size: 14px;
   font-weight: 400;
@@ -256,7 +257,7 @@ const SupplementInfo = styled.div`
 const Vendor = styled.div`
   margin-top: 16px;
   text-align: left;
-  color: var(--grey8, #7C8389);
+  color: var(--grey8, #7c8389);
   font-family: SUIT;
   font-size: 12px;
   font-style: normal;
@@ -265,7 +266,7 @@ const Vendor = styled.div`
 `;
 
 const Name = styled.div`
-  color: var(--grey11, #36393C);
+  color: var(--grey11, #36393c);
   font-family: SUIT;
   font-size: 12px;
   font-style: normal;
@@ -281,7 +282,7 @@ const EnglishName = styled.div`
 `;
 
 const EnglishNameTag = styled.div`
-  color: var(--grey8, #7C8389);
+  color: var(--grey8, #7c8389);
   font-family: SUIT;
   font-size: 12.036px;
   font-style: normal;
@@ -299,9 +300,9 @@ const NutrientTag = styled.div`
   align-items: center;
   gap: 10px;
   border-radius: 100px;
-  background: var(--100, #D9F4E5);
+  background: var(--100, #d9f4e5);
   max-width: 96px;
-  color: var(--600, #33A165);
+  color: var(--600, #33a165);
   font-family: SUIT;
   font-size: 12px;
   font-style: normal;
@@ -309,48 +310,42 @@ const NutrientTag = styled.div`
   line-height: 160%;
 `;
 
+const Color1 = styled.span`
+  color: var(--symentic-red-500, #ff4d46);
 
-const Color1= styled.span`
-   color: var(--symentic-red-500, #FF4D46);
+  /* body2_semibold_14pt */
+  font-family: SUIT middle;
+`;
 
-/* body2_semibold_14pt */
-font-family: SUIT middle;
+const Color2 = styled.span`
+  color: var(--primary, #40c97f);
 
-    `;
+  /* body2_semibold_14pt */
+  font-family: SUIT middle;
+`;
 
-    const Color2= styled.span`
-color: var(--primary, #40C97F);
+const SectionTitle = styled.h2`
+  color: var(--grey7, #959ca4);
 
-/* body2_semibold_14pt */
-font-family: SUIT middle;
-
-    `;
-
-    const SectionTitle = styled.h2`
-color: var(--grey7, #959CA4);
-
-/* title1_semibold_18pt */
-font-family: SUIT;
-font-size: 18px;
-font-style: normal;
-font-weight: 600;
-line-height: 160%; /* 28.8px */
-letter-spacing: -0.2px;
-  margin-bottom:16px;
-  margin-top:24px;
+  /* title1_semibold_18pt */
+  font-family: SUIT;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%; /* 28.8px */
+  letter-spacing: -0.2px;
+  margin-bottom: 16px;
+  margin-top: 24px;
 `;
 
 const ChartWrapper = styled.div`
-
-    height:700px;
-    top: 350px;
-    width: 302px;
-    left:24px;
-    position: absolute;
-   
-
-    `;
-    const SectionBorder = styled.div`
+  height: 700px;
+  top: 350px;
+  width: 302px;
+  left: 24px;
+  position: absolute;
+`;
+const SectionBorder = styled.div`
   width: 330px;
   background: #dde0e4;
   height: 1px;
