@@ -19,9 +19,11 @@ export default function UnifiedCard({
       <Title $fontWeight={titleFontWeight} $lineHeight={titleLineHeight}>
         {title}
       </Title>
-      <Description $fontWeight={descriptionFontWeight} $lineHeight={descriptionLineHeight}>
-        {description}
-      </Description>
+      {isRecent && (
+        <Description $fontWeight={descriptionFontWeight} $lineHeight={descriptionLineHeight}>
+          {description}
+        </Description>
+      )}
     </CardContainer>
   );
 }
@@ -81,6 +83,8 @@ const CardContainer = styled.div<{ $isClicked: boolean, $someClicked: boolean, $
       border: 1px solid var(--grey2, #eceef0);
       background: var(--white, #fff);
     `}
+
+     
 `;
 
 // 1. 자신 이외의 나머지 카드 중 하나가 클릭되어 있을 때, 카드의 스타일 (자신을 display none으로 처리)
