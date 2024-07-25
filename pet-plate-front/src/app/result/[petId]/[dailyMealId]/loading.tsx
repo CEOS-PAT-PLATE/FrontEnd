@@ -3,13 +3,37 @@ import LoadingSVGImage from '@public/svg/analyze-loading-img.svg?url';
 import Image from 'next/image';
 import Wrapper from '@style/input-data2/Wrapper';
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+
+const getPetInfoFromLocalStorage = () => {
+  if (typeof window === 'undefined') return null;
+  const petInfoString = localStorage.getItem('petInfo');
+  if (!petInfoString) {
+    console.error('No petInfo');
+    return null;
+  }
+  try {
+    const petInfo = JSON.parse(petInfoString);
+    return petInfo;
+  } catch (error) {
+    console.error('', error);
+    return null;
+  }
+};
+
 
 export default function Page() {
+
+
+
+
+
   return (
     <Wrapper>
       <TextWrapper>
         <DateTitle>
-          <GreenText>김백순</GreenText>의 영양소를 분석하고 있어요.
+         영양소를 분석하고 있어요.
         </DateTitle>
         <DateTitle>잠시만 기다려 주세요!</DateTitle>
       </TextWrapper>

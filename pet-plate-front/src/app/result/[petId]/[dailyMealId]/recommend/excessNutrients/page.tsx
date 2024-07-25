@@ -9,6 +9,8 @@ import { nutrientExcessInfo } from '@lib/descriptionData';
 import Wrapper from '@style/input-data2/Wrapper';
 import Image from 'next/image';
 import alertGraphic from '@public/svg/alert-graphic.svg?url';
+import { usePathname } from 'next/navigation';
+
 
 interface ResultProps {
   params: { petId: number; dailyMealId: number };
@@ -30,9 +32,36 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
   const [petId, setPetId] = useState<number | null>(null);
   const [dailyMealId, setDailyMealId] = useState<number | null>(null);
   const [excessNutrients, setExcessNutrients] = useState<ExcessNutrient[]>([]);
+  const pathname = usePathname();
+  const [petName, setPetName] = useState<string | null>(null);
+
+
+  const getPetInfoFromLocalStorage = () => {
+    if (typeof window === 'undefined') return null;
+    const petInfoString = localStorage.getItem('petInfo');
+    if (!petInfoString) {
+      console.error('No petInfo');
+      return null;
+    }
+    try {
+      const petInfo = JSON.parse(petInfoString);
+      return petInfo;
+    } catch (error) {
+      console.error('', error);
+      return null;
+    }
+  };
+
 
   useEffect(() => {
     const { petId, dailyMealId } = params;
+
+    const petInfo = getPetInfoFromLocalStorage();
+    if (petInfo) {
+      console.log('petInfo:', petInfo);
+    }
+    setPetName(petInfo?.name);
+    
 
     setPetId(petId);
     setDailyMealId(dailyMealId);
@@ -63,11 +92,11 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
             <EmptyText1>부족하거나 과한 영양소가 없어요!</EmptyText1>
             <AlertGraphic src={alertGraphic} alt="alert-graphic" />
             <EmptyText2>
-              000의 영양 관리를 잘 하고 계시네요.
-              <br />
-              000의 식단이 바뀌어 영양 상태가 궁금해지면,
-              <br />
-              언제든 펫플레이트로 돌아와 영양 분석을 해주세요!{' '}
+            {petName}의 영양 관리를 잘 하고 계시네요.
+            <br />
+            {petName}의 식단이 바뀌어 영양 상태가 궁금해지면,
+            <br />
+            언제든 펫플레이트로 돌아와 영양 분석을 해주세요!{' '}
             </EmptyText2>
           </ImageWrapper>
         ) : (

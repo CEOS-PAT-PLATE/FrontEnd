@@ -25,13 +25,7 @@ interface PetInfo {
   profileImgPath: string | null;
 }
 
-// 활동량 매핑
-const activityMapping = {
-  VERY_ACTIVE: "초활발",
-  ACTIVE: "활발",
-  SOMEWHAT_ACTIVE: "보통",
-  INACTIVE: "차분"
-};
+
 
 const storeNutrientDataInLocalStorage = (petId: number, dailyMealId: number, nutrientData: any) => {
   const key = `${petId}-${dailyMealId}`;
