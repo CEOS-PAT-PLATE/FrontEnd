@@ -313,14 +313,34 @@ const Text2 = styled.div`
   height: 40px;
 `;
 
+const getParticle = (nutrient: string) => {
+  // 영양소에 따른 조사 설정
+  const nutrientParticleMap: { [key: string]: string } = {
+    '탄수화물': '이',
+    '단백질': '이',
+    '지방': '이',
+    '칼슘': '이',
+    '인': '이',
+    '비타민 A': '가',
+    '비타민 D': '가',
+    '비타민 E': '가'
+  };
+
+  // 기본 조사 '이'로 설정, 영양소에 따라 변경
+  return nutrientParticleMap[nutrient] || '이';
+};
+
+
 const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number }) => {
   const nutrientData = nutrientExcessInfo.find((info) => info.nutrientName === nutrient);
+  const particle = getParticle(nutrient); // 영양소에 따른 조사 결정
+
   return (
     <Section>
       <OrderText>{`${orderArray[index].word}번째 과잉 영양소`}</OrderText>
       <NutrientTitle>{nutrientData?.title}</NutrientTitle>
       <NutrientContent>{nutrientData?.content}</NutrientContent>
-      <NutrientSymptomsTitle>{`${nutrient}가 과잉 섭취될 때 발생할 수 있는 증상`}</NutrientSymptomsTitle>
+      <NutrientSymptomsTitle>{`${nutrient}${particle} 과잉 섭취될 때 발생할 수 있는 증상`}</NutrientSymptomsTitle>
       <SymptomsList>
         {nutrientData?.symptoms.map((symptom, i) => (
           <SymptomWrapper key={i}>
