@@ -109,7 +109,7 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
                 <ContainerWrapper>
                   <Text1>비슷한 고민을 가진</Text1>
                   <Text2>반려인들은 이런 점을 신경써요!</Text2>
-                  {getNutritionAdvice(excessNutrients.map((n) => n.name).join(', ')).map((advice, index) => (
+                  {getNutritionAdvice(excessNutrients.map((n) => n.name)).map((advice, index) => (
                     <Card key={index}>
                       <Info>
                         <Vendor>{advice.title}</Vendor>
@@ -168,7 +168,7 @@ const Content = styled.div`
   height: 650px;
   width: 360px;
 `;
-const getNutritionAdvice = (excessNutrient: string) => {
+const getNutritionAdvice = (excessNutrients: string[]) => {
   // 영양소에 따른 조사 설정
   const nutrientParticleMap: { [key: string]: string } = {
     '탄수화물': '이',
@@ -176,18 +176,24 @@ const getNutritionAdvice = (excessNutrient: string) => {
     '지방': '이',
     '칼슘': '이',
     '인': '이',
-    '비타민A': '가',
-    '비타민D': '가',
-    '비타민E': '가'
+    '비타민 A': '가',
+    '비타민 D': '가',
+    '비타민 E': '가'
   };
 
+  // 배열에서 마지막 영양소 가져오기
+  const lastNutrient = excessNutrients[excessNutrients.length - 1];
+  
   // 기본 조사 '이'로 설정, 영양소에 따라 변경
-  const particle = nutrientParticleMap[excessNutrient] || '이';
+  const particle = nutrientParticleMap[lastNutrient] || '가';
+  
+  // 영양소 목록을 문자열로 변환하고, 조사 추가
+  const nutrientsString = excessNutrients.join(', ');
 
   return [
     {
       title: '균형 잡힌 식단',
-      content: `입력한 식단에서 어떤 식품이 ${excessNutrient}${particle} 많이 함유되어 있는지 확인해주세요 -> 식이 조절: 사료와 보충제의 영양 성분표를 확인하여 ${excessNutrient} 함량을 확인해보세요! ${excessNutrient} 과잉 섭취를 완화하기 위해, 반려견 사료의 영양 성분표 내 ${excessNutrient}의 적정 함유량을 확인한 후 제품을 구매해요. AAFCO(미국 사료 관리 협회)와 같은 인정된 기관의 영양 지침을 충족하면서도 ${excessNutrient}${particle} 많이 안 들어있는 사료로 변경하는 걸 추천드려요. 더불어, ${excessNutrient}${particle} 많이 포함된 자연식품을 주의해주세요!`,
+      content: `입력한 식단에서 어떤 식품이 ${nutrientsString}${particle} 많이 함유되어 있는지 확인해주세요 -> 식이 조절: 사료와 보충제의 영양 성분표를 확인하여 ${nutrientsString} 함량을 확인해보세요! ${nutrientsString} 과잉 섭취를 완화하기 위해, 반려견 사료의 영양 성분표 내 ${nutrientsString}의 적정 함유량을 확인한 후 제품을 구매해요. AAFCO(미국 사료 관리 협회)와 같은 인정된 기관의 영양 지침을 충족하면서도 ${nutrientsString}${particle} 많이 안 들어있는 사료로 변경하는 걸 추천드려요. 더불어, ${nutrientsString}${particle} 많이 포함된 자연식품을 주의해주세요!`,
     },
     {
       title: '정기적인 수의사 검진',
@@ -195,7 +201,7 @@ const getNutritionAdvice = (excessNutrient: string) => {
     },
     {
       title: '과도한 보충제 피하기',
-      content: `현재 ${excessNutrient}${particle} 포함된 보충제를 사용하고 있다면, 수의사의 지침에 따라 제한하는 걸 추천드려요. 직접적으로 ${excessNutrient}${particle} 명시되어 있지 않아도 종합 비타민이라면 해당될 수도 있으니 신중하게 사용하세요.`,
+      content: `현재 ${nutrientsString}${particle} 포함된 보충제를 사용하고 있다면, 수의사의 지침에 따라 제한하는 걸 추천드려요. 직접적으로 ${nutrientsString}${particle} 명시되어 있지 않아도 종합 비타민이라면 해당될 수도 있으니 신중하게 사용하세요.`,
     },
     {
       title: '체중과 건강 모니터링',
@@ -203,7 +209,6 @@ const getNutritionAdvice = (excessNutrient: string) => {
     },
   ];
 };
-
 
 const ContainerWrapper = styled.div`
   position: absolute;
