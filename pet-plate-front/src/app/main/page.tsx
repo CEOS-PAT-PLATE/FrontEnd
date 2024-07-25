@@ -6,9 +6,11 @@ import Image from 'next/image';
 
 import mainGraphic from '@public/svg/mainGraphic.svg?url';
 import nextIcon from '@public/svg/arrow-left-line.svg?url';
+import MainHeader from '@components/main/mainHeader';
 import ScrollCarousel from '@components/main/scrollCarousel';
 import GapButton from '@components/main/gapbtn';
-import Modal from '@components/main/loginModal'; // 모달 컴포넌트 경로를 적절히 수정
+import Modal from '@components/main/loginModal';
+
 
 export default function Page() {
   const router = useRouter();
@@ -40,6 +42,7 @@ export default function Page() {
 
   return (
     <PageWrapper>
+      <MainHeader backgroundColor = {"#B2E9CC"}/>
       <MainInfoContainer>
         <MainGraphic src={mainGraphic} alt="mainGraphic" />
       </MainInfoContainer>
@@ -92,6 +95,8 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+
 `;
 const MainInfoContainer = styled.div`
   width: 100%;
