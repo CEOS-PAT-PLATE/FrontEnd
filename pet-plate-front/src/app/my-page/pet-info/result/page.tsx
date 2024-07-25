@@ -8,6 +8,8 @@ import LinkButton from "@components/main/linkBtn";
 import ResultList from '@components/input-data1/resultList';
 import { petAPI } from '@api/petAPI';
 import ResultHeader from '@components/input-data1/resultHeader'
+import {usePathname} from 'next/navigation';
+
 
 interface Pet {
   petId: number;
@@ -20,6 +22,9 @@ interface Pet {
 }
 
 export default function Page() {
+
+  const pathName = usePathname();
+
   const buttonContent = (
     <><span style={{ color: "#fff" }}>수정완료</span></>
   );
@@ -37,21 +42,7 @@ export default function Page() {
           const petInfo = petData[0];
           localStorage.setItem('petInfo', JSON.stringify(petInfo));
 
-          // 서버에 petInfo를 저장하는 요청
-          fetch('/api', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ petInfo }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log('펫 정보 서버에 저장', data);
-            })
-            .catch((error) => {
-              console.error('펫 정보 서버 저장 실패', error);
-            });
+        
         }
       } catch (error) {
         console.error('펫 정보 조회 실패', error);
@@ -59,7 +50,7 @@ export default function Page() {
     };
 
     fetchPets();
-  }, []);
+  }, [pathName]);
 
   const activityDescriptions: { [key: string]: string } = {
     INACTIVE: '차분',
