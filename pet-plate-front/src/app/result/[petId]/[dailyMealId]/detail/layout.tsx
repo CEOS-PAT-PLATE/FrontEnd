@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import { dailyMealsAPI } from '@api/dailyMealsAPI';
-import CancelButton from '@public/svg/cancel-button.svg?url';
 import Image from 'next/image';
 import BackButton from '@public/svg/back-button.svg?url';
 

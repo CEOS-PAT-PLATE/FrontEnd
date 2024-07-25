@@ -4,6 +4,13 @@ import { usePathname } from 'next/navigation';
 import Navbar from '@components/result/navbar';
 import styled from 'styled-components';
 import Wrapper from '@style/input-data2/Wrapper';
+import BackButton from '@public/svg/back-button.svg?url';
+import Image from 'next/image';
+
+
+import { useRouter } from 'next/navigation';
+
+
 
 import { dailyMealsAPI } from '@api/dailyMealsAPI';
 
@@ -21,6 +28,8 @@ export default function Layout({
   const [deficientCount, setDeficientCount] = useState(0);
   const [excessCount, setExcessCount] = useState(0);
   const pathname = usePathname();
+  const router = useRouter();
+
 
   console.log(petId, dailyMealId);
 
@@ -51,12 +60,28 @@ export default function Layout({
 
   return (
     <Wrapper>
+           <CancelButtonImage
+          src={BackButton}
+          alt="닫기 버튼"
+          onClick={() => router.push(`/result/${petId}/${dailyMealId}`)}
+        />
       <Title>추천 영양성분</Title>
       <Navbar deficientCount={deficientCount} excessCount={excessCount} params={{ petId, dailyMealId }} />
       <Content>{children}</Content>
     </Wrapper>
   );
 }
+
+
+const CancelButtonImage = styled(Image)`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 58px;
+  left: 20px;
+  z-index: 100;
+`;
 
 const Content = styled.div`
   flex: 1;
