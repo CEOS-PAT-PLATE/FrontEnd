@@ -74,7 +74,7 @@ const HeadInfo = styled.div`
 
 const FullNoticeContainer = styled.div`
   position: absolute;
-  bottom: -102px;
+  bottom: -66px;
   left: -25px;
   width: 100%;
   height: 800px;
