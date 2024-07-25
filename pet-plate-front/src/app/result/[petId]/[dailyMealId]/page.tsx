@@ -247,6 +247,7 @@ export default function Page({ params }: ResultProps) {
             <SecondLine>
               몸무게 <BoldText>{petInfo?.weight}kg |</BoldText> 활동량 <BoldText>{activity}</BoldText>
             </SecondLine>
+            
           </SVGContent>
           <StyledLink href={`/result/${petId}/${dailyMealId}/recommend/deficientNutrients`}>
             <RecommendationButton>추천 영양성분 보기</RecommendationButton>
@@ -374,7 +375,6 @@ const FirstLine = styled.p`
   line-height: 180%;
   letter-spacing: -0.75px;
   color: var(--grey11, #36393c);
-  position: absolute;
   top: 16px;
   left: 18px;
 `;
@@ -385,7 +385,6 @@ const SecondLine = styled.p`
   font-weight: 400;
   line-height: 160%;
   color: var(--grey10, #4f5357);
-  position: absolute;
   top: 48px;
   left: 18px;
 `;
@@ -482,16 +481,28 @@ const SVGContent = styled.div`
   width: 312px;
   height: 169px;
   border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+  justify-content: flex-start;
   position: relative;
+  z-index: 100;
+  padding-top:16px;
+  padding-left:17px;
+    padding-right:14px;
+
 `;
 
 const SVGImage = styled(Image)`
-  position: absolute;
   width: 312px;
   height: 169px;
   top: 0;
   left: 0;
   border-radius: 8px;
+  position: absolute;
+  z-index: -1;
+
+
+
 `;
 
 const ContentContainer = styled.div`
