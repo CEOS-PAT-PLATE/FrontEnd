@@ -20,7 +20,7 @@ const getTodayDate = () => {
   return `${year}-${month}-${day}`;
 };
 
-const storeNutrientDataInLocalStorage = (petId:number, dailyMealId:number, nutrientData:any) => {
+const storeNutrientDataInLocalStorage = (petId: number, dailyMealId: number, nutrientData: any) => {
   const key = `${petId}-${dailyMealId}`;
   localStorage.setItem(key, JSON.stringify(nutrientData));
   localStorage.setItem('selectedDate', getTodayDate());
@@ -51,6 +51,7 @@ export default function Page() {
       const nutrientData = {}; // 실제 데이터로 변경 필요
       storeNutrientDataInLocalStorage(petId, dailyMealId, nutrientData);
       router.push(`/result/${petId}/${dailyMealId}`);
+      setIsCompleteModalOpen(false);
     }
   };
 

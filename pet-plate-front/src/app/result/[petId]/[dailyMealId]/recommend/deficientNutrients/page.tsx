@@ -83,12 +83,12 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
   const deficientNutrientGroups = nutrientGroups.filter((group) =>
     nutritionDeficientInfo.some((info) => info.nutrientName === group.nutrientName),
   );
-  console.log(nutritionDeficientInfo.length);
+  console.log(nutrientGroups.length);
 
   return (
     <>
       <SupplementModal />
-      {nutritionDeficientInfo.length === 0 ? (
+      {nutrientGroups.length === 0 ? (
         <EmptyImageWrapper>
           <EmptyText1>부족하거나 과한 영양소가 없어요!</EmptyText1>
           <AlertGraphic src={alertGraphic} alt="alert-graphic" />

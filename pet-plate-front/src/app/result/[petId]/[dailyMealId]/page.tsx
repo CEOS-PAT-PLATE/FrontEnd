@@ -1,4 +1,3 @@
-
 'use client';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
@@ -118,18 +117,20 @@ export default function Page({ params }: ResultProps) {
       const deficientNutrientsData = deficientNutrients.data.data;
 
       setDeficientNutrients(
-        deficientNutrientsData.filter((_: any, index: number) => index % 2 === 0).map((nutrient: any) => nutrient.name),
+        deficientNutrientsData
+          //.filter((_: any, index: number) => index % 2 === 0)
+          .map((nutrient: any) => nutrient.name),
       );
 
       const nutrientData = {
         excessNutrients: excessNutrients.data.data
-          .filter((_: any, index: number) => index % 2 === 0)
+          //  .filter((_: any, index: number) => index % 2 === 0)
           .map((nutrient: any) => nutrient.name),
         properNutrients: properNutrients.data.data
-          .filter((_: any, index: number) => index % 2 === 0)
+          //   .filter((_: any, index: number) => index % 2 === 0)
           .map((nutrient: any) => nutrient.name),
         deficientNutrients: deficientNutrientsData
-          .filter((_: any, index: number) => index % 2 === 0)
+          // .filter((_: any, index: number) => index % 2 === 0)
           .map((nutrient: any) => nutrient.name),
         todayNutrients: todayNutrients.data.data,
         todayKcal: todayKcal?.data.kcal,

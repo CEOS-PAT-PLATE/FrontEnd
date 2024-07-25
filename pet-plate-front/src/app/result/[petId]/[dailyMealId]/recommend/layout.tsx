@@ -32,8 +32,8 @@ export default function Layout({
         dailyMealsAPI.getDeficientNutrients(petId, dailyMealId),
       ]);
 
-      const deficientCount = deficientNutrients.data.data.length/2; // 배열 길이를 2로 나눔
-      const excessCount = excessNutrients.data.data.length/2;
+      const deficientCount = deficientNutrients.data.data.length; // 배열 길이를 2로 나눔
+      const excessCount = excessNutrients.data.data.length;
 
       setDeficientCount(deficientCount);
       setExcessCount(excessCount);
