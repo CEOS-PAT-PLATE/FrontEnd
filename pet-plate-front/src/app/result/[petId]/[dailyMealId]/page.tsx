@@ -465,9 +465,9 @@ const MealListTitle = styled.h2`
 const ExitButtonStyleWrapper = styled.div`
   position: absolute;
   z-index: 3000;
-  right: 20px;
+  right: 26px;
   cursor: pointer;
-  top: 44px;
+  top: 47px;
 `;
 
 function ExitButtonImage({ src, alt, onClick }: { src: string; alt: string; onClick: () => void }) {
