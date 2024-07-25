@@ -82,7 +82,11 @@ let normalizedIntake=0;
   return (
     <BarWrapper>
       <BarBackground />
-      <NutrientNameText>{label}</NutrientNameText>
+      <NutrientRange>
+      <MarkerStart />
+      <MarkerMiddle />
+      <MarkerEnd />
+    </NutrientRange>      <NutrientNameText>{label}</NutrientNameText>
       <Bar data={chartData} options={options} />
       <NutrientText>
         {intake}g / {recommended}g
@@ -184,3 +188,36 @@ const NutrientText = styled.div`
   font-weight: 400;
   line-height: 160%;
 ;`
+
+
+// 적정 영양소 범위 표시 위한 요소
+const NutrientRange = styled.div`
+  position: relative;
+  width: 59px;
+  height: 10px;
+  flex-shrink: 0;
+  background: rgba(100, 105, 110, 0.20);
+  display: flex;
+  align-items: center;
+`;
+
+const Marker = styled.div`
+  position: absolute;
+width: 1px;
+background-color: var(--grey8, #7C8389);
+  height: 100%;
+`;
+
+const MarkerStart = styled(Marker)`
+  left: 0;
+`;
+
+const MarkerMiddle = styled(Marker)`
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+const MarkerEnd = styled(Marker)`
+  right: 0;
+`;
+
