@@ -104,21 +104,18 @@ export default function Page({ params }: ResultProps) {
   const { petId, dailyMealId } = params;
   const [petInfo, setPetInfo] = useState<PetInfo | null>(null);
   const [deficientNutrients, setDeficientNutrients] = useState<string[]>([]);
+  const [excessNutrients, setExcessNutrients] = useState<string[]>([]);
   const [nutrientsData, setNutrientsData] = useRecoilState(nutrientDataState);
   const [dailyMeals, setDailyMeals] = useRecoilState(dailyMealsState);
   const [mainNutrients, setMainNutrients] = useState<string[]>([]);
   const [activity, setActivity] = useState<string>('');
 
-
-
-
   const date = getSelectedDate() || '0';
-  console.log(date);
   const [year, month, day] = date.split('-');
 
   const fetchNutrientData = async (date: string) => {
     try {
-      const [excessNutrients, properNutrients, deficientNutrients] = await Promise.all([
+      const [excessNutrientsResponse, properNutrientsResponse, deficientNutrientsResponse] = await Promise.all([
         dailyMealsAPI.getExcessNutrients(petId, dailyMealId),
         dailyMealsAPI.getProperNutrients(petId, dailyMealId),
         dailyMealsAPI.getDeficientNutrients(petId, dailyMealId),
@@ -126,24 +123,13 @@ export default function Page({ params }: ResultProps) {
 
       const { todayNutrients, todayKcal, todaykcalRatio, todayProperKcal } = await fetchPetNutrientData(petId, date);
 
-      const deficientNutrientsData = deficientNutrients.data.data;
-
-      setDeficientNutrients(
-        deficientNutrientsData
-          //.filter((_: any, index: number) => index % 2 === 0)
-          .map((nutrient: any) => nutrient.name),
-      );
+      setDeficientNutrients(deficientNutrientsResponse.data.data.map((nutrient: any) => nutrient.name));
+      setExcessNutrients(excessNutrientsResponse.data.data.map((nutrient: any) => nutrient.name));
 
       const nutrientData = {
-        excessNutrients: excessNutrients.data.data
-          //  .filter((_: any, index: number) => index % 2 === 0)
-          .map((nutrient: any) => nutrient.name),
-        properNutrients: properNutrients.data.data
-          //   .filter((_: any, index: number) => index % 2 === 0)
-          .map((nutrient: any) => nutrient.name),
-        deficientNutrients: deficientNutrientsData
-          // .filter((_: any, index: number) => index % 2 === 0)
-          .map((nutrient: any) => nutrient.name),
+        excessNutrients: excessNutrientsResponse.data.data.map((nutrient: any) => nutrient.name),
+        properNutrients: properNutrientsResponse.data.data.map((nutrient: any) => nutrient.name),
+        deficientNutrients: deficientNutrientsResponse.data.data.map((nutrient: any) => nutrient.name),
         todayNutrients: todayNutrients.data.data,
         todayKcal: todayKcal?.data.kcal,
         todaykcalRatio: todaykcalRatio.data.kcalRatio,
@@ -154,9 +140,7 @@ export default function Page({ params }: ResultProps) {
       storeNutrientDataInLocalStorage(petId, dailyMealId, nutrientData);
 
       const todayNutrientsData = todayNutrients.data;
-      console.log('오늘', todayNutrients.data);
       storeAllNutrientDataInLocalStorage(petId, dailyMealId, todayNutrientsData);
-      setMainNutrients(todayNutrients.data);
       setMainNutrients([todayNutrients.data[0], todayNutrients.data[1], , todayNutrients.data[2]]);
     } catch (error) {
       console.error('오류', error);
@@ -212,7 +196,6 @@ export default function Page({ params }: ResultProps) {
   useEffect(() => {
     const petInfo = getPetInfoFromLocalStorage();
     setPetInfo(petInfo);
-   
 
     switch (petInfo?.activity) {
       case 'VERY_ACTIVE':
@@ -234,8 +217,6 @@ export default function Page({ params }: ResultProps) {
 
   console.log(nutrientsData);
 
-
-
   return (
     <Wrapper>
       <Title>분석 결과</Title>
@@ -248,15 +229,23 @@ export default function Page({ params }: ResultProps) {
           </DateTitle>
           <SVGContent>
             <SVGImage src={ResultBox} width={312} height={169} alt="loading" />
-            {deficientNutrients.length > 0 ? (
+            {(deficientNutrients.length > 0 && excessNutrients.length > 0) ? (
               <FirstLine>
-                부족 영양소<RedText> {deficientNutrients.join(', ')}</RedText>
+                <RedText>{deficientNutrients.join(', ')}</RedText> 가 부족해요!
+              </FirstLine>
+            ) : deficientNutrients.length > 0 ? (
+              <FirstLine>
+                <RedText>{deficientNutrients.join(', ')}</RedText> 가 부족해요!
+              </FirstLine>
+            ) : excessNutrients.length > 0 ? (
+              <FirstLine>
+                <RedText>{excessNutrients.join(', ')}</RedText> 가 과해요!
               </FirstLine>
             ) : (
-              <FirstLine>오늘은 부족한 영양소가 없어요!</FirstLine>
+              <FirstLine>부족하거나 과한 영양소가 없어요!</FirstLine>
             )}
             <SecondLine>
-              몸무게 <BoldText>{petInfo?.weight}kg |</BoldText> 활동량 < BoldText>{activity}</ BoldText>
+              몸무게 <BoldText>{petInfo?.weight}kg |</BoldText> 활동량 <BoldText>{activity}</BoldText>
             </SecondLine>
           </SVGContent>
           <StyledLink href={`/result/${petId}/${dailyMealId}/recommend/deficientNutrients`}>
@@ -328,8 +317,6 @@ const RedText = styled.span`
 
 const BoldText = styled.span`
   font-family: SUIT middle;
-
-
 `;
 
 const GreenText = styled.span`
