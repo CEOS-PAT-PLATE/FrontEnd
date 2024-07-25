@@ -211,6 +211,31 @@ export default function Page({ params }: ResultProps) {
 
   console.log(nutrientsData);
 
+  const getNutritionAdvice = (nutrients: string[]) => {
+    // 영양소에 따른 조사 설정
+    const nutrientParticleMap: { [key: string]: string } = {
+      '탄수화물': '이',
+      '단백질': '이',
+      '지방': '이',
+      '칼슘': '이',
+      '인': '이',
+      '비타민 A': '가',
+      '비타민 D': '가',
+      '비타민 E': '가'
+    };
+  
+    if (nutrients.length === 0) return '';
+  
+    // 배열에서 마지막 영양소 가져오기
+    const lastNutrient = nutrients[nutrients.length - 1];
+  console.log(lastNutrient);
+    // 마지막 영양소에 따른 조사 결정
+    const particle = nutrientParticleMap[lastNutrient] || '이';
+  
+    // 영양소 목록을 문자열로 변환하고, 조사 추가
+    return `${nutrients.join(', ')}${particle}`;
+  };
+
   return (
     <Wrapper>
       <Title>분석 결과</Title>
@@ -224,19 +249,19 @@ export default function Page({ params }: ResultProps) {
           <SVGContent>
             <SVGImage src={ResultBox} width={312} height={169} alt="loading" />
             {(deficientNutrients.length > 0 && excessNutrients.length > 0) ? (
-              <FirstLine>
-                <RedText>{deficientNutrients.join(', ')}</RedText> 가 부족해요!
-              </FirstLine>
-            ) : deficientNutrients.length > 0 ? (
-              <FirstLine>
-                <RedText>{deficientNutrients.join(', ')}</RedText> 가 부족해요!
-              </FirstLine>
-            ) : excessNutrients.length > 0 ? (
-              <FirstLine>
-                <RedText>{excessNutrients.join(', ')}</RedText> 가 과해요!
-              </FirstLine>
-            ) : (
-              <FirstLine>부족하거나 과한 영양소가 없어요!</FirstLine>
+        <FirstLine>
+        <RedText>{getNutritionAdvice(deficientNutrients)}</RedText> 부족해요!
+      </FirstLine>
+      ) : deficientNutrients.length > 0 ? (
+      <FirstLine>
+        <RedText>{getNutritionAdvice(deficientNutrients)}</RedText> 부족해요!
+      </FirstLine>
+      ) : excessNutrients.length > 0 ? (
+      <FirstLine>
+        <RedText>{getNutritionAdvice(excessNutrients)}</RedText> 과해요!
+      </FirstLine>
+      ) : (
+      <FirstLine>부족하거나 과한 영양소가 없어요!</FirstLine>
             )}
             <SecondLine>
               몸무게 <BoldText>{petInfo?.weight}kg |</BoldText> 활동량 <BoldText>{activity}</BoldText>
