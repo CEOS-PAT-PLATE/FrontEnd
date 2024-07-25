@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { dailyMealsAPI } from '@api/dailyMealsAPI';
 import CancelButton from '@public/svg/cancel-button.svg?url';
 import Image from 'next/image';
+import BackButton from '@public/svg/back-button.svg?url';
+
 
 import LineChart from '@components/result/line-charts';
 
@@ -153,7 +155,7 @@ export default function Layout({
           <Vendor>* 보다 자세한 설명은 ‘추천 영양성분’에서 확인해주세요.</Vendor>
         </SupplementInfo>
         <CancelButtonImage
-          src={CancelButton}
+          src={BackButton}
           alt="닫기 버튼"
           onClick={() => router.push(`/result/${petId}/${dailyMealId}`)}
         />
@@ -237,7 +239,7 @@ const CancelButtonImage = styled(Image)`
   cursor: pointer;
   position: absolute;
   top: -82px;
-  left: 90%;
+  left: 0px;
 `;
 
 const SupplementInfo = styled.div`
