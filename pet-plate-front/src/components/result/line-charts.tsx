@@ -28,8 +28,11 @@ function NutrientBar({
   recommended: number;
   color: string;
 }) {
-  const maxNutrientValue = 100; // 비율로 나타나게끔
-  const normalizedIntake = Math.min((intake / recommended) * maxNutrientValue, maxNutrientValue);
+let normalizedIntake=0;
+  if(intake>recommended*10/6)
+    {normalizedIntake = recommended*10/6;}
+  else{normalizedIntake = intake;}
+ 
 
   const chartData = {
     labels: [label],
@@ -39,14 +42,12 @@ function NutrientBar({
         data: [normalizedIntake],
         backgroundColor: [color],
         borderRadius: 20,
-        barPercentage: 2,
+        barPercentage: 1,
         borderSkipped: false,
         minBarLength: 2,
       },
     ],
   };
-
-
 
   const options = {
     barThickness: 7,
@@ -57,14 +58,13 @@ function NutrientBar({
         grid: {
           display: false,
         },
-        max: maxNutrientValue,
+        max: recommended*10/6,
       },
       y: {
         display: false,
         grid: {
           display: false,
         },
-       
       },
     },
     plugins: {
@@ -76,8 +76,7 @@ function NutrientBar({
       },
     },
     responsive: true,
-    maintainAspectRatio: false, // 고정된 가로세로 비율을 유지x -> 부모 요소의 크기에 맞게 너비/높이 독립적으로 조절.. 드디어..
-
+    maintainAspectRatio: false,
   };
 
   return (
@@ -143,14 +142,17 @@ export default function LineChart({ nutrientData, group }: { nutrientData: any[]
 const LineWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
 `;
 
 const BarWrapper = styled.div`
   position: relative;
-
   height: 40px;
   margin-bottom: 12px;
   z-index: 20;
+  max-width: 302px;
+   
+
 `;
 
 const BarBackground = styled.div`
@@ -159,7 +161,7 @@ const BarBackground = styled.div`
   position: absolute;
   top: 16px;
   left: 0;
-  width: 302px;
+  width: 270px;
   height: 17%;
   z-index: -10;
 `;
@@ -169,15 +171,16 @@ const NutrientText = styled.div`
   color: var(--grey8, #7c8389);
   font-family: SUIT;
   font-size: 10px;
-  font-weight: 400;
+ font-weight: 400;
   line-height: 160%;
-`;
+  `
 
-const NutrientNameText = styled.div`
+
+  const NutrientNameText = styled.div`
   position: absolute;
   color: var(--grey11, #36393c);
   font-family: SUIT;
   font-size: 10px;
   font-weight: 400;
   line-height: 160%;
-`;
+;`
