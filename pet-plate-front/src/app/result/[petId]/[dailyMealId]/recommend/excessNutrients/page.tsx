@@ -222,7 +222,7 @@ const Card = styled.div`
   width: 312px;
   padding: 16px;
   margin-bottom: 16px;
-  margin-left: 8px;
+  margin-left: 24px;
 `;
 
 const Info = styled.div`
