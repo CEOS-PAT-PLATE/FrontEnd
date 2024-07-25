@@ -39,6 +39,8 @@ const ButtonWrapper = styled.div`
   z-index: 1;
   position: absolute;
   right: 30px;
-  margin-left: 8px;
-  margin-right:11px;
+  margin-left: 20px;
+  margin-right:20px;
+  width: 24px;
+  height: 24px;
 `;

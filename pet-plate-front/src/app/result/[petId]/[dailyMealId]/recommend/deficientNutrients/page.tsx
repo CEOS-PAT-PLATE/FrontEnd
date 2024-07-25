@@ -310,16 +310,20 @@ const Card = styled.div`
 
 const ImageWrapper = styled.div`
   flex-shrink: 0;
-  margin-right: 10px;
+  margin-right: 12px;
+  margin-left: -5px;
 `;
 
 const Info = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: -10px;
+  width: 170px;
+
 `;
 
 const Vendor = styled.span`
-  width: 171px;
+  width: 170px;
   color: var(--grey7, #959ca4);
 
   /* body3_regular_12pt */
@@ -333,13 +337,13 @@ const Vendor = styled.span`
 const Name = styled.span`
   align-self: stretch;
   color: var(--grey10, #4f5357);
-
+  width: 170px;
+max-width: 150px;
   /* title2_bold_16pt */
   font-family: SUIT;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
-  max-width: 171px;
   line-height: 160%;
 
   /* 이름 너무 길면 */
