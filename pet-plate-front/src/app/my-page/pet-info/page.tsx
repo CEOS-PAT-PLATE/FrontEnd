@@ -176,8 +176,8 @@ export default function Page() {
                   name={option.name}
                   value={option.value}
                   text={option.text}
+                  marginLeft='43px'
                   onChange={() => activenessChange(option.value)}
-                  width={option.width} // width를 전달합니다.
                 />
               ))}
             </RadioWrapper>
@@ -192,8 +192,8 @@ export default function Page() {
                   name={option.name}
                   value={option.value}
                   text={option.text}
+                  marginLeft='20px'
                   onChange={() => neuteredChange(option.value)}
-                  width={option.width} // width를 전달합니다.
                 />
               ))}
             </RadioWrapper>
@@ -271,6 +271,8 @@ const RadioWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap; 
+  gap: 0.5rem;
 `;
 
 const FixedButtonContainer = styled.div`
