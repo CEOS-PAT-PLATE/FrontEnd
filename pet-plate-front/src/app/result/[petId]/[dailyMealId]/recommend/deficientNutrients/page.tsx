@@ -137,7 +137,7 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
             <div key={group.nutrientName}>
               <NutrientInfoSection nutrient={group.nutrientName} index={index} />
               <ContainerWrapper>
-                <Text1>비슷한 고민을 가진 반려인들은 
+                <Text1>현재 비슷한 고민을 가진 반려인들은 
                 <br />
                   이 영양제를 많이 써요.
                   </Text1>
@@ -240,17 +240,37 @@ const getParticle = (nutrient: string) => {
   return nutrientParticleMap[nutrient] || '이';
 };
 
+const getParticle2 = (nutrient: string) => {
+  // 영양소에 따른 조사 설정
+  const nutrientParticleMap: { [key: string]: string } = {
+    '탄수화물': '이란?',
+    '단백질': '이란?',
+    '지방': '이란?',
+    '칼슘': '이란?',
+    '인': '이란?',
+    '비타민 A': '란?',
+    '비타민 D': '란?',
+    '비타민 E': '란?'
+  };
+
+  // 기본 조사 '이'로 설정, 영양소에 따라 변경
+  return nutrientParticleMap[nutrient] || '이란?';
+};
+
+
 
 const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number }) => {
   const nutrientData = nutritionDeficientInfo.find((info) => info.nutrientName === nutrient);
   const particle = getParticle(nutrient); // 영양소에 따른 조사 결정
+  const particle2 = getParticle2(nutrient); // 영양소에 따른 조사 결정2
+
 
   return (
     <Section>
       <OrderText>{`${orderArray[index].word}번째 부족 영양소`}</OrderText>
       <NutrientTitle>{nutrientData?.title}</NutrientTitle>
       <NutrientContent>{nutrientData?.content}</NutrientContent>
-      <NutrientSymptomsTitle>{`${nutrient}${particle} 부족할 때 발생할 수 있는 증상`}</NutrientSymptomsTitle>
+      <NutrientSymptomsTitle><GreenText>{`${nutrient}`}</GreenText>{`${particle}`} 부족할 때 발생할 수 있는 증상</NutrientSymptomsTitle>
       <SymptomsList>
         {nutrientData?.symptoms.map((symptom, i) => (
           <SymptomWrapper key={i}>
@@ -262,11 +282,16 @@ const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number
           </SymptomWrapper>
         ))}
       </SymptomsList>
-      <NutrientDefinitionTitle>{`${nutrient}이란?`}</NutrientDefinitionTitle>
+      <NutrientDefinitionTitle><GreenText>{`${nutrient}`}</GreenText>{`${particle2}`}</NutrientDefinitionTitle>
       <NutrientDefinition>{nutrientData?.definition}</NutrientDefinition>
     </Section>
   );
 };
+
+const GreenText = styled.span`
+  color: var(--primary, #40c97f);
+  font-weight: 700;
+`;
 
 const Content = styled.div`
   overflow-y: auto;

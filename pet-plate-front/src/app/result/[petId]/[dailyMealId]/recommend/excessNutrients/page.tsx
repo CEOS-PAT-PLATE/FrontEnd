@@ -107,8 +107,10 @@ export default function ExcessNutrientsPage({ params }: ResultProps) {
                   <NutrientInfoSection nutrient={group.nutrientName} index={index} key={group.nutrientName} />
                 ))}
                 <ContainerWrapper>
-                  <Text1>비슷한 고민을 가진</Text1>
-                  <Text2>반려인들은 이런 점을 신경써요!</Text2>
+                <Text1>비슷한 고민을 가진 반려인들은 
+                <br />
+                 이런 점을 신경써요!
+                  </Text1>
                   {getNutritionAdvice(excessNutrients.map((n) => n.name)).map((advice, index) => (
                     <Card key={index}>
                       <Info>
@@ -181,6 +183,7 @@ const getNutritionAdvice = (excessNutrients: string[]) => {
     '비타민 E': '가'
   };
 
+
   // 배열에서 마지막 영양소 가져오기
   const lastNutrient = excessNutrients[excessNutrients.length - 1];
   
@@ -212,13 +215,17 @@ const getNutritionAdvice = (excessNutrients: string[]) => {
 
 const ContainerWrapper = styled.div`
   position: absolute;
-  padding-top: 10px;
+  padding-top: 120px;
   min-height: 476px;
   min-width: 360px;
   width: 360px;
   display: flex;
   flex-direction: column;
   background: var(--50, #ecfaf2);
+    margin-top: 20px;
+      height: auto;
+
+
 `;
 
 const Container = styled.div`
@@ -283,7 +290,7 @@ const EmptyMessage = styled.div`
 
 const Text1 = styled.div`
   color: var(--700, #26784c);
-  font-family: SUIT;
+  font-family: SUIT variable;
   font-size: 20px;
   font-weight: 700;
   line-height: 160%;
@@ -293,7 +300,9 @@ const Text1 = styled.div`
   background: var(--50, #ecfaf2);
   color: var(--700, #26784c);
   padding: 0px 16px;
-`;
+  left: 16px;
+margin-top: -80px;`;
+
 
 const Text2 = styled.div`
   color: var(--700, #26784c);
@@ -330,17 +339,36 @@ const getParticle = (nutrient: string) => {
   return nutrientParticleMap[nutrient] || '이';
 };
 
+const getParticle2 = (nutrient: string) => {
+  // 영양소에 따른 조사 설정
+  const nutrientParticleMap: { [key: string]: string } = {
+    '탄수화물': '이란?',
+    '단백질': '이란?',
+    '지방': '이란?',
+    '칼슘': '이란?',
+    '인': '이란?',
+    '비타민 A': '란?',
+    '비타민 D': '란?',
+    '비타민 E': '란?'
+  };
+
+  // 기본 조사 '이'로 설정, 영양소에 따라 변경
+  return nutrientParticleMap[nutrient] || '이란?';
+};
+
 
 const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number }) => {
   const nutrientData = nutrientExcessInfo.find((info) => info.nutrientName === nutrient);
   const particle = getParticle(nutrient); // 영양소에 따른 조사 결정
+  const particle2 = getParticle2(nutrient); // 영양소에 따른 조사 결정2
+
 
   return (
     <Section>
       <OrderText>{`${orderArray[index].word}번째 과잉 영양소`}</OrderText>
       <NutrientTitle>{nutrientData?.title}</NutrientTitle>
       <NutrientContent>{nutrientData?.content}</NutrientContent>
-      <NutrientSymptomsTitle>{`${nutrient}${particle} 과잉 섭취될 때 발생할 수 있는 증상`}</NutrientSymptomsTitle>
+      <NutrientSymptomsTitle><GreenText>{`${nutrient}`}</GreenText>{`${particle}`} 과잉 섭취될 때 발생할 수 있는 증상</NutrientSymptomsTitle>
       <SymptomsList>
         {nutrientData?.symptoms.map((symptom, i) => (
           <SymptomWrapper key={i}>
@@ -352,11 +380,16 @@ const NutrientInfoSection = ({ nutrient, index }: { nutrient: any; index: number
           </SymptomWrapper>
         ))}
       </SymptomsList>
-      <NutrientDefinitionTitle>{`${nutrient}이란?`}</NutrientDefinitionTitle>
+      <NutrientDefinitionTitle><GreenText>{`${nutrient}`}</GreenText>{`${particle2}`}</NutrientDefinitionTitle>
       <NutrientDefinition>{nutrientData?.definition}</NutrientDefinition>
     </Section>
   );
 };
+
+const GreenText = styled.span`
+  color: var(--primary, #40c97f);
+  font-weight: 700;
+`;
 
 const Section = styled.div`
   margin-bottom: 40px;
@@ -375,7 +408,7 @@ const OrderText = styled.div`
 
 const NutrientTitle = styled.div`
   color: var(--primary, #40c97f);
-  font-family: SUIT;
+  font-family: SUIT variable;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -396,7 +429,8 @@ const NutrientContent = styled.div`
 
 const NutrientSymptomsTitle = styled.div`
   color: var(--grey11, #36393c);
-  font-family: SUIT;
+  font-family: SUIT variable;
+
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
