@@ -69,7 +69,8 @@ export default function SupplementModal() {
           <AlignCenter>
             <EnglishNameWrapper>
             <EnglishNameTag>구매처</EnglishNameTag>
-            <EnglishName>{supplementData?.url}</EnglishName>
+            <EnglishNameLink href={supplementData?.url} target="_blank" rel="noopener noreferrer">
+              {supplementData?.url}</EnglishNameLink>
             </EnglishNameWrapper>
           </AlignCenter>
         </SupplementInfo>
@@ -128,7 +129,9 @@ const CancelButtonImage = styled(Image)`
 
 const InfoCardWrapper = styled.div`
   min-height: 431px; 
-  max-height: 458px;
+  max-height: 490px;
+
+  position: relative;
   display: flex;
   width: 312px;
   align-items: center;
@@ -138,11 +141,9 @@ const InfoCardWrapper = styled.div`
   border-radius: 16px;
   background: var(--grey1, #fafafc);
   box-shadow: 2px 2px 15px 0px rgba(153, 159, 165, 0.2);
-  position: relative;
   margin-top: 100px;
   z-index: 1;
   top: 90px;
-  padding-bottom: 24px; /* padding 보장*/
   box-sizing: border-box; /* padding 을 길이 계산에 포함 */
 `;
 
@@ -210,6 +211,34 @@ font-size: 14.444px;
 font-style: normal;
 font-weight: 400;
 line-height: 140%; /* 20.221px */
+`;
+
+const EnglishNameLink = styled.a`
+  font-size: 14px;
+  text-align: left;
+  max-width: 200px;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 보여줄 줄 수 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 0px;
+  padding-right: 10px;
+  word-wrap: break-word; /* 단어를 자르지말고, wrap함 width 넘으면 */
+  color: var(--grey11, #36393C);
+font-family: SUIT;
+font-size: 14.444px;
+font-style: normal;
+font-weight: 400;
+line-height: 140%; /* 20.221px */
+
+text-decoration: none; 
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline; 
+  }
 `;
 
 const EnglishNameTag = styled.div`
