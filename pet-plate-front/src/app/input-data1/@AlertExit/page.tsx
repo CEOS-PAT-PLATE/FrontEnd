@@ -97,6 +97,7 @@ export const Content = styled.p`
   display: flex;
   flex-direction: column;
   height: 44px;
+  margin-bottom: 36px;
 
   /* body2_regular_14pt */
   font-family: SUIT;

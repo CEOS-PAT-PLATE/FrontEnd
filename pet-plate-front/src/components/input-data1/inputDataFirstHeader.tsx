@@ -25,7 +25,6 @@ const InputDataFirstHeader: React.FC<InputDataFirstHeaderProps> = ({ onClickBack
       <ExitButtonWrapper
         onClick={() => {
         setIsExitModalOpen(true);
-        console.log('클릭');
       }}>
         <ExitButtonImage src={ExitButton} alt="exit-button" />
       </ExitButtonWrapper>
