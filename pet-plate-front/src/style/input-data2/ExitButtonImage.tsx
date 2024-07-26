@@ -11,6 +11,7 @@ const ExitButtonStyleWrapper = styled(Image)`
   top: 72px; /* 화면 상단에 고정 */
   left: -3px; /* 좌측 정렬 */
   z-index: 6; /* 다른 요소보다 위에 배치 */
+  cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
 `;
 
 export default function ExitButtonImage({ src, alt }: { src: string; alt: string }) {
