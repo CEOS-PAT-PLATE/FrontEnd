@@ -315,6 +315,7 @@ const Container = styled.div`
   padding: 16px;
   margin-top: 104px;
   overflow-y: auto;
+  
 `;
 
 const Card = styled.div`
@@ -331,6 +332,7 @@ const Card = styled.div`
   height: 100px;
   padding: 16px;
   margin-bottom: 16px;
+  margin-left:8px;
 `;
 
 const ImageWrapper = styled.div`
