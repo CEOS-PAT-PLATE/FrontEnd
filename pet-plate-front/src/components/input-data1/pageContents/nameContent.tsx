@@ -18,7 +18,7 @@ export default function NameContent() {
 
   return (
     <ContentWrapper>
-      <Title>강아지의 이름은 무엇인가요?</Title>
+      <Title>반려견의 이름은 무엇인가요?</Title>
       <InputField
         placeholder="이름"
         width="19.5rem"
