@@ -476,7 +476,7 @@ const SymptomName = styled.div`
   width: 165px;
   margin-right: 8px;
   color: var(--grey11, #36393c);
-  font-family: SUIT;
+  font-family: SUIT middle;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;

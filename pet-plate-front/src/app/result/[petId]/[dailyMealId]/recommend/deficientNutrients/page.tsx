@@ -513,7 +513,8 @@ const SymptomName = styled.div`
   color: var(--grey11, #36393c);
 
   /* body2_semibold_14pt */
-  font-family: SUIT;
+  font-family: SUIT middle;
+
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
