@@ -6,6 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import backIcon from "@public/svg/back-button.svg?url"
 import InputField from "@components/input-data1/inputField"
+import InputFieldDouble from '@components/input-data1/inputFiledDouble'
 import RadioCheck from "@components/my-page/radioCheck"
 import GapButton from '@components/main/gapbtn';
 import { petAPI } from '@api/petAPI';
@@ -43,8 +44,8 @@ export default function Page() {
   const weightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (petInfo) {
       const value = e.target.value;
-      const newWeight = value === '' ? undefined : parseInt(value.trim(), 10);
-      const updatedPetInfo = { ...petInfo, weight: newWeight };
+      const weightAsNumber = value !== '' && !isNaN(Number(value)) ? Number(value) : undefined;
+      const updatedPetInfo = { ...petInfo, weight: weightAsNumber };
       setPetInfo(updatedPetInfo);
     }
   };
@@ -156,7 +157,7 @@ export default function Page() {
             <ContentHalfWrapper>
               <Title>몸무게</Title>
               <RowContainer>
-                <InputField
+                <InputFieldDouble
                   placeholder="몸무게"
                   width="6.5rem"
                   value={petInfo.weight !== undefined ? petInfo.weight.toString() : ''}

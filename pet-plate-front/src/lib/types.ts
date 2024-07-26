@@ -132,6 +132,6 @@ export interface PetInfo {
 export interface InputFieldProps {
   placeholder: string;
   width: string;
-  value: string | number;
+  value?: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

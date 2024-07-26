@@ -7,7 +7,7 @@ import {InputFieldProps} from "@lib/types"
 export default function inputField({ width, placeholder, value, onChange } : InputFieldProps) {
   return (
     <InputFiledWrapper>
-        <InputFileld type="text" 
+        <InputFileld type="number" step="0.01"
          placeholder={placeholder} 
          width={width}
          value={value}
@@ -22,6 +22,18 @@ const InputFiledWrapper = styled.div`
 `
 
 const InputFileld = styled.input`
+    -moz-appearance: textfield; /* Firefox */
+    -webkit-appearance: none; /* Safari and Chrome */
+    appearance: none; /* Standard syntax */
+
+    /* Hide the number input arrows for Firefox specifically */
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+
     height: 3rem;
     padding: 0 1rem;
     font-size: 1rem;
