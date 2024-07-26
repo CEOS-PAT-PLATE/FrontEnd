@@ -158,7 +158,7 @@ export default function DeficientNutrientsPage({ params }: ResultProps) {
                           <Vendor>{supplement.vendor}</Vendor>
                           <Name>{supplement.name}</Name>
                         </Info>
-                        <RightArrow detail={{ supplement, nutrient: group.nutrientName }} />
+                        <RightArrow supplementId={supplement.id}/>
                       </Card>
                     ))
                   ) : (

@@ -69,9 +69,9 @@ interface Supplement {
 
 }
 
-export const selectedSupplementState = atom<{ supplement: Supplement | null, nutrient: string | null }>({
+export const selectedSupplementState = atom<number>({
   key: 'selectedSupplementState',
-  default: { supplement: null, nutrient: null },
+  default: 0,
 });
 
 
@@ -97,4 +97,10 @@ export const nutrientDataState = atom({
 export const dailyMealsState = atom({
   key: 'dailyMealState',
   default: 0,
+});
+
+
+export const supplementModalClickedState = atom({
+  key: 'supplementModalClickedState',
+  default: false,
 });

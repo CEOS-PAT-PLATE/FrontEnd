@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import rightArrow from '@public/svg/chevron-right.svg?url';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
-import { isModalVisibleState, selectedSupplementState } from '@recoil/nutrientAtoms';
+import { isModalVisibleState, selectedSupplementState,supplementModalClickedState } from '@recoil/nutrientAtoms';
 
 interface Supplement {
   id: number;
@@ -15,16 +15,18 @@ interface Supplement {
 }
 
 interface RightArrowProps {
-  detail: { supplement: Supplement; nutrient: string };
+ supplementId:number;
 }
 
-export default function RightArrow({ detail }: RightArrowProps) {
+export default function RightArrow({ supplementId }: RightArrowProps) {
   const [isVisible, setIsVisible] = useRecoilState(isModalVisibleState);
   const [selectedDetail, setSelectedDetail] = useRecoilState(selectedSupplementState);
-
+const [isModalClicked, setIsModalClicked] = useRecoilState(supplementModalClickedState);
   const handleClick = () => {
-    setSelectedDetail(detail);
+    setSelectedDetail(supplementId);
     setIsVisible(true);
+    setIsModalClicked(true);
+
   };
 
   return (
