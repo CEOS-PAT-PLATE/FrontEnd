@@ -7,7 +7,7 @@ import { RecentRawFood } from '@lib/types';
 import NoticeText from '@style/input-data2/NoticeText';
 import InfoCardAndButton from '@components/input-data2/naturalfood-page/naturalfood-notice';
 import SuggestionButton from '@components/input-data2/naturalfood-page/suggestion-button';
-
+import  InfoCardWrapper from '@style/input-data2/InfoCardWrapper';
 const NEXT_PUBLIC_API_URL = 'https://apitest.petplate.kr';
 
 const fetchWithAuth = async (endpoint: string) => {
@@ -93,16 +93,19 @@ export default async function Page({ searchParams }: { searchParams?: { keyword?
 
   return (
     <>
+    <InfoCardWrapper/> 
       <InfoLayout
         title="자연식 정보를 적어주세요"
         description="가열하지 않은, 날 것 그대로 급여하는 음식을 의미해요. 바나나, 오이, 딸기 등을 포함해요."
-      />
+     />
+
+      
+     
       <Search placeholder="검색" />
       <Table keyword={keyword} rawFoods={naturalFoodLists} recentRawFoods={uniqueRecentNaturalFoodLists} />
       <NoticeText>자연식이 뭔지 모르겠어요!</NoticeText>
       <SuggestionButton />
       <NaturalFoodButton />
-      <InfoCardAndButton />
     </>
   );
 }

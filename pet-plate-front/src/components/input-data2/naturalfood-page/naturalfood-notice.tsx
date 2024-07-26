@@ -74,7 +74,6 @@ const HeadInfo = styled.div`
 
 const FullNoticeContainer = styled.div`
   position: absolute;
-  bottom: -66px;
   left: -25px;
   width: 100%;
   height: 800px;
@@ -85,6 +84,7 @@ const FullNoticeContainer = styled.div`
   font-weight: 600;
   text-align: center;
   z-index: 8;
+  top:-176px;
 `;
 
 const NaturalInfoCardImage = styled.div`
