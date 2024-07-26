@@ -30,6 +30,9 @@ export const nutrientAPI = {
   getRecommendedSupplements: async (petId: number, dailyMealId: number) => {
     return await axiosInstance.get(`/drugs/recommend/pet/${petId}/dailyMeals/${dailyMealId}/nutrients/deficient`);
   },
+  getRecommendedSupplement:async (drugId:number) => {
+    return await axiosInstance.get(`/drugs/${drugId}`);
+  },
 };
 
 export default nutrientAPI;
