@@ -1,12 +1,14 @@
 'use client';
-
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import Image from 'next/image';
 import alertGraphic from "@public/svg/alert-graphic.svg?url";
 import alertTip from "@public/svg/alert-final-tip.svg?url";
 import { useRouter } from 'next/navigation';
-import background from '@public/svg/input-data1-final-background.svg?url'
+
+interface ModalProps {
+  show: boolean;
+  onClose: () => void;
+}
 
 // Bounce 애니메이션 정의
 const bounce = keyframes`
@@ -21,58 +23,54 @@ const bounce = keyframes`
   }
 `;
 
-export default function Page() {
+
+const Modal: React.FC<ModalProps> = ({ show, onClose }) => {
   const router = useRouter();
+
+  if (!show) return null;
+
   const handleContinue = () => {
     // 로컬스토리지에 enrollPet을 true로 설정
     localStorage.setItem('enrollPet', 'true');
     router.push('/201');
   };
 
+
   return (
-    <PageContainer>
-      <BackgroundImage src={background} alt='background'/>
-      <AlertWrapper>
-        <Text1>이제 얼마 안남았어요!</Text1>
+    <Overlay onClick={onClose}>
+      <ModalContainer onClick={(e) => e.stopPropagation()}>
+      <Text1>이제 얼마 안남았어요!</Text1>
         <AlertGraphic src={alertGraphic} alt="alert-graphic" />
         <Text2>오늘의 식단을 입력해주시면 <br /> 맞춤형 영양정보를 알려드릴게요.</Text2>
         <AlertTip src={alertTip} alt="tip" />
         <ContinueBtn onClick={handleContinue}>다음으로</ContinueBtn>
-      </AlertWrapper>
-    </PageContainer>
+      </ModalContainer>
+    </Overlay>
   );
-}
+};
 
-const BackgroundImage = styled(Image)`
-    position: absolute;
-    top : 0;
-    left: 0;
-    z-index: 1;
-`
+export default Modal;
 
-const PageContainer = styled.div`
-  width: 100%;
-  height: 47.25rem;
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: center;
+  width: 360px;
+  height: 800px;
+  backdrop-filter: blur(4px); /* 배경 블러 처리 */
+  background: rgba(75, 147, 125, 0.3); /* 투명도 80% 적용 */
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  background-color: transparent;
-  position: relative;
-  z-index: 100;
+  align-items: center;
+  z-index: 1000;
 `;
 
-const AlertWrapper = styled.div`
-  width: 18.125rem;
-  height: 27.688rem;
-  border: none;
-  border-radius: 0.75rem;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+const ModalContainer = styled.div`
+  background: white;
+  padding: 2.25rem 1.5rem 1.5rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 `;
 
 const Text1 = styled.div`
@@ -114,4 +112,5 @@ const ContinueBtn = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
 `;
