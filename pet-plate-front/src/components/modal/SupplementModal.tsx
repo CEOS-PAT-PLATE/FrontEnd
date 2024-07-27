@@ -122,7 +122,7 @@ const CancelButtonImage = styled(Image)`
   height: 24px;
   cursor: pointer;
   position: absolute;
-  top: -144px;
+  top: -113px;
   left: 90%;
 `;
 
@@ -141,7 +141,7 @@ const InfoCardWrapper = styled.div`
   box-shadow: 2px 2px 15px 0px rgba(153, 159, 165, 0.2);
   margin-top: 100px;
   z-index: 1;
-  top: 90px;
+  top: 70px;
   box-sizing: border-box; /* padding 을 길이 계산에 포함 */
 `;
 
