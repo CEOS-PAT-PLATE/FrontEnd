@@ -3,13 +3,15 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Progressbar from '@components/input-data1/progressbar';
-import LinkButton from "@components/main/linkBtn";
+import LinkButton from '@components/main/linkBtn'
+import GapButton from "@components/main/gapbtn";
 import ResultList from '@components/input-data1/resultList';
 import { petAPI } from '@api/petAPI';
 import ResultHeader from '@components/input-data1/resultHeader';
 import Image from "next/image";
 import alertTip from "@public/svg/alert-result-tip.svg?url";
 import {usePathname} from 'next/navigation';
+import Modal from '@components/input-data1/finalModal';
 
 interface Pet {
   petId: number;
@@ -35,6 +37,7 @@ const bounce = keyframes`
 `;
 
 export default function Page() {
+  const [showModal, setShowModal] = useState(false);
   const pathName = usePathname();
   const buttonContent = (
     <><span style={{ color: "#fff" }}>다음으로</span></>
@@ -43,6 +46,9 @@ export default function Page() {
   const changeButtonContent = (
     <><span style={{ color: "#fff" }}>수정하기</span></>
   );
+  const openModal = () =>{
+    setShowModal(true);
+  }
 
   const [pets, setPets] = useState<Pet[]>([]);
 
@@ -130,14 +136,15 @@ export default function Page() {
             hoverbuttoncontentcolor="#fff"
             buttonContent={changeButtonContent}
           />
-          <LinkButton
-            href="/input-data1/alert-final"
-            backgroundcolor={(props) => props.theme.colors['grey10']}
-            hoverbackgroundcolor={(props) => props.theme.colors['grey10']}
-            hoverbuttoncontentcolor="#fff"
+          <GapButton
+            onClick={openModal}
+            backgroundColor={(props) => props.theme.colors['grey10']}
+            hoverBackgroundColor={(props) => props.theme.colors['grey10']}
+            hoverButtonContentColor="#fff"
             buttonContent={buttonContent}
           />
         </FixedButtonContainer>
+        <Modal show={showModal} onClose={() => setShowModal(false)} />
       </PageContainer>
     </>
   );
