@@ -45,8 +45,11 @@ export default function Page() {
       />
       <LinkWrapper>
         <LinkMainPage href={'/main'}>펫플레이트 알아보기</LinkMainPage>
-        <LinklInfo href={'/my-page/policy'}>개인정보 처리 약관</LinklInfo>
-        <LinklInfo href={'/my-page/policy'}>서비스 이용 약관</LinklInfo>
+        <LinkInfo href={'/my-page/policy'}>개인정보 처리 약관</LinkInfo>
+        <LinkInfo href={'/my-page/policy'}>서비스 이용 약관</LinkInfo>
+        <LinkInfo href="https://forms.gle/3ACwtvKT22a9D8pUA" target="_blank" rel="noopener noreferrer">
+          펫플레이트 팀에게 건의하기
+        </LinkInfo>
       </LinkWrapper>
       <NavbarFooter />
     </PageWrapper>
@@ -115,7 +118,7 @@ const LinkMainPage = styled(Link)`
   color: ${(props) => props.theme.colors['grey11']};
 `;
 
-const LinklInfo = styled(Link)`
+const LinkInfo = styled(Link)`
   text-decoration: none;
   font-size: 0.938rem;
   font-weight: 400;
