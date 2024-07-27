@@ -8,11 +8,13 @@ interface RadioListProps {
     text: string;
     onChange: () => void;
     marginLeft: string; 
+    checked: boolean; // Add checked prop
 }
-export default function RadioCheck({ name, value, text, onChange, marginLeft }: RadioListProps) {
+
+export default function RadioCheck({ name, value, text, onChange, marginLeft, checked }: RadioListProps) {
   return (
     <RadioWrapper>
-      <input type="radio" name={name} value={value} onChange={onChange} id={value} />
+      <input type="radio" name={name} value={value} onChange={onChange} id={value} checked={checked} />
       <label htmlFor={value}>
         <span>{text}</span>
         <div className="check-icon" style={{ marginLeft }}>

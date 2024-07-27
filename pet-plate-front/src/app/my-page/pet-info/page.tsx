@@ -177,6 +177,7 @@ export default function Page() {
                   name={option.name}
                   value={option.value}
                   text={option.text}
+                  checked={petInfo.activity === option.value}
                   marginLeft='43px'
                   onChange={() => activenessChange(option.value)}
                 />
@@ -193,6 +194,7 @@ export default function Page() {
                   name={option.name}
                   value={option.value}
                   text={option.text}
+                  checked={petInfo.neutering === option.value}
                   marginLeft='20px'
                   onChange={() => neuteredChange(option.value)}
                 />
