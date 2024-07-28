@@ -1,20 +1,22 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { petAPI } from '@api/petAPI';
 
 const SignUp = () => {
   const router = useRouter();
+  const [isTokenFetched, setIsTokenFetched] = useState(false);
 
   async function fetchSignUp() {
     const code = new URL(window.location.href).searchParams.get('code');
+    const API_BASE_URL = 'https://apitest.petplate.kr';
 
-    if (code) {
+    if (code && !isTokenFetched) {
       try {
         // URLSearchParams를 사용하여 URL에 쿼리 파라미터 추가
         const params = new URLSearchParams({ code });
-        const response = await fetch(`/api/v1/auth/issue?${params.toString()}`, {
+        const response = await fetch(`${API_BASE_URL}/api/v1/auth/issue?${params.toString()}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -23,7 +25,9 @@ const SignUp = () => {
 
         if (response.ok) {
           const { data } = await response.json();
-          const { accessToken, refreshToken, enrollPet } = data;
+          const accessToken = response.headers.get('Authorization') || '';
+          const refreshToken = response.headers.get('Refreshtoken') || '';
+          const { enrollPet } = data;
 
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
@@ -55,23 +59,24 @@ const SignUp = () => {
 
           fetchPets();
 
+          setIsTokenFetched(true); // 토큰이 성공적으로 발급되었음을 표시
           router.push('/sign-up/load');
         } else {
           console.error('토큰 발행 실패');
-          // router.push('/sign-up/error');
         }
       } catch (error) {
         console.error('에러 발생:', error);
-        // router.push('/sign-up/error');
       }
-    } else {
+    } else if (!code) {
       router.push('/sign-up/load');
     }
   }
 
   useEffect(() => {
-    fetchSignUp();
-  }, [router]);
+    if (!isTokenFetched) {
+      fetchSignUp();
+    }
+  }, []);
 
   return null; // 컴포넌트는 렌더링할 내용이 없으므로 null 반환
 };
