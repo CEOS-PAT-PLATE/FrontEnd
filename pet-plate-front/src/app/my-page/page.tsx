@@ -47,7 +47,7 @@ export default function Page() {
         <LinkMainPage href={'/main'}>펫플레이트 알아보기</LinkMainPage>
         <LinkInfo href={'/my-page/policy'}>개인정보 처리 약관</LinkInfo>
         <LinkInfo href={'/my-page/policy'}>서비스 이용 약관</LinkInfo>
-        <LinkInfo href="https://forms.gle/3ACwtvKT22a9D8pUA" target="_blank" rel="noopener noreferrer">
+        <LinkInfo href="https://docs.google.com/forms/d/e/1FAIpQLSfQ5GNQTNYGSpfdlp5yk2QeXqf4YTjQ1OiS5RkN_ei5kS6LHw/viewform?vc=0&c=0&w=1&flr=0" target="_blank" rel="noopener noreferrer">
           펫플레이트 팀에게 건의하기
         </LinkInfo>
       </LinkWrapper>
