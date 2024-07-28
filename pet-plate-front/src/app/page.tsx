@@ -17,7 +17,9 @@ export default function Home() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const API_BASE_URL = 'https://apitest.petplate.kr';
-      const NAVER_AUTH_URL = `${API_BASE_URL}/oauth2/authorization/naver?redirect_uri=${window.location.href}`;
+     // const NAVER_AUTH_URL = `${API_BASE_URL}/oauth2/authorization/naver?redirect_uri=${window.location.href}`;
+     const REDIRECT_URI = 'http://petplate.kr/sign-up';
+     const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=JguATATjx0ihfBEbKJJn&state=STATE_STRING&redirect_uri=${REDIRECT_URI}`;
       setNaverAuthUrl(NAVER_AUTH_URL);
 
       const reloaded = sessionStorage.getItem('reloaded');
