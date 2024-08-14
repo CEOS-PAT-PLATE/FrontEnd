@@ -1,24 +1,18 @@
 'use client';
 
 import React from 'react';
-import { Line, Bar, Doughnut } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import styled from 'styled-components';
-
-import { Chart as ChartJS } from 'chart.js';
-import * as Chart from 'chart.js/auto';
-
 import { useState, useEffect } from 'react';
 
-ChartJS.register(
-  Chart.LinearScale,
-  Chart.CategoryScale,
-  Chart.LineElement,
-  Chart.PointElement,
-  Chart.Legend,
-  Chart.Title,
-  Chart.BarController,
-  Chart.BarElement,
-);
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function DoughnutChart({ todayKcal, todayProperKcal }: { todayKcal: number; todayProperKcal: number }) {
 
