@@ -9,13 +9,11 @@ import {
   LinearScale,
   CategoryScale,
   BarElement,
-  PointElement,
   Legend,
-  Title,
   BarController,
 } from 'chart.js';
 
-ChartJS.register(LinearScale, CategoryScale, BarElement, PointElement, Legend, Title, BarController);
+ChartJS.register(LinearScale, CategoryScale, BarElement, Legend,  BarController);
 
 function NutrientBar({
   label,
